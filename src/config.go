@@ -1,4 +1,4 @@
-package appstore
+package src
 
 type Config struct {
 	VendorNo       string

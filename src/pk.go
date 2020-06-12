@@ -1,9 +1,10 @@
-package appstore
+package src
 
 import (
 	"crypto/ecdsa"
 	"crypto/x509"
 	"encoding/pem"
+	"github.com/kachit/appstore-sdk-go/appstore"
 	"io/ioutil"
 )
 
@@ -19,7 +20,7 @@ func (pk *PrivateKey) ParseP8(txt string) (*ecdsa.PrivateKey, error) {
 	rawByte := []byte(txt)
 	block, _ := pem.Decode(rawByte)
 	if block == nil {
-		return nil, ErrAuthKeyNotPem
+		return nil, appstore.ErrAuthKeyNotPem
 	}
 	key, err := x509.ParsePKCS8PrivateKey(block.Bytes)
 	if err != nil {
@@ -29,6 +30,6 @@ func (pk *PrivateKey) ParseP8(txt string) (*ecdsa.PrivateKey, error) {
 	case *ecdsa.PrivateKey:
 		return pk, nil
 	default:
-		return nil, ErrAuthKeyNotECDSA
+		return nil, appstore.ErrAuthKeyNotECDSA
 	}
 }

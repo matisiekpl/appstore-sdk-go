@@ -1,4 +1,4 @@
-package appstore
+package src
 
 type SalesReportSale struct {
 	Provider              string `csv:"Provider"`
