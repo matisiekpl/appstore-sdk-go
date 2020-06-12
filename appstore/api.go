@@ -2,11 +2,11 @@ package appstore
 
 type Client struct {
 	Cfg *Config
-	TS  *TokenStorage
+	Ts  *TokenStorage
 }
 
 func NewClient(cfg *Config) *Client {
-	cl := &Client{Cfg: cfg}
+	cl := &Client{Cfg: cfg, Ts: &TokenStorage{}}
 	return cl
 }
 
@@ -17,7 +17,4 @@ type Token struct {
 
 type TokenStorage struct {
 	Token *Token
-}
-
-type ResponseParser struct {
 }

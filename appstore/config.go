@@ -14,11 +14,3 @@ func NewConfig() *Config {
 	cfg.TokenTtl = 600
 	return cfg
 }
-
-//func (cfg *Config) LoadPrivateKey() error {
-//	if cfg.PrivateKey == "" {
-//		privateKey, err := ioutil.ReadFile(cfg.PrivateKeyPath)
-//	}
-//	privateKey, err := ioutil.ReadFile(cfg.PrivateKeyPath)
-//	return string(privateKey), err
-//}
