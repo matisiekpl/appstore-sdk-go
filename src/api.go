@@ -1,4 +1,4 @@
-package src
+package appstore_sdk
 
 type Client struct {
 	Cfg *Config

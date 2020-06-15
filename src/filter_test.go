@@ -1,4 +1,4 @@
-package src
+package appstore_sdk
 
 import (
 	"github.com/stretchr/testify/assert"
