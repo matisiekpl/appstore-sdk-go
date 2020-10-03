@@ -1,11 +1,11 @@
-# App Store SDK GO (Unofficial)
+# AppStore SDK GO (Unofficial)
 
 [![Build Status](https://travis-ci.org/Kachit/appstore-sdk-go.svg?branch=master)](https://travis-ci.org/Kachit/appstore-sdk-go)
 [![codecov](https://codecov.io/gh/Kachit/appstore-sdk-go/branch/master/graph/badge.svg)](https://codecov.io/gh/Kachit/appstore-sdk-go)
 [![License](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/kachit/appstore-sdk-go/blob/master/LICENSE)
 
 ## Description
-Golang SDK for App Store Connect API
+Golang SDK for AppStore Connect API
 
 ## API documentation
 
