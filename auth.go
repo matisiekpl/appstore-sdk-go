@@ -10,6 +10,15 @@ type AuthToken struct {
 	ExpiresAt int64
 }
 
+func (t *AuthToken) IsValid() bool {
+	return t.IsNotExpired() && t.Token != ""
+}
+
+func (t *AuthToken) IsNotExpired() bool {
+	ts := time.Now().Unix()
+	return t.ExpiresAt > ts
+}
+
 type TokenBuilder struct {
 	cfg        *Config
 	PrivateKey *PrivateKey
@@ -42,7 +51,7 @@ func (tb *TokenBuilder) BuildJWTToken(payload *jwt.StandardClaims) *jwt.Token {
 func (tb *TokenBuilder) BuildAuthToken() (*AuthToken, error) {
 	payload := tb.BuildPayload()
 	jwtToken := tb.BuildJWTToken(payload)
-	key, err := tb.PrivateKey.Load(tb.cfg.PrivateKeyPath)
+	key, err := tb.PrivateKey.Load(tb.cfg.PrivateKey)
 	if err != nil {
 		return nil, err
 	}

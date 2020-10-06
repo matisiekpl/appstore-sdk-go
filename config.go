@@ -1,16 +1,20 @@
 package appstore_sdk
 
-const AppStoreConnectAPIProductionUri = "https://api.appstoreconnect.apple.com"
+import "time"
 
+const AppStoreConnectAPIProductionUri = "https://api.appstoreconnect.apple.com"
 const AppStoreConnectAPIAudience = "appstoreconnect-v1"
+const AppStoreConnectAPITokenTtl = 600
+const AppStoreConnectAPIHttpMaxIdleConnection = 10
+const AppStoreConnectAPIHttpIdleConnectionTimeout = 30 * time.Second
 
 type Config struct {
-	Uri            string
-	VendorNo       string
-	IssuerId       string
-	KeyId          string
-	PrivateKeyPath string
-	Token          *TokenConfig
+	Uri        string
+	VendorNo   string
+	IssuerId   string
+	KeyId      string
+	PrivateKey string
+	Token      *TokenConfig
 }
 
 type TokenConfig struct {
@@ -20,14 +24,14 @@ type TokenConfig struct {
 	Ttl      int
 }
 
-func NewConfig(issuerId string, keyId string, vendorNo string, pkPath string) *Config {
+func NewConfig(issuerId string, keyId string, vendorNo string, pkPathOrContent string) *Config {
 	cfg := &Config{
-		Uri:            AppStoreConnectAPIProductionUri,
-		IssuerId:       issuerId,
-		KeyId:          keyId,
-		VendorNo:       vendorNo,
-		PrivateKeyPath: pkPath,
-		Token:          NewTokenConfig(),
+		Uri:        AppStoreConnectAPIProductionUri,
+		IssuerId:   issuerId,
+		KeyId:      keyId,
+		VendorNo:   vendorNo,
+		PrivateKey: pkPathOrContent,
+		Token:      NewTokenConfig(),
 	}
 	return cfg
 }
@@ -37,7 +41,7 @@ func NewTokenConfig() *TokenConfig {
 		Type:     "JWT",
 		Algo:     "ES256",
 		Audience: AppStoreConnectAPIAudience,
-		Ttl:      600,
+		Ttl:      AppStoreConnectAPITokenTtl,
 	}
 	return cfg
 }

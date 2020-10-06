@@ -6,19 +6,29 @@ import (
 	"encoding/pem"
 	"errors"
 	"fmt"
-	"io/ioutil"
 )
 
 type PrivateKey struct {
 }
 
-func (pk *PrivateKey) LoadFile(path string) ([]byte, error) {
-	privateKey, err := ioutil.ReadFile(path)
-	return privateKey, err
+func (pk *PrivateKey) LoadFromFile(path string) ([]byte, error) {
+	return readFile(path)
+}
+
+func (pk *PrivateKey) LoadFromContent(content string) ([]byte, error) {
+	return []byte(content), nil
+}
+
+func (pk *PrivateKey) LoadData(pathOrContent string) ([]byte, error) {
+	if fileExists(pathOrContent) {
+		return pk.LoadFromFile(pathOrContent)
+	} else {
+		return pk.LoadFromContent(pathOrContent)
+	}
 }
 
 func (pk *PrivateKey) Load(path string) (*ecdsa.PrivateKey, error) {
-	data, err := pk.LoadFile(path)
+	data, err := pk.LoadData(path)
 	if err != nil {
 		return nil, err
 	}

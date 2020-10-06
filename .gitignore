@@ -13,5 +13,6 @@
 *.out
 
 #Custom
+tmp
 go.sum
 main.go
