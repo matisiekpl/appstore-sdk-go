@@ -5,13 +5,13 @@
 [![License](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/kachit/appstore-sdk-go/blob/master/LICENSE)
 
 ## Description
-Golang SDK for AppStore Connect API
+Unofficial Golang SDK for AppStore Connect API
 
 ## API documentation
 
 ## Download
 ```shell
-go get github.com/kachit/appstore-sdk-go
+go get -u github.com/kachit/appstore-sdk-go
 ```
 
 ## Usage

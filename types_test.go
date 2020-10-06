@@ -38,7 +38,7 @@ func Test_Types_CustomTimestamp_UnmarshalCSVEmpty(t *testing.T) {
 	assert.True(t, c.Value().IsZero())
 }
 
-func Test_Common_Types_CustomTimestamp_MarshalJSONSuccess(t *testing.T) {
+func Test_Types_CustomTimestamp_MarshalJSONSuccess(t *testing.T) {
 	c := CustomTimestamp{}
 	c.Timestamp = time.Date(2020, time.Month(1), 20, 0, 0, 0, 0, time.UTC)
 	result, err := c.MarshalJSON()

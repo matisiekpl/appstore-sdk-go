@@ -17,27 +17,3 @@ func (rp *Mapper) Init() {
 		return r
 	})
 }
-
-func (rp *Mapper) MapReportsSalesResponse(response []byte) ([]*SalesReportSale, error) {
-	reports := []*SalesReportSale{}
-	err := gocsv.UnmarshalBytes(response, &reports)
-	return reports, err
-}
-
-func (rp *Mapper) MapReportsSubscribersResponse(response []byte) ([]*SalesReportSubscriber, error) {
-	reports := []*SalesReportSubscriber{}
-	err := gocsv.UnmarshalBytes(response, &reports)
-	return reports, err
-}
-
-func (rp *Mapper) MapReportsSubscriptionsResponse(response []byte) ([]*SalesReportSubscription, error) {
-	reports := []*SalesReportSubscription{}
-	err := gocsv.UnmarshalBytes(response, &reports)
-	return reports, err
-}
-
-func (rp *Mapper) MapReportsSubscriptionsEventsResponse(response []byte) ([]*SalesReportSubscriptionEvent, error) {
-	reports := []*SalesReportSubscriptionEvent{}
-	err := gocsv.UnmarshalBytes(response, &reports)
-	return reports, err
-}
