@@ -2,44 +2,44 @@ package appstore_sdk
 
 import "time"
 
-type ReportType string
-type ReportSubType string
-type Frequency string
-type Version string
+type SalesReportType string
+type SalesReportSubType string
+type SalesReportFrequency string
+type SalesReportVersion string
 
 const (
-	FrequencyDaily   Frequency = "DAILY"
-	FrequencyWeekly  Frequency = "WEEKLY"
-	FrequencyMonthly Frequency = "MONTHLY"
-	FrequencyYearly  Frequency = "YEARLY"
+	FrequencyDaily   SalesReportFrequency = "DAILY"
+	FrequencyWeekly  SalesReportFrequency = "WEEKLY"
+	FrequencyMonthly SalesReportFrequency = "MONTHLY"
+	FrequencyYearly  SalesReportFrequency = "YEARLY"
 )
 
 const (
-	ReportTypeSales             ReportType = "SALES"
-	ReportTypePreorder          ReportType = "PRE_ORDER"
-	ReportTypeNewsStand         ReportType = "NEWSSTAND"
-	ReportTypeSubscription      ReportType = "SUBSCRIPTION"
-	ReportTypeSubscriptionEvent ReportType = "SUBSCRIPTION_EVENT"
-	ReportTypeSubscriber        ReportType = "SUBSCRIBER"
+	ReportTypeSales             SalesReportType = "SALES"
+	ReportTypePreorder          SalesReportType = "PRE_ORDER"
+	ReportTypeNewsStand         SalesReportType = "NEWSSTAND"
+	ReportTypeSubscription      SalesReportType = "SUBSCRIPTION"
+	ReportTypeSubscriptionEvent SalesReportType = "SUBSCRIPTION_EVENT"
+	ReportTypeSubscriber        SalesReportType = "SUBSCRIBER"
 )
 
 const (
-	ReportSubTypeSummary  ReportSubType = "SUMMARY"
-	ReportSubTypeDetailed ReportSubType = "DETAILED"
-	ReportSubTypeOptIn    ReportSubType = "OPT_IN"
+	ReportSubTypeSummary  SalesReportSubType = "SUMMARY"
+	ReportSubTypeDetailed SalesReportSubType = "DETAILED"
+	ReportSubTypeOptIn    SalesReportSubType = "OPT_IN"
 )
 
 const (
-	Version10 Version = "1_0"
-	Version12 Version = "1_2"
+	Version10 SalesReportVersion = "1_0"
+	Version12 SalesReportVersion = "1_2"
 )
 
 type SalesReportsFilter struct {
 	ReportDate    time.Time
-	ReportSubType ReportSubType
-	ReportType    ReportType
-	Frequency     Frequency
-	Version       Version
+	ReportSubType SalesReportSubType
+	ReportType    SalesReportType
+	Frequency     SalesReportFrequency
+	Version       SalesReportVersion
 	VendorNumber  string
 }
 
@@ -48,7 +48,7 @@ func (f *SalesReportsFilter) SetReportDate(value time.Time) *SalesReportsFilter 
 	return f
 }
 
-func (f *SalesReportsFilter) SetReportSubType(value ReportSubType) *SalesReportsFilter {
+func (f *SalesReportsFilter) SetReportSubType(value SalesReportSubType) *SalesReportsFilter {
 	f.ReportSubType = value
 	return f
 }
@@ -65,7 +65,7 @@ func (f *SalesReportsFilter) Summary() *SalesReportsFilter {
 	return f.SetReportSubType(ReportSubTypeSummary)
 }
 
-func (f *SalesReportsFilter) SetReportType(value ReportType) *SalesReportsFilter {
+func (f *SalesReportsFilter) SetReportType(value SalesReportType) *SalesReportsFilter {
 	f.ReportType = value
 	return f
 }
@@ -94,7 +94,7 @@ func (f *SalesReportsFilter) Subscriber() *SalesReportsFilter {
 	return f.SetReportType(ReportTypeSubscriber)
 }
 
-func (f *SalesReportsFilter) SetFrequency(value Frequency) *SalesReportsFilter {
+func (f *SalesReportsFilter) SetFrequency(value SalesReportFrequency) *SalesReportsFilter {
 	f.Frequency = value
 	return f
 }
@@ -115,7 +115,7 @@ func (f *SalesReportsFilter) Yearly() *SalesReportsFilter {
 	return f.SetFrequency(FrequencyYearly)
 }
 
-func (f *SalesReportsFilter) SetVersion(value Version) *SalesReportsFilter {
+func (f *SalesReportsFilter) SetVersion(value SalesReportVersion) *SalesReportsFilter {
 	f.Version = value
 	return f
 }
@@ -128,8 +128,8 @@ func (f *SalesReportsFilter) Version10() *SalesReportsFilter {
 	return f.SetVersion(Version10)
 }
 
-func (f *SalesReportsFilter) ToQueryParamsMap() map[string]string {
-	qs := make(map[string]string)
+func (f *SalesReportsFilter) ToQueryParamsMap() map[string]interface{} {
+	qs := make(map[string]interface{})
 	qs["filter[reportDate]"] = f.ReportDate.Format("2006-01-02")
 	qs["filter[reportSubType]"] = string(f.ReportSubType)
 	qs["filter[reportType]"] = string(f.ReportType)

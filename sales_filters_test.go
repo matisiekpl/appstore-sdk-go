@@ -20,7 +20,7 @@ func Test_SalesReportsFilter_ToQueryParamsMap(t *testing.T) {
 	date, _ := time.Parse("2006-01-02", "2020-05-05")
 	filter.Daily().Sales().Summary().Version10().SetReportDate(date)
 
-	qs := make(map[string]string)
+	qs := make(map[string]interface{})
 	qs["filter[reportDate]"] = "2020-05-05"
 	qs["filter[reportSubType]"] = string(ReportSubTypeSummary)
 	qs["filter[reportType]"] = string(ReportTypeSales)

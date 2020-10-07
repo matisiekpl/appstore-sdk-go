@@ -6,7 +6,7 @@ type SalesReportSale struct {
 	SKU                   string `csv:"SKU" json:"sku"`
 	Developer             string `csv:"Developer" json:"developer"`
 	Title                 string `csv:"Title" json:"title"`
-	Version               string `csv:"Version" json:"version"`
+	Version               string `csv:"SalesReportVersion" json:"version"`
 	ProductTypeIdentifier string `csv:"Product Type Identifier" json:"product_type_identifier"`
 	Units                 string `csv:"Units" json:"units"`
 	DeveloperProceeds     string `csv:"Developer Proceeds" json:"developer_proceeds"`

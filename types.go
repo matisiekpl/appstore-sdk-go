@@ -107,12 +107,20 @@ func (ct *CustomDate) Value() time.Time {
 }
 
 func (ct *CustomDate) UnmarshalCSV(csv string) error {
-	if csv != "" {
-		var err error
-		ct.Date, err = time.Parse(CustomDateFormatDefault, csv)
-		if err != nil {
-			return fmt.Errorf("CustomDate@UnmarshalJSON ParseTime: %v", err)
-		}
+	if csv == "" {
+		return nil
+	}
+
+	var format string
+	if strings.Contains(csv, `/`) {
+		format = CustomDateFormatSlash
+	} else {
+		format = CustomDateFormatDefault
+	}
+	var err error
+	ct.Date, err = time.Parse(format, csv)
+	if err != nil {
+		return fmt.Errorf("CustomDate@UnmarshalJSON ParseTime: %v", err)
 	}
 	return nil
 }
