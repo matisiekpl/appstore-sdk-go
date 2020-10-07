@@ -8,6 +8,9 @@
 Unofficial Golang SDK for AppStore Connect API
 
 ## API documentation
+https://developer.apple.com/documentation/appstoreconnectapi/download_finance_reports
+
+https://developer.apple.com/documentation/appstoreconnectapi/download_sales_and_trends_reports
 
 ## Download
 ```shell
