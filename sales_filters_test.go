@@ -6,26 +6,26 @@ import (
 	"time"
 )
 
-func Test_SalesReportsFilter_FillByDefault(t *testing.T) {
+func Test_SalesReports_Filter_FillByDefault(t *testing.T) {
 	filter := SalesReportsFilter{}
-	filter.Daily().Sales().Summary().Version10()
-	assert.Equal(t, ReportTypeSales, filter.ReportType)
-	assert.Equal(t, ReportSubTypeSummary, filter.ReportSubType)
-	assert.Equal(t, FrequencyDaily, filter.Frequency)
-	assert.Equal(t, Version10, filter.Version)
+	filter.Daily().TypeSales().SubTypeSummary().Version10()
+	assert.Equal(t, SalesReportTypeSales, filter.ReportType)
+	assert.Equal(t, SalesReportSubTypeSummary, filter.ReportSubType)
+	assert.Equal(t, SalesReportFrequencyDaily, filter.Frequency)
+	assert.Equal(t, SalesReportVersion10, filter.Version)
 }
 
-func Test_SalesReportsFilter_ToQueryParamsMap(t *testing.T) {
+func Test_SalesReports_Filter_ToQueryParamsMap(t *testing.T) {
 	filter := SalesReportsFilter{}
 	date, _ := time.Parse("2006-01-02", "2020-05-05")
-	filter.Daily().Sales().Summary().Version10().SetReportDate(date)
+	filter.Daily().TypeSales().SubTypeSummary().Version10().SetReportDate(date)
 
 	qs := make(map[string]interface{})
 	qs["filter[reportDate]"] = "2020-05-05"
-	qs["filter[reportSubType]"] = string(ReportSubTypeSummary)
-	qs["filter[reportType]"] = string(ReportTypeSales)
-	qs["filter[frequency]"] = string(FrequencyDaily)
-	qs["filter[version]"] = string(Version10)
+	qs["filter[reportSubType]"] = string(SalesReportSubTypeSummary)
+	qs["filter[reportType]"] = string(SalesReportTypeSales)
+	qs["filter[frequency]"] = string(SalesReportFrequencyDaily)
+	qs["filter[version]"] = string(SalesReportVersion10)
 	qs["filter[vendorNumber]"] = ""
 	assert.Equal(t, qs, filter.ToQueryParamsMap())
 }

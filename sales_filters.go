@@ -8,30 +8,30 @@ type SalesReportFrequency string
 type SalesReportVersion string
 
 const (
-	FrequencyDaily   SalesReportFrequency = "DAILY"
-	FrequencyWeekly  SalesReportFrequency = "WEEKLY"
-	FrequencyMonthly SalesReportFrequency = "MONTHLY"
-	FrequencyYearly  SalesReportFrequency = "YEARLY"
+	SalesReportFrequencyDaily   SalesReportFrequency = "DAILY"
+	SalesReportFrequencyWeekly  SalesReportFrequency = "WEEKLY"
+	SalesReportFrequencyMonthly SalesReportFrequency = "MONTHLY"
+	SalesReportFrequencyYearly  SalesReportFrequency = "YEARLY"
 )
 
 const (
-	ReportTypeSales             SalesReportType = "SALES"
-	ReportTypePreorder          SalesReportType = "PRE_ORDER"
-	ReportTypeNewsStand         SalesReportType = "NEWSSTAND"
-	ReportTypeSubscription      SalesReportType = "SUBSCRIPTION"
-	ReportTypeSubscriptionEvent SalesReportType = "SUBSCRIPTION_EVENT"
-	ReportTypeSubscriber        SalesReportType = "SUBSCRIBER"
+	SalesReportTypeSales             SalesReportType = "SALES"
+	SalesReportTypePreorder          SalesReportType = "PRE_ORDER"
+	SalesReportTypeNewsStand         SalesReportType = "NEWSSTAND"
+	SalesReportTypeSubscription      SalesReportType = "SUBSCRIPTION"
+	SalesReportTypeSubscriptionEvent SalesReportType = "SUBSCRIPTION_EVENT"
+	SalesReportTypeSubscriber        SalesReportType = "SUBSCRIBER"
 )
 
 const (
-	ReportSubTypeSummary  SalesReportSubType = "SUMMARY"
-	ReportSubTypeDetailed SalesReportSubType = "DETAILED"
-	ReportSubTypeOptIn    SalesReportSubType = "OPT_IN"
+	SalesReportSubTypeSummary  SalesReportSubType = "SUMMARY"
+	SalesReportSubTypeDetailed SalesReportSubType = "DETAILED"
+	SalesReportSubTypeOptIn    SalesReportSubType = "OPT_IN"
 )
 
 const (
-	Version10 SalesReportVersion = "1_0"
-	Version12 SalesReportVersion = "1_2"
+	SalesReportVersion10 SalesReportVersion = "1_0"
+	SalesReportVersion12 SalesReportVersion = "1_2"
 )
 
 type SalesReportsFilter struct {
@@ -53,16 +53,16 @@ func (f *SalesReportsFilter) SetReportSubType(value SalesReportSubType) *SalesRe
 	return f
 }
 
-func (f *SalesReportsFilter) Detailed() *SalesReportsFilter {
-	return f.SetReportSubType(ReportSubTypeDetailed)
+func (f *SalesReportsFilter) SubTypeDetailed() *SalesReportsFilter {
+	return f.SetReportSubType(SalesReportSubTypeDetailed)
 }
 
-func (f *SalesReportsFilter) OptIn() *SalesReportsFilter {
-	return f.SetReportSubType(ReportSubTypeOptIn)
+func (f *SalesReportsFilter) SubTypeOptIn() *SalesReportsFilter {
+	return f.SetReportSubType(SalesReportSubTypeOptIn)
 }
 
-func (f *SalesReportsFilter) Summary() *SalesReportsFilter {
-	return f.SetReportSubType(ReportSubTypeSummary)
+func (f *SalesReportsFilter) SubTypeSummary() *SalesReportsFilter {
+	return f.SetReportSubType(SalesReportSubTypeSummary)
 }
 
 func (f *SalesReportsFilter) SetReportType(value SalesReportType) *SalesReportsFilter {
@@ -70,28 +70,28 @@ func (f *SalesReportsFilter) SetReportType(value SalesReportType) *SalesReportsF
 	return f
 }
 
-func (f *SalesReportsFilter) Sales() *SalesReportsFilter {
-	return f.SetReportType(ReportTypeSales)
+func (f *SalesReportsFilter) TypeSales() *SalesReportsFilter {
+	return f.SetReportType(SalesReportTypeSales)
 }
 
-func (f *SalesReportsFilter) PreOrder() *SalesReportsFilter {
-	return f.SetReportType(ReportTypePreorder)
+func (f *SalesReportsFilter) TypePreOrder() *SalesReportsFilter {
+	return f.SetReportType(SalesReportTypePreorder)
 }
 
-func (f *SalesReportsFilter) NewsStand() *SalesReportsFilter {
-	return f.SetReportType(ReportTypeNewsStand)
+func (f *SalesReportsFilter) TypeNewsStand() *SalesReportsFilter {
+	return f.SetReportType(SalesReportTypeNewsStand)
 }
 
-func (f *SalesReportsFilter) Subscription() *SalesReportsFilter {
-	return f.SetReportType(ReportTypeSubscription)
+func (f *SalesReportsFilter) TypeSubscription() *SalesReportsFilter {
+	return f.SetReportType(SalesReportTypeSubscription)
 }
 
-func (f *SalesReportsFilter) SubscriptionEvent() *SalesReportsFilter {
-	return f.SetReportType(ReportTypeSubscriptionEvent)
+func (f *SalesReportsFilter) TypeSubscriptionEvent() *SalesReportsFilter {
+	return f.SetReportType(SalesReportTypeSubscriptionEvent)
 }
 
-func (f *SalesReportsFilter) Subscriber() *SalesReportsFilter {
-	return f.SetReportType(ReportTypeSubscriber)
+func (f *SalesReportsFilter) TypeSubscriber() *SalesReportsFilter {
+	return f.SetReportType(SalesReportTypeSubscriber)
 }
 
 func (f *SalesReportsFilter) SetFrequency(value SalesReportFrequency) *SalesReportsFilter {
@@ -100,19 +100,19 @@ func (f *SalesReportsFilter) SetFrequency(value SalesReportFrequency) *SalesRepo
 }
 
 func (f *SalesReportsFilter) Daily() *SalesReportsFilter {
-	return f.SetFrequency(FrequencyDaily)
+	return f.SetFrequency(SalesReportFrequencyDaily)
 }
 
 func (f *SalesReportsFilter) Weekly() *SalesReportsFilter {
-	return f.SetFrequency(FrequencyWeekly)
+	return f.SetFrequency(SalesReportFrequencyWeekly)
 }
 
 func (f *SalesReportsFilter) Monthly() *SalesReportsFilter {
-	return f.SetFrequency(FrequencyMonthly)
+	return f.SetFrequency(SalesReportFrequencyMonthly)
 }
 
 func (f *SalesReportsFilter) Yearly() *SalesReportsFilter {
-	return f.SetFrequency(FrequencyYearly)
+	return f.SetFrequency(SalesReportFrequencyYearly)
 }
 
 func (f *SalesReportsFilter) SetVersion(value SalesReportVersion) *SalesReportsFilter {
@@ -121,11 +121,11 @@ func (f *SalesReportsFilter) SetVersion(value SalesReportVersion) *SalesReportsF
 }
 
 func (f *SalesReportsFilter) Version12() *SalesReportsFilter {
-	return f.SetVersion(Version12)
+	return f.SetVersion(SalesReportVersion12)
 }
 
 func (f *SalesReportsFilter) Version10() *SalesReportsFilter {
-	return f.SetVersion(Version10)
+	return f.SetVersion(SalesReportVersion10)
 }
 
 func (f *SalesReportsFilter) ToQueryParamsMap() map[string]interface{} {

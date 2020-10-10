@@ -7,6 +7,7 @@ import (
 
 func Test_Client_NewClientFromConfig(t *testing.T) {
 	config := BuildStubConfig()
-	result := NewClientFromConfig(config, nil)
+	token := BuildStubAuthToken()
+	result := NewClientFromConfig(config, token, nil)
 	assert.NotEmpty(t, result)
 }

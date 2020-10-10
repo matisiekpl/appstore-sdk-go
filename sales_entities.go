@@ -36,6 +36,7 @@ type SalesReportSubscription struct {
 	AppAppleID                                     CustomInteger `csv:"App Apple ID" json:"app_apple_id"`
 	SubscriptionName                               string        `csv:"Subscription Name" json:"subscription_name"`
 	SubscriptionAppleID                            CustomInteger `csv:"Subscription Apple ID" json:"subscription_apple_id"`
+	SubscriptionGroupID                            CustomInteger `csv:"Subscription Group ID" json:"subscription_group_id"`
 	StandardSubscriptionDuration                   string        `csv:"Standard Subscription Duration" json:"standard_subscription_duration"`
 	PromotionalOfferName                           string        `csv:"Promotional Offer Name" json:"promotional_offer_name"`
 	PromotionalOfferID                             string        `csv:"Promotional Offer ID" json:"promotional_offer_id"`
@@ -56,9 +57,9 @@ type SalesReportSubscription struct {
 	FreeTrialPromotionalOfferSubscriptions         CustomInteger `csv:"Free Trial Promotional Offer Subscriptions" json:"free_trial_promotional_offer_subscriptions"`
 	PayUpFrontPromotionalOfferSubscriptions        CustomInteger `csv:"Pay Up Front Promotional Offer Subscriptions" json:"pay_up_front_promotional_offer_subscriptions"`
 	PayAsYouGoPromotionalOfferSubscriptions        CustomInteger `csv:"Pay As You Go Promotional Offer Subscriptions" json:"pay_as_you_go_promotional_offer_subscriptions"`
-	MarketingOptIns                                string        `csv:"Marketing Opt-Ins" json:"marketing_opt_ins"`
+	MarketingOptIns                                CustomInteger `csv:"Marketing Opt-Ins" json:"marketing_opt_ins"`
 	BillingRetry                                   CustomInteger `csv:"Billing Retry" json:"billing_retry"`
-	GracePeriod                                    string        `csv:"Grace Period" json:"grace_period"`
+	GracePeriod                                    CustomInteger `csv:"Grace Period" json:"grace_period"`
 }
 
 type SalesReportSubscriptionEvent struct {
@@ -79,7 +80,7 @@ type SalesReportSubscriptionEvent struct {
 	PreservedPricing             string        `csv:"Preserved Pricing" json:"preserved_pricing"`
 	ProceedsReason               string        `csv:"Proceeds Reason" json:"proceeds_reason"`
 	ConsecutivePaidPeriods       CustomInteger `csv:"Consecutive Paid Periods" json:"consecutive_paid_periods"`
-	OriginalStartDate            string        `csv:"Original Start Date" json:"original_start_date"`
+	OriginalStartDate            CustomDate    `csv:"Original Start Date" json:"original_start_date"`
 	Client                       string        `csv:"Client" json:"client"`
 	Device                       string        `csv:"Device" json:"device"`
 	State                        string        `csv:"State" json:"state"`

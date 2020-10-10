@@ -1,0 +1,50 @@
+App Name	App Apple ID	Subscription Name	Subscription Apple ID	Subscription Group ID	Standard Subscription Duration	Promotional Offer Name	Promotional Offer ID	Customer Price	Customer Currency	Developer Proceeds	Proceeds Currency	Preserved Pricing	Proceeds Reason	Client	Device	State	Country	Active Standard Price Subscriptions	Active Free Trial Introductory Offer Subscriptions	Active Pay Up Front Introductory Offer Subscriptions	Active Pay As You Go Introductory Offer Subscriptions	Free Trial Promotional Offer Subscriptions	Pay Up Front Promotional Offer Subscriptions	Pay As You Go Promotional Offer Subscriptions	Marketing Opt-Ins	Billing Retry	Grace Period
+FooBarApp	1234567890	foo.bar.baz	1234567890	1234567890	1 Year	 	 	2950.00	RUB	2065.00	RUB      				iPhone	 	RU	20	0	0	0	0	0	0	0	0	0
+FooBarApp	1234567891	foo.bar.baz	1234567891	1234567891	1 Month	 	 	10.49	USD	6.12	USD				iPhone	 	BY	1	0	0	0	0	0	0	0	0	0
+FooBarApp	1234567892	foo.bar.baz	1234567892	1234567892	1 Month	 	 	14.49	USD	10.15	USD				iPhone	 	UA	0	0	0	0	0	0	0	0	1	0
+FooBarApp	1234567893	foo.bar.baz	1234567893	1234567893	1 Month	 	 	4700.00	NGN	3290.00	NGN				iPhone	Lagos	NG	0	0	0	0	0	0	0	0	1	0
+FooBarApp	1234567894	foo.bar.baz	1234567894	1234567894	1 Month	 	 	1790.00	KZT	1253.00	KZT	Yes			iPhone	AAO	KZ	1	0	0	0	0	0	0	0	0	0
+FooBarApp	1234567895	foo.bar.baz	1234567895	1234567895	1 Month	 	 	2990.00	KZT	2093.00	KZT				iPhone	AAO	KZ	0	0	0	0	0	0	0	0	5	0
+FooBarApp	1234567896	foo.bar.baz	1234567896	1234567896	1 Year	 	 	16990.00	KZT	11893.00	KZT				iPhone	AQM	KZ	1	0	0	0	0	0	0	0	0	0
+FooBarApp	1234567897	foo.bar.baz	1234567897	1234567897	1 Year	 	 	11990.00	KZT	8393.00	KZT				iPhone	AQM	KZ	4	0	0	0	0	0	0	0	0	0
+FooBarApp	1234567898	foo.bar.baz	1234567898	1234567898	7 Days	 	 	599.00	RUB	419.30	RUB				iPhone	 	RU	160	0	0	0	0	0	0	0	20	0
+FooBarApp	1234567899	foo.bar.baz	1234567899	1234567899	7 Days	 	 	104.99	ZAR	63.91	ZAR				iPhone	 	ZA	0	0	0	0	0	0	0	0	1	0
+FooBarApp	1234567900	foo.bar.baz	1234567900	1234567900	1 Month	 	 	229.99	ZAR	139.99	ZAR				iPhone	 	ZA	1	0	0	0	0	0	0	0	0	0
+FooBarApp	1234567901	foo.bar.baz	1234567901	1234567901	7 Days	 	 	9.99	USD	7.00	USD				iPhone	 	UA	7	0	0	0	0	0	0	0	1	0
+FooBarApp	1234567902	foo.bar.baz	1234567902	1234567902	1 Month	 	 	2990.00	KZT	2093.00	KZT				iPhone	AQM	KZ	9	0	0	0	0	0	0	0	2	0
+FooBarApp	1234567903	foo.bar.baz	1234567903	1234567903	1 Year	 	 	1450.00	RUB	1015.00	RUB				iPhone	 	RU	0	0	0	0	0	0	0	0	1	0
+FooBarApp	1234567904	foo.bar.baz	1234567904	1234567904	1 Year	 	 	11990.00	KZT	8393.00	KZT				iPhone	MAN	KZ	1	0	0	0	0	0	0	0	0	0
+FooBarApp	1234567905	foo.bar.baz	1234567905	1234567905	1 Month	 	 	2990.00	KZT	2093.00	KZT				iPhone	OQA	KZ	1	0	0	0	0	0	0	0	0	0
+FooBarApp	1234567906	foo.bar.baz	1234567906	1234567906	1 Year	 	 	11990.00	KZT	8393.00	KZT				iPhone	AAO	KZ	3	0	0	0	0	0	0	0	0	0
+FooBarApp	1234567907	foo.bar.baz	1234567907	1234567907	1 Year	 	 	11990.00	KZT	8393.00	KZT				iPhone	AAO	KZ	10	0	0	0	0	0	0	0	0	0
+FooBarApp	1234567908	foo.bar.baz	1234567908	1234567908	1 Month	 	 	4.49	USD	3.15	USD	Yes			iPhone	 	UA	1	0	0	0	0	0	0	0	0	0
+FooBarApp	1234567909	foo.bar.baz	1234567909	1234567909	7 Days	 	 	179.00	THB	125.30	THB				iPhone	Chonburi	TH	1	0	0	0	0	0	0	0	0	0
+FooBarApp	1234567910	foo.bar.baz	1234567910	1234567910	1 Year	 	 	11990.00	KZT	8393.00	KZT				iPhone	AQM	KZ	2	0	0	0	0	0	0	0	0	0
+FooBarApp	1234567911	foo.bar.baz	1234567911	1234567911	7 Days	 	 	0.00	KZT	0.00	KZT				iPhone	QYZ	KZ	0	0	0	0	0	0	0	0	1	0
+FooBarApp	1234567912	foo.bar.baz	1234567912	1234567912	1 Month	 	 	4.49	USD	3.15	USD				iPad	 	AZ	1	0	0	0	0	0	0	0	0	0
+FooBarApp	1234567913	foo.bar.baz	1234567913	1234567913	1 Month	 	 	2990.00	KZT	2093.00	KZT				iPhone	AAO	KZ	20	0	0	0	0	0	0	0	6	0
+FooBarApp	1234567914	foo.bar.baz	1234567914	1234567914	7 Days	 	 	1150.00	KZT	805.00	KZT				iPhone	AQM	KZ	1	0	0	0	0	0	0	0	0	0
+FooBarApp	1234567915	foo.bar.baz	1234567915	1234567915	7 Days	 	 	299.00	RUB	209.30	RUB				iPhone	 	RU	0	0	0	0	0	0	0	0	52	0
+FooBarApp	1234567916	foo.bar.baz	1234567916	1234567916	7 Days	 	 	5.99	GBP	3.47	GBP				iPhone	 	GB	1	0	0	0	0	0	0	0	0	0
+FooBarApp	1234567917	foo.bar.baz	1234567917	1234567917	7 Days	 	 	299.00	RUB	209.30	RUB				iPad	 	RU	0	0	0	0	0	0	0	0	1	0
+FooBarApp	1234567918	foo.bar.baz	1234567918	1234567918	1 Month	 	 	2990.00	KZT	2093.00	KZT				iPhone	PAV	KZ	1	0	0	0	0	0	0	0	0	0
+FooBarApp	1234567919	foo.bar.baz	1234567919	1234567919	7 Days	 	 	2200.00	NGN	1540.00	NGN				iPhone	Lagos	NG	0	0	0	0	0	0	0	0	1	0
+FooBarApp	1234567920	foo.bar.baz	1234567920	1234567920	7 Days	 	 	5.99	USD	4.20	USD				iPhone	MO	US	0	0	0	0	0	0	0	0	1	0
+FooBarApp	1234567921	foo.bar.baz	1234567921	1234567921	7 Days	 	 	4.99	USD	3.50	USD				iPhone	 	UA	0	0	0	2	0	0	0	0	3	0
+FooBarApp	1234567922	foo.bar.baz	1234567922	1234567922	7 Days	 	 	5.99	USD	4.20	USD				iPhone	AH	KW	1	0	0	0	0	0	0	0	0	0
+FooBarApp	1234567923	foo.bar.baz	1234567923	1234567923	7 Days	 	 	1150.00	KZT	805.00	KZT				iPhone	AAO	KZ	5	0	0	0	0	0	0	0	0	0
+FooBarApp	1234567924	foo.bar.baz	1234567924	1234567924	1 Year	 	 	8490.00	KZT	5943.00	KZT				iPhone	AQM	KZ	2	0	0	0	0	0	0	0	0	0
+FooBarApp	1234567925	foo.bar.baz	1234567925	1234567925	7 Days	 	 	4.49	USD	3.15	USD				iPhone	 	UA	22	0	0	0	0	0	0	0	11	0
+FooBarApp	1234567926	foo.bar.baz	1234567926	1234567926	1 Month	 	 	12.99	USD	9.10	USD				iPhone	CA	US	2	0	0	0	0	0	0	0	0	0
+FooBarApp	1234567927	foo.bar.baz	1234567927	1234567927	1 Year	 	 	11990.00	KZT	8393.00	KZT				iPhone	ATY	KZ	1	0	0	0	0	0	0	0	0	0
+FooBarApp	1234567928	foo.bar.baz	1234567928	1234567928	1 Month	 	 	4.49	USD	2.73	USD				iPhone	 	UZ	1	0	0	0	0	0	0	0	0	0
+FooBarApp	1234567929	foo.bar.baz	1234567929	1234567929	7 Days	 	 	9.99	USD	7.00	USD				iPhone	NJ	US	1	0	0	0	0	0	0	0	0	0
+FooBarApp	1234567930	foo.bar.baz	1234567930	1234567930	7 Days	 	 	4.49	USD	2.62	USD				iPhone	 	BY	1	0	0	0	0	0	0	0	0	0
+FooBarApp	1234567931	foo.bar.baz	1234567931	1234567931	7 Days	 	 	5.99	USD	4.20	USD				iPhone	TX	US	0	0	0	0	0	0	0	0	1	0
+FooBarApp	1234567932	foo.bar.baz	1234567932	1234567932	7 Days	 	 	6.49	EUR	3.75	EUR				iPhone	AL	ES	1	0	0	0	0	0	0	0	0	0
+FooBarApp	1234567933	foo.bar.baz	1234567933	1234567933	7 Days	 	 	1150.00	KZT	805.00	KZT				iPhone	AAO	KZ	2	0	0	0	0	0	0	0	0	0
+FooBarApp	1234567934	foo.bar.baz	1234567934	1234567934	1 Year	 	 	1750.00	PHP	1225.00	PHP				iPhone	MNL	PH	1	0	0	0	0	0	0	0	0	0
+FooBarApp	1234567935	foo.bar.baz	1234567935	1234567935	7 Days	 	 	9.99	AUD	6.36	AUD				iPhone	QLD	AU	0	0	0	0	0	0	0	0	1	0
+FooBarApp	1234567936	foo.bar.baz	1234567936	1234567936	7 Days	 	 	4.99	EUR	2.89	EUR				iPhone	B	ES	0	0	0	0	0	0	0	0	1	0
+FooBarApp	1234567937	foo.bar.baz	1234567937	1234567937	1 Year	 	 	0.00	RUB	0.00	RUB				iPhone	 	RU	3	0	0	0	0	0	0	0	0	0
+FooBarApp	1234567938	foo.bar.baz	1234567938	1234567938	1 Month	 	 	2990.00	KZT	2093.00	KZT				iPhone	ZHA	KZ	0	0	0	0	0	0	0	0	1	0

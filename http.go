@@ -61,11 +61,11 @@ func (rb *RequestBuilder) buildHeaders() http.Header {
 	return headers
 }
 
-func NewHttpTransport(config *Config, h *http.Client) *Transport {
+func NewHttpTransport(config *Config, token *AuthToken, h *http.Client) *Transport {
 	if h == nil {
-		h = &http.Client{}
+		h = NewDefaultHttpClient()
 	}
-	rb := &RequestBuilder{cfg: config}
+	rb := &RequestBuilder{cfg: config, token: token}
 	return &Transport{http: h, rb: rb}
 }
 
@@ -114,9 +114,9 @@ func (r *Response) GetRawResponse() *http.Response {
 	return r.raw
 }
 
-func (r *Response) GetRawBody() string {
-	body, _ := r.ReadBody()
-	return string(body)
+func (r *Response) GetRawBody() (string, error) {
+	data, err := r.ReadBody()
+	return string(data), err
 }
 
 func (r *Response) UnmarshalCSV(v interface{}) error {

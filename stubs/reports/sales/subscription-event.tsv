@@ -1,0 +1,50 @@
+Event Date	Event	App Name	App Apple ID	Subscription Name	Subscription Apple ID	Subscription Group ID	Standard Subscription Duration	Promotional Offer Name	Promotional Offer ID	Subscription Offer Type	Subscription Offer Duration	Marketing Opt-In	Marketing Opt-In Duration	Preserved Pricing	Proceeds Reason	Consecutive Paid Periods	Original Start Date	Client	Device	State	Country	Previous Subscription Name	Previous Subscription Apple ID	Days Before Canceling	Cancellation Reason	Days Canceled	Quantity
+2020-10-06	Renew	AppFooBar	1234567890	foo.bar.baz	1234567890	1234567890	7 Days	 	 				 			11	2020-07-25		iPhone	 	RU		 	 	 	 	1
+2020-10-05	Start Introductory Offer	AppFooBar	1234567891	foo.bar.baz	1234567891	1234567891	7 Days	 	 	Pay as you go	2 Weeks		 			0	2020-10-05		iPhone	 	RU		 	 	 	 	42
+2020-10-05	Renew	AppFooBar	1234567892	foo.bar.baz	1234567892	1234567892	7 Days	 	 				 			10	2020-07-30		iPhone	 	RU		 	 	 	 	1
+2020-10-05	Renew	AppFooBar	1234567893	foo.bar.baz	1234567893	1234567893	7 Days	 	 				 			5	2020-07-29		iPhone	 	UA		 	 	 	 	1
+2020-10-04	Canceled from Billing Retry	AppFooBar	1234567894	foo.bar.baz	1234567894	1234567894	7 Days	 	 	Free Trial	3 Days		 			0	2020-08-01		iPhone	 	UA		 	 	Billing issue	 	2
+2020-10-06	Renew	AppFooBar	1234567895	foo.bar.baz	1234567895	1234567895	7 Days	 	 				 			2	2020-09-26		iPhone	 	RU		 	 	 	 	1
+2020-10-05	Subscribe	AppFooBar	1234567896	foo.bar.baz	1234567896	1234567896	1 Year	 	 				 			1	2020-10-05		iPhone	 	RU		 	 	 	 	2
+2020-10-04	Billing Retry from Paid Subscription	AppFooBar	1234567897	foo.bar.baz	1234567897	1234567897	7 Days	 	 	Pay as you go	2 Weeks		 			3	2020-08-24		iPhone	 	RU		 	 	 	 	1
+2020-10-05	Renew	AppFooBar	1234567898	foo.bar.baz	1234567898	1234567898	7 Days	 	 				 			27	2020-03-29		iPhone	ATY	KZ		 	 	 	 	1
+2020-10-05	Billing Retry from Introductory Offer	AppFooBar	1234567899	foo.bar.baz	1234567899	1234567899	7 Days	 	 	Pay as you go	2 Weeks		 			0	2020-09-21		iPhone	 	RU		 	 	 	 	1
+2020-10-06	Renew	AppFooBar	1234567900	foo.bar.baz	1234567900	1234567900	7 Days	 	 				 			14	2020-06-29		iPhone	 	RU		 	 	 	 	1
+2020-10-05	Billing Retry from Introductory Offer	AppFooBar	1234567901	foo.bar.baz	1234567901	1234567901	7 Days	 	 	Pay as you go	2 Weeks		 			0	2020-09-28		iPhone	 	RU		 	 	 	 	3
+2020-10-05	Canceled from Billing Retry	AppFooBar	1234567902	foo.bar.baz	1234567902	1234567902	7 Days	 	 	Free Trial	3 Days		 			0	2020-08-02		iPhone	 	UA		 	 	Billing issue	 	3
+2020-10-05	Renew	AppFooBar	1234567903	foo.bar.baz	1234567903	1234567903	7 Days	 	 				 			13	2020-07-10		iPhone	 	RU		 	 	 	 	2
+2020-10-05	Cancel	AppFooBar	1234567904	foo.bar.baz	1234567904	1234567904	7 Days	 	 				 			1	2020-09-24		iPhone	 	RU		 	 	Billing issue	 	1
+2020-10-05	Canceled from Billing Retry	AppFooBar	1234567905	foo.bar.baz	1234567905	1234567905	7 Days	 	 	Free Trial	3 Days		 			0	2020-08-02		iPhone	AQT	KZ		 	 	Billing issue	 	1
+2020-10-05	Billing Retry from Paid Subscription	AppFooBar	1234567906	foo.bar.baz	1234567906	1234567906	7 Days	 	 				 			14	2020-06-17		iPhone	 	NZ		 	 	 	 	1
+2020-10-05	Billing Retry from Paid Subscription	AppFooBar	1234567907	foo.bar.baz	1234567907	1234567907	1 Month	 	 				 			3	2020-07-02		iPhone	Lagos	NG		 	 	 	 	1
+2020-10-05	Cancel	AppFooBar	1234567908	foo.bar.baz	1234567908	1234567908	7 Days	 	 	Pay as you go	2 Weeks		 			0	2020-09-21		iPhone	AAO	KZ		 	9	Canceled	 	1
+2020-10-05	Cancel	AppFooBar	1234567909	foo.bar.baz	1234567909	1234567909	7 Days	 	 	Pay as you go	2 Weeks		 			0	2020-09-28		iPhone	 	RU		 	0	Canceled	 	6
+2020-10-05	Renew	AppFooBar	1234567910	foo.bar.baz	1234567910	1234567910	7 Days	 	 				 	Yes		37	2020-01-24		iPhone	 	RU		 	 	 	 	1
+2020-10-05	Renew	AppFooBar	1234567911	foo.bar.baz	1234567911	1234567911	7 Days	 	 				 			14	2020-07-03		iPhone	 	RU		 	 	 	 	1
+2020-10-05	Renew	AppFooBar	1234567912	foo.bar.baz	1234567912	1234567912	7 Days	 	 				 			17	2020-06-12		iPhone	 	RU		 	 	 	 	1
+2020-10-05	Renew	AppFooBar	1234567913	foo.bar.baz	1234567913	1234567913	7 Days	 	 				 			2	2020-08-07		iPhone	 	RU		 	 	 	 	1
+2020-10-05	Renew	AppFooBar	1234567914	foo.bar.baz	1234567914	1234567914	7 Days	 	 				 			8	2020-07-19		iPhone	 	RU		 	 	 	 	1
+2020-10-05	Renew	AppFooBar	1234567915	foo.bar.baz	1234567915	1234567915	7 Days	 	 				 			22	2020-05-01		iPhone	 	RU		 	 	 	 	1
+2020-10-05	Renew	AppFooBar	1234567916	foo.bar.baz	1234567916	1234567916	7 Days	 	 				 			11	2020-07-24		iPhone	 	RU		 	 	 	 	1
+2020-10-05	Cancel	AppFooBar	1234567917	foo.bar.baz	1234567917	1234567917	7 Days	 	 	Pay as you go	2 Weeks		 			0	2020-09-28		iPhone	 	RU		 	5	Canceled	 	1
+2020-10-05	Renew	AppFooBar	1234567918	foo.bar.baz	1234567918	1234567918	7 Days	 	 				 	Yes		28	2020-03-27		iPhone	 	RU		 	 	 	 	1
+2020-10-05	Start Introductory Offer	AppFooBar	1234567919	foo.bar.baz	1234567919	1234567919	7 Days	 	 				 			0	2020-10-05		iPhone	 	RU		 	 	 	 	3
+2020-10-06	Renew	AppFooBar	1234567920	foo.bar.baz	1234567920	1234567920	7 Days	 	 				 			12	2020-07-15		iPhone	 	RU		 	 	 	 	1
+2020-10-06	Renew	AppFooBar	1234567921	foo.bar.baz	1234567921	1234567921	7 Days	 	 				 			22	2020-05-05		iPhone	 	RU		 	 	 	 	1
+2020-10-04	Start Introductory Offer	AppFooBar	1234567922	foo.bar.baz	1234567922	1234567922	7 Days	 	 	Pay as you go	2 Weeks		 			0	2020-10-04		iPhone	 	RU		 	 	 	 	1
+2020-10-04	Billing Retry from Paid Subscription	AppFooBar	1234567923	foo.bar.baz	1234567923	1234567923	7 Days	 	 				 			5	2020-07-10		iPhone	 	RU		 	 	 	 	1
+2020-10-05	Renew	AppFooBar	1234567924	foo.bar.baz	1234567924	1234567924	7 Days	 	 	Pay as you go	2 Weeks		 			5	2020-08-24		iPhone	 	RU		 	 	 	 	1
+2020-10-06	Renew	AppFooBar	1234567925	foo.bar.baz	1234567925	1234567925	7 Days	 	 				 	Yes		27	2020-04-03		iPhone	 	RU		 	 	 	 	1
+2020-10-05	Cancel	AppFooBar	1234567926	foo.bar.baz	1234567926	1234567926	7 Days	 	 	Pay as you go	2 Weeks		 			0	2020-09-28		iPhone	 	RU		 	1	Canceled	 	3
+2020-10-05	Renew	AppFooBar	1234567927	foo.bar.baz	1234567927	1234567927	7 Days	 	 	Pay as you go	2 Weeks		 			3	2020-09-06		iPhone	 	RU		 	 	 	 	1
+2020-10-05	Cancel	AppFooBar	1234567928	foo.bar.baz	1234567928	1234567928	7 Days	 	 				 			6	2020-08-24		iPhone	 	RU		 	 	Billing issue	 	1
+2020-10-05	Renew	AppFooBar	1234567929	foo.bar.baz	1234567929	1234567929	7 Days	 	 				 			8	2020-04-18		iPhone	 	RU		 	 	 	 	1
+2020-10-05	Upgrade	AppFooBar	1234567930	foo.bar.baz	1234567930	1234567930	1 Month	 	 	Pay as you go	2 Weeks		 			3	2020-09-14		iPhone	 	RU	mentor.promo.week	1526299572	 	 	 	1
+2020-10-05	Billing Retry from Paid Subscription	AppFooBar	1234567931	foo.bar.baz	1234567931	1234567931	7 Days	 	 				 	Yes		19	2020-03-24		iPhone	 	RU		 	 	 	 	1
+2020-10-05	Renewal from Billing Retry	AppFooBar	1234567932	foo.bar.baz	1234567932	1234567932	7 Days	 	 	Pay as you go	2 Weeks		 			1	2020-09-20		iPhone	 	RU		 	 	 	 	1
+2020-10-05	Cancel	AppFooBar	1234567933	foo.bar.baz	1234567933	1234567933	7 Days	 	 	Free Trial	3 Days		 			0	2020-10-02		iPhone	 	RU		 	1	Canceled	 	1
+2020-10-04	Billing Retry from Paid Subscription	AppFooBar	1234567934	foo.bar.baz	1234567934	1234567934	7 Days	 	 				 	Yes		13	2020-03-12		iPhone	 	RU		 	 	 	 	1
+2020-10-05	Canceled from Billing Retry	AppFooBar	1234567935	foo.bar.baz	1234567935	1234567935	7 Days	 	 	Free Trial	3 Days		 			0	2020-08-02		iPhone	 	RU		 	 	Billing issue	 	15
+2020-10-05	Renew	AppFooBar	1234567936	foo.bar.baz	1234567936	1234567936	7 Days	 	 				 			23	2020-05-01		iPhone	 	RU		 	 	 	 	1
+2020-10-05	Renewal from Billing Retry	AppFooBar	1234567937	foo.bar.baz	1234567937	1234567937	7 Days	 	 				 	Yes		9	2020-04-10		iPhone	 	RU		 	 	 	 	1
+2020-10-05	Renew	AppFooBar	1234567938	foo.bar.baz	1234567938	1234567938	7 Days	 	 				 			10	2020-07-31		iPhone	AQM	KZ		 	 	 	 	1
