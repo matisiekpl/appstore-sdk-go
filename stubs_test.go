@@ -7,13 +7,15 @@ import (
 	"strings"
 )
 
+const StubAuthKeyPath string = "stubs/auth/keys/AuthKeyStub_4W5TU4DR28.p8"
+
 func BuildStubConfig() *Config {
 	return &Config{
 		Uri:        "https://github.com",
 		IssuerId:   "foo",
 		KeyId:      "bar",
 		VendorNo:   "baz",
-		PrivateKey: "tmp/key.p8",
+		PrivateKey: StubAuthKeyPath,
 		Token:      NewTokenConfig(),
 	}
 }
