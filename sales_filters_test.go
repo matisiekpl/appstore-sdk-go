@@ -7,7 +7,7 @@ import (
 )
 
 func Test_SalesReports_Filter_FillByDefault(t *testing.T) {
-	filter := SalesReportsFilter{}
+	filter := &SalesReportsFilter{}
 	filter.Daily().TypeSales().SubTypeSummary().Version10()
 	assert.Equal(t, SalesReportTypeSales, filter.ReportType)
 	assert.Equal(t, SalesReportSubTypeSummary, filter.ReportSubType)
@@ -16,7 +16,7 @@ func Test_SalesReports_Filter_FillByDefault(t *testing.T) {
 }
 
 func Test_SalesReports_Filter_ToQueryParamsMap(t *testing.T) {
-	filter := SalesReportsFilter{}
+	filter := &SalesReportsFilter{}
 	date, _ := time.Parse("2006-01-02", "2020-05-05")
 	filter.Daily().TypeSales().SubTypeSummary().Version10().SetReportDate(date)
 

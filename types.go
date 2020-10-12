@@ -127,7 +127,7 @@ func (ct *CustomDate) UnmarshalCSV(csv string) error {
 
 func (ct *CustomDate) MarshalJSON() ([]byte, error) {
 	if ct.Date.IsZero() {
-		return []byte(""), nil
+		return []byte(`""`), nil
 	}
 	jsonData, err := json.Marshal(ct.Date.Format(CustomDateFormatDefault))
 	if err != nil {

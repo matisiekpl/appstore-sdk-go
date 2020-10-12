@@ -75,4 +75,5 @@ func Test_CSV_UnmarshalSalesReportSubscriber(t *testing.T) {
 	assert.Equal(t, 4.489999771118164, reports[0].CustomerPrice.Value())
 	assert.Equal(t, 3.1500000953674316, reports[0].DeveloperProceeds.Value())
 	assert.Equal(t, 1, reports[0].Units.Value())
+	assert.True(t, reports[0].PurchaseDate.Value().IsZero())
 }

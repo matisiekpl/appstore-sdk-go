@@ -76,3 +76,12 @@ func Test_Auth_TokenBuilder_BuildAuthTokenSuccess(t *testing.T) {
 	assert.True(t, token.IsValid())
 	assert.True(t, token.IsNotExpired())
 }
+
+func Test_Auth_TokenBuilder_BuildAuthTokenError(t *testing.T) {
+	cfg := BuildStubConfig()
+	cfg.PrivateKey = "stubs/auth/keys/fail.p8"
+	auth := NewTokenBuilder(cfg)
+	_, err := auth.BuildAuthToken()
+	assert.Error(t, err)
+	assert.Equal(t, "PrivateKey@DecodePem: AuthKey must be a valid .p8 PEM file", err.Error())
+}
