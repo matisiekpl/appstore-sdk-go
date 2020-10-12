@@ -1,6 +1,9 @@
 package appstore_sdk
 
-import "time"
+import (
+	"fmt"
+	"time"
+)
 
 type SalesReportType string
 type SalesReportSubType string
@@ -137,4 +140,23 @@ func (f *SalesReportsFilter) ToQueryParamsMap() map[string]interface{} {
 	qs["filter[version]"] = string(f.Version)
 	qs["filter[vendorNumber]"] = f.VendorNumber
 	return qs
+}
+
+func (f *SalesReportsFilter) IsValid() error {
+	if f.ReportDate.IsZero() {
+		return fmt.Errorf("SalesReportsFilter@IsValid: %v", "ReportDate is required")
+	}
+	if f.ReportType == "" {
+		return fmt.Errorf("SalesReportsFilter@IsValid: %v", "ReportType is required")
+	}
+	if f.ReportSubType == "" {
+		return fmt.Errorf("SalesReportsFilter@IsValid: %v", "ReportSubType is required")
+	}
+	if f.Frequency == "" {
+		return fmt.Errorf("SalesReportsFilter@IsValid: %v", "Frequency is required")
+	}
+	if f.VendorNumber == "" {
+		return fmt.Errorf("SalesReportsFilter@IsValid: %v", "VendorNumber is required")
+	}
+	return nil
 }

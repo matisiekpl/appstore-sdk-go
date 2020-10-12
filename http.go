@@ -1,10 +1,8 @@
 package appstore_sdk
 
 import (
-	"bytes"
-	"encoding/json"
+	"compress/gzip"
 	"fmt"
-	"io"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -34,22 +32,18 @@ func (rb *RequestBuilder) buildUri(path string, query map[string]interface{}) (u
 		return nil, fmt.Errorf("RequestBuilder@buildUri parse: %v", err)
 	}
 	u.Path = "/" + path
-	if query != nil {
-		q := u.Query()
-		for k, v := range query {
-			q.Set(k, fmt.Sprintf("%v", v))
-		}
-		u.RawQuery = q.Encode()
-	}
+	u.RawQuery = rb.buildQueryParams(query)
 	return u, err
 }
 
-func (rb *RequestBuilder) buildBody(data map[string]interface{}) (io.Reader, error) {
-	b, err := json.Marshal(data)
-	if err != nil {
-		return nil, fmt.Errorf("RequestBuilder@buildBody json convert: %v", err)
+func (rb *RequestBuilder) buildQueryParams(query map[string]interface{}) string {
+	q := url.Values{}
+	if query != nil {
+		for k, v := range query {
+			q.Set(k, fmt.Sprintf("%v", v))
+		}
 	}
-	return bytes.NewBuffer(b), nil
+	return q.Encode()
 }
 
 func (rb *RequestBuilder) buildHeaders() http.Header {
@@ -82,13 +76,8 @@ func (t *Transport) Request(method string, path string, query map[string]interfa
 	if err != nil {
 		return nil, fmt.Errorf("transport@request build uri: %v", err)
 	}
-	//build body
-	bodyReader, err := t.rb.buildBody(body)
-	if err != nil {
-		return nil, fmt.Errorf("transport@request build request body: %v", err)
-	}
 	//build request
-	req, err := http.NewRequest(strings.ToUpper(method), uri.String(), bodyReader)
+	req, err := http.NewRequest(strings.ToUpper(method), uri.String(), nil)
 	if err != nil {
 		return nil, fmt.Errorf("transport@request new request error: %v", err)
 	}
@@ -129,7 +118,13 @@ func (r *Response) UnmarshalCSV(v interface{}) error {
 
 func (r *Response) ReadBody() ([]byte, error) {
 	defer r.raw.Body.Close()
-	return ioutil.ReadAll(r.raw.Body)
+	if !r.IsSuccess() {
+		return ioutil.ReadAll(r.raw.Body)
+	} else {
+		zr, _ := gzip.NewReader(r.raw.Body)
+		defer zr.Close()
+		return ioutil.ReadAll(zr)
+	}
 }
 
 func NewResponse(raw *http.Response) *Response {

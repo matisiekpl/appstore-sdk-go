@@ -18,18 +18,6 @@ func Test_HTTP_RequestBuilder_BuildHeaders(t *testing.T) {
 	assert.Equal(t, "Bearer "+token.Token, headers.Get("Authorization"))
 }
 
-func Test_HTTP_RequestBuilder_BuildBody(t *testing.T) {
-	cfg := buildStubConfig()
-	builder := RequestBuilder{cfg: cfg}
-
-	data := make(map[string]interface{})
-	data["foo"] = "bar"
-	data["bar"] = "baz"
-
-	body, _ := builder.buildBody(data)
-	assert.NotEmpty(t, body)
-}
-
 func Test_HTTP_RequestBuilder_IsValidTokenSuccess(t *testing.T) {
 	cfg := buildStubConfig()
 	token := buildStubAuthToken()
@@ -148,16 +136,24 @@ func Test_HTTP_Response_GetRawResponse(t *testing.T) {
 	assert.Equal(t, http.StatusOK, raw.StatusCode)
 }
 
-func Test_HTTP_Response_GetRawBody(t *testing.T) {
+func Test_HTTP_Response_GetRawBodySuccess(t *testing.T) {
 	data, _ := loadStubResponseData("stubs/reports/sales/sales.tsv")
-	rsp := buildStubResponseFromFile(http.StatusOK, "stubs/reports/sales/sales.tsv")
-	response := &Response{raw: rsp}
+	rsp := buildStubResponseFromGzip(http.StatusOK, "stubs/reports/sales/sales.tsv")
+	response := NewResponse(rsp)
+	str, _ := response.GetRawBody()
+	assert.Equal(t, string(data), str)
+}
+
+func Test_HTTP_Response_GetRawBodyBadRequest(t *testing.T) {
+	data, _ := loadStubResponseData("stubs/reports/sales/sales.tsv")
+	rsp := buildStubResponseFromFile(http.StatusBadRequest, "stubs/reports/sales/sales.tsv")
+	response := NewResponse(rsp)
 	str, _ := response.GetRawBody()
 	assert.Equal(t, string(data), str)
 }
 
 func Test_HTTP_Response_UnmarshalCSV(t *testing.T) {
-	rsp := buildStubResponseFromFile(http.StatusOK, "stubs/reports/sales/sales.tsv")
+	rsp := buildStubResponseFromGzip(http.StatusOK, "stubs/reports/sales/sales.tsv")
 	response := &Response{raw: rsp}
 	reports := []*SalesReportSale{}
 	_ = response.UnmarshalCSV(&reports)

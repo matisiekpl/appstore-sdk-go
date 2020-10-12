@@ -2,6 +2,7 @@ package appstore_sdk
 
 import (
 	"bytes"
+	"compress/gzip"
 	"io/ioutil"
 	"net/http"
 	"strings"
@@ -36,13 +37,31 @@ func loadStubResponseData(path string) ([]byte, error) {
 	return ioutil.ReadFile(path)
 }
 
-func buildStubResponseFromString(statusCode int, json string) *http.Response {
-	body := ioutil.NopCloser(strings.NewReader(json))
+func loadStubResponseDataGzipped(path string) ([]byte, error) {
+	var buf bytes.Buffer
+	zw := gzip.NewWriter(&buf)
+	data, err := ioutil.ReadFile(path)
+	if err != nil {
+		return nil, err
+	}
+	_, err = zw.Write(data)
+	err = zw.Close()
+	return buf.Bytes(), err
+}
+
+func buildStubResponseFromString(statusCode int, str string) *http.Response {
+	body := ioutil.NopCloser(strings.NewReader(str))
 	return &http.Response{Body: body, StatusCode: statusCode}
 }
 
 func buildStubResponseFromFile(statusCode int, path string) *http.Response {
 	data, _ := loadStubResponseData(path)
+	body := ioutil.NopCloser(bytes.NewReader(data))
+	return &http.Response{Body: body, StatusCode: statusCode}
+}
+
+func buildStubResponseFromGzip(statusCode int, path string) *http.Response {
+	data, _ := loadStubResponseDataGzipped(path)
 	body := ioutil.NopCloser(bytes.NewReader(data))
 	return &http.Response{Body: body, StatusCode: statusCode}
 }

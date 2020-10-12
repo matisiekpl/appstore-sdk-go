@@ -12,7 +12,7 @@ func (r *ResourceAbstract) get(path string, query map[string]interface{}) (*Resp
 	if err != nil {
 		return nil, fmt.Errorf("ResourceAbstract@get request: %v", err)
 	}
-	return &Response{raw: rsp}, nil
+	return NewResponse(rsp), nil
 }
 
 func newResourceAbstract(transport *Transport, config *Config) *ResourceAbstract {
