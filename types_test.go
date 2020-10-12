@@ -117,7 +117,7 @@ func Test_Types_CustomTimestamp_MarshalJSONSuccess(t *testing.T) {
 func Test_Types_CustomTimestamp_MarshalJSONEmpty(t *testing.T) {
 	c := CustomTimestamp{}
 	result, err := c.MarshalJSON()
-	assert.Equal(t, []byte(``), result)
+	assert.Equal(t, []byte(`""`), result)
 	assert.Nil(t, err)
 }
 

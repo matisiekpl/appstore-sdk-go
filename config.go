@@ -8,6 +8,7 @@ const AppStoreConnectAPITokenTtl = 600
 const AppStoreConnectAPIHttpMaxIdleConnection = 10
 const AppStoreConnectAPIHttpIdleConnectionTimeout = 30 * time.Second
 
+//Common config
 type Config struct {
 	Uri        string
 	VendorNo   string
@@ -17,6 +18,7 @@ type Config struct {
 	Token      *TokenConfig
 }
 
+//Token config
 type TokenConfig struct {
 	Audience string
 	Type     string
@@ -24,6 +26,7 @@ type TokenConfig struct {
 	Ttl      int
 }
 
+//Create new config from credentials
 func NewConfig(issuerId string, keyId string, vendorNo string, pkPathOrContent string) *Config {
 	cfg := &Config{
 		Uri:        AppStoreConnectAPIProductionUri,
@@ -36,6 +39,7 @@ func NewConfig(issuerId string, keyId string, vendorNo string, pkPathOrContent s
 	return cfg
 }
 
+//Create new token config
 func NewTokenConfig() *TokenConfig {
 	cfg := &TokenConfig{
 		Type:     "JWT",
