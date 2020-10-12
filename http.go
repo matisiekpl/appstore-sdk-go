@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/gocarina/gocsv"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -104,6 +103,7 @@ func (t *Transport) Get(path string, query map[string]interface{}) (resp *http.R
 
 type Response struct {
 	raw *http.Response
+	csv *CSV
 }
 
 func (r *Response) IsSuccess() bool {
@@ -124,7 +124,7 @@ func (r *Response) UnmarshalCSV(v interface{}) error {
 	if err != nil {
 		return err
 	}
-	return gocsv.UnmarshalBytes(body, v)
+	return r.csv.Unmarshal(body, v)
 }
 
 func (r *Response) ReadBody() ([]byte, error) {
@@ -133,5 +133,5 @@ func (r *Response) ReadBody() ([]byte, error) {
 }
 
 func NewResponse(raw *http.Response) *Response {
-	return &Response{raw: raw}
+	return &Response{raw: raw, csv: &CSV{}}
 }
