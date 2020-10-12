@@ -165,6 +165,20 @@ func Test_HTTP_Response_UnmarshalCSV(t *testing.T) {
 	assert.Equal(t, 12, reports[0].Units.Value())
 }
 
+func Test_HTTP_Response_UnmarshalError(t *testing.T) {
+	rsp := buildStubResponseFromFile(http.StatusBadRequest, "stubs/errors/invalid.parameter.json")
+	response := &Response{raw: rsp}
+	var errorResult *ErrorResult
+	_ = response.UnmarshalError(&errorResult)
+	err := errorResult.GetError()
+	assert.Equal(t, "foo", err.Id)
+	assert.Equal(t, "400", err.Status)
+	assert.Equal(t, "PARAMETER_ERROR.INVALID", err.Code)
+	assert.Equal(t, "A parameter has an invalid value", err.Title)
+	assert.Equal(t, "The version parameter you have specified is invalid. The latest version for this report is 1_0.", err.Detail)
+	assert.Equal(t, "filter[version]", err.Source.Parameter)
+}
+
 func Test_HTTP_NewResponse(t *testing.T) {
 	rsp := buildStubResponseFromFile(http.StatusOK, "stubs/reports/sales/sales.tsv")
 	response := NewResponse(rsp)

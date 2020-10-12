@@ -23,14 +23,33 @@ package main
 
 import (
     "fmt"
-    "net/http"
+    "time"
     appstore_sdk "github.com/kachit/appstore-sdk-go"
 )
 
 func yourFuncName(){ 
-    cfg := appstore_sdk.NewConfig()
+    cfg := appstore_sdk.NewConfig("foo", "bar", "baz", "path/to/your/private.key")
+    client := appstore_sdk.NewClientFromConfig(cfg, nil)
+    
+    //Build auth token
+    err := client.Init()
+    fmt.Println(err)
 
-    client := appstore_sdk.NewClient(cfg, &http.Client{})
+    //Build filter
+    date, _ := time.Parse("2006-01-02", "2020-05-05")
+    filter := &appstore_sdk.SalesReportsFilter{}
+    filter.Daily().TypeSales().SubTypeSummary().Version10().SetReportDate(date)
 
-    fmt.Print(client)
+    //Get data
+    resp, err := client.SalesReports().GetReport(filter)
+    if resp.IsSuccess() {
+        reports := []*appstore_sdk.SalesReportSale{}
+        err = resp.UnmarshalCSV(&reports)
+        fmt.Println(reports[0])
+    } else {
+        var errorResult *appstore_sdk.ErrorResult
+        _ = resp.UnmarshalError(&errorResult)
+        err := errorResult.GetError()
+        fmt.Println(err)
+    }
 }

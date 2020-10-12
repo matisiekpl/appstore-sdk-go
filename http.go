@@ -2,6 +2,7 @@ package appstore_sdk
 
 import (
 	"compress/gzip"
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -114,6 +115,14 @@ func (r *Response) UnmarshalCSV(v interface{}) error {
 		return err
 	}
 	return r.csv.Unmarshal(body, v)
+}
+
+func (r *Response) UnmarshalError(v interface{}) error {
+	body, err := r.ReadBody()
+	if err != nil {
+		return err
+	}
+	return json.Unmarshal(body, v)
 }
 
 func (r *Response) ReadBody() ([]byte, error) {
