@@ -5,11 +5,12 @@ import (
 	"io/ioutil"
 	"net/http"
 	"strings"
+	"time"
 )
 
 const StubAuthKeyPath string = "stubs/auth/keys/AuthKeyStub_4W5TU4DR28.p8"
 
-func BuildStubConfig() *Config {
+func buildStubConfig() *Config {
 	return &Config{
 		Uri:        "https://github.com",
 		IssuerId:   "foo",
@@ -20,24 +21,28 @@ func BuildStubConfig() *Config {
 	}
 }
 
-func BuildStubAuthToken() *AuthToken {
+func buildStubAuthToken() *AuthToken {
 	return &AuthToken{
 		Token:     "AuthToken",
-		ExpiresAt: 100,
+		ExpiresAt: time.Now().Unix() + 1000,
 	}
 }
 
-func LoadStubResponseData(path string) ([]byte, error) {
+func buildStubHttpTransport() *Transport {
+	return NewHttpTransport(buildStubConfig(), buildStubAuthToken(), nil)
+}
+
+func loadStubResponseData(path string) ([]byte, error) {
 	return ioutil.ReadFile(path)
 }
 
-func BuildStubResponseFromString(statusCode int, json string) *http.Response {
+func buildStubResponseFromString(statusCode int, json string) *http.Response {
 	body := ioutil.NopCloser(strings.NewReader(json))
 	return &http.Response{Body: body, StatusCode: statusCode}
 }
 
-func BuildStubResponseFromFile(statusCode int, path string) *http.Response {
-	data, _ := LoadStubResponseData(path)
+func buildStubResponseFromFile(statusCode int, path string) *http.Response {
+	data, _ := loadStubResponseData(path)
 	body := ioutil.NopCloser(bytes.NewReader(data))
 	return &http.Response{Body: body, StatusCode: statusCode}
 }

@@ -38,13 +38,13 @@ func Test_Auth_AuthToken_IsValidFailEmpty(t *testing.T) {
 }
 
 func Test_Auth_NewTokenBuilder(t *testing.T) {
-	auth := NewTokenBuilder(BuildStubConfig())
+	auth := NewTokenBuilder(buildStubConfig())
 	assert.NotEmpty(t, auth)
 	assert.NotEmpty(t, auth.cfg)
 }
 
 func Test_Auth_TokenBuilder_BuildPayload(t *testing.T) {
-	cfg := BuildStubConfig()
+	cfg := buildStubConfig()
 	auth := NewTokenBuilder(cfg)
 	payload := auth.BuildPayload()
 	assert.NotEmpty(t, payload)
@@ -54,7 +54,7 @@ func Test_Auth_TokenBuilder_BuildPayload(t *testing.T) {
 }
 
 func Test_Auth_TokenBuilder_BuildJWTToken(t *testing.T) {
-	cfg := BuildStubConfig()
+	cfg := buildStubConfig()
 	auth := NewTokenBuilder(cfg)
 	payload := auth.BuildPayload()
 	jwtToken := auth.BuildJWTToken(payload)
@@ -67,7 +67,7 @@ func Test_Auth_TokenBuilder_BuildJWTToken(t *testing.T) {
 }
 
 func Test_Auth_TokenBuilder_BuildAuthTokenSuccess(t *testing.T) {
-	cfg := BuildStubConfig()
+	cfg := buildStubConfig()
 	auth := NewTokenBuilder(cfg)
 	token, _ := auth.BuildAuthToken()
 	assert.NotEmpty(t, token)
@@ -78,7 +78,7 @@ func Test_Auth_TokenBuilder_BuildAuthTokenSuccess(t *testing.T) {
 }
 
 func Test_Auth_TokenBuilder_BuildAuthTokenError(t *testing.T) {
-	cfg := BuildStubConfig()
+	cfg := buildStubConfig()
 	cfg.PrivateKey = "stubs/auth/keys/fail.p8"
 	auth := NewTokenBuilder(cfg)
 	_, err := auth.BuildAuthToken()

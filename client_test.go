@@ -6,7 +6,7 @@ import (
 )
 
 func Test_Client_NewClientFromConfig(t *testing.T) {
-	config := BuildStubConfig()
+	config := buildStubConfig()
 	result := NewClientFromConfig(config, nil)
 	assert.NotEmpty(t, result)
 	assert.NotEmpty(t, result.Cfg)
@@ -16,7 +16,7 @@ func Test_Client_NewClientFromConfig(t *testing.T) {
 }
 
 func Test_Client_InitSuccess(t *testing.T) {
-	config := BuildStubConfig()
+	config := buildStubConfig()
 	result := NewClientFromConfig(config, nil)
 	_ = result.Init()
 	assert.NotEmpty(t, result)
@@ -27,7 +27,7 @@ func Test_Client_InitSuccess(t *testing.T) {
 }
 
 func Test_Client_SalesReports(t *testing.T) {
-	config := BuildStubConfig()
+	config := buildStubConfig()
 	client := NewClientFromConfig(config, nil)
 	_ = client.Init()
 	result := client.SalesReports()
@@ -37,7 +37,7 @@ func Test_Client_SalesReports(t *testing.T) {
 }
 
 func Test_Client_FinancialReports(t *testing.T) {
-	config := BuildStubConfig()
+	config := buildStubConfig()
 	client := NewClientFromConfig(config, nil)
 	_ = client.Init()
 	result := client.FinancialReports()
@@ -47,7 +47,7 @@ func Test_Client_FinancialReports(t *testing.T) {
 }
 
 func Test_Client_InitError(t *testing.T) {
-	config := BuildStubConfig()
+	config := buildStubConfig()
 	config.PrivateKey = "stubs/auth/keys/fail.p8"
 	result := NewClientFromConfig(config, nil)
 	err := result.Init()
