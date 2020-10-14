@@ -155,8 +155,5 @@ func (f *SalesReportsFilter) IsValid() error {
 	if f.Frequency == "" {
 		return fmt.Errorf("SalesReportsFilter@IsValid: %v", "Frequency is required")
 	}
-	if f.VendorNumber == "" {
-		return fmt.Errorf("SalesReportsFilter@IsValid: %v", "VendorNumber is required")
-	}
 	return nil
 }

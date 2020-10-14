@@ -77,7 +77,7 @@ func Test_SalesReports_Filter_SetVersion(t *testing.T) {
 }
 
 func Test_SalesReports_Filter_IsValid(t *testing.T) {
-	filter := &SalesReportsFilter{VendorNumber: "foo"}
+	filter := &SalesReportsFilter{}
 	date, _ := time.Parse("2006-01-02", "2020-05-05")
 	filter.Daily().TypeSales().SubTypeSummary().Version10().SetReportDate(date)
 	err := filter.IsValid()
@@ -85,25 +85,15 @@ func Test_SalesReports_Filter_IsValid(t *testing.T) {
 }
 
 func Test_SalesReports_Filter_IsInValidReportDate(t *testing.T) {
-	filter := &SalesReportsFilter{VendorNumber: "foo"}
+	filter := &SalesReportsFilter{}
 	filter.Daily().TypeSales().SubTypeSummary().Version10()
-	filter.VendorNumber = ""
 	err := filter.IsValid()
 	assert.Error(t, err)
 	assert.Equal(t, "SalesReportsFilter@IsValid: ReportDate is required", err.Error())
 }
 
-func Test_SalesReports_Filter_IsInValidVendorNumber(t *testing.T) {
-	filter := &SalesReportsFilter{}
-	date, _ := time.Parse("2006-01-02", "2020-05-05")
-	filter.Daily().TypeSales().SubTypeSummary().Version10().SetReportDate(date)
-	err := filter.IsValid()
-	assert.Error(t, err)
-	assert.Equal(t, "SalesReportsFilter@IsValid: VendorNumber is required", err.Error())
-}
-
 func Test_SalesReports_Filter_IsInValidReportType(t *testing.T) {
-	filter := &SalesReportsFilter{VendorNumber: "foo"}
+	filter := &SalesReportsFilter{}
 	date, _ := time.Parse("2006-01-02", "2020-05-05")
 	filter.Daily().SubTypeSummary().Version10().SetReportDate(date)
 	err := filter.IsValid()
@@ -112,7 +102,7 @@ func Test_SalesReports_Filter_IsInValidReportType(t *testing.T) {
 }
 
 func Test_SalesReports_Filter_IsInValidReportSubType(t *testing.T) {
-	filter := &SalesReportsFilter{VendorNumber: "foo"}
+	filter := &SalesReportsFilter{}
 	date, _ := time.Parse("2006-01-02", "2020-05-05")
 	filter.Daily().TypeSales().Version10().SetReportDate(date)
 	err := filter.IsValid()
@@ -121,7 +111,7 @@ func Test_SalesReports_Filter_IsInValidReportSubType(t *testing.T) {
 }
 
 func Test_SalesReports_Filter_IsInValidFrequency(t *testing.T) {
-	filter := &SalesReportsFilter{VendorNumber: "foo"}
+	filter := &SalesReportsFilter{}
 	date, _ := time.Parse("2006-01-02", "2020-05-05")
 	filter.SubTypeSummary().TypeSales().Version10().SetReportDate(date)
 	err := filter.IsValid()

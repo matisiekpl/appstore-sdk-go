@@ -5,15 +5,18 @@ import (
 	"time"
 )
 
+//Authentication token
 type AuthToken struct {
 	Token     string
 	ExpiresAt int64
 }
 
+//Check token is valid
 func (t *AuthToken) IsValid() bool {
 	return t.IsNotExpired() && t.Token != ""
 }
 
+//Check token is not expired
 func (t *AuthToken) IsNotExpired() bool {
 	ts := time.Now().Unix()
 	return t.ExpiresAt > ts
