@@ -11,8 +11,8 @@ func Test_Sales_GetReport_InvalidFilter(t *testing.T) {
 	transport := NewHttpTransport(config, token, nil)
 	resource := &SalesReportsResource{ResourceAbstract: newResourceAbstract(transport, config)}
 	filter := &SalesReportsFilter{}
-	filter.Daily().TypeSales().SubTypeSummary().Version10()
+	filter.TypeSales().SubTypeSummary().Version10()
 	_, err := resource.GetReport(filter)
 	assert.Error(t, err)
-	assert.Equal(t, "SalesReportsResource@GetReport invalid filter: SalesReportsFilter@IsValid: ReportDate is required", err.Error())
+	assert.Equal(t, "SalesReportsResource@GetReport invalid filter: SalesReportsFilter@IsValid: Frequency is required", err.Error())
 }

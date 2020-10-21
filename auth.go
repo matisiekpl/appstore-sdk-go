@@ -22,15 +22,18 @@ func (t *AuthToken) IsNotExpired() bool {
 	return t.ExpiresAt > ts
 }
 
+//Token builder
 type TokenBuilder struct {
 	cfg        *Config
 	PrivateKey *PrivateKey
 }
 
+//Create new TokenBuilder from config
 func NewTokenBuilder(cfg *Config) *TokenBuilder {
 	return &TokenBuilder{cfg: cfg, PrivateKey: &PrivateKey{}}
 }
 
+//Build JWT token payload
 func (tb *TokenBuilder) BuildPayload() *jwt.StandardClaims {
 	return &jwt.StandardClaims{
 		Audience:  tb.cfg.Token.Audience,
@@ -39,6 +42,7 @@ func (tb *TokenBuilder) BuildPayload() *jwt.StandardClaims {
 	}
 }
 
+//Build JWT token
 func (tb *TokenBuilder) BuildJWTToken(payload *jwt.StandardClaims) *jwt.Token {
 	return &jwt.Token{
 		Header: map[string]interface{}{
@@ -51,6 +55,7 @@ func (tb *TokenBuilder) BuildJWTToken(payload *jwt.StandardClaims) *jwt.Token {
 	}
 }
 
+//Build Auth token
 func (tb *TokenBuilder) BuildAuthToken() (*AuthToken, error) {
 	payload := tb.BuildPayload()
 	jwtToken := tb.BuildJWTToken(payload)

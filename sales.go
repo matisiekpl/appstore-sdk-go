@@ -2,10 +2,13 @@ package appstore_sdk
 
 import "fmt"
 
+//Sales reports resource
 type SalesReportsResource struct {
 	*ResourceAbstract
 }
 
+//Get sales report by filter
+//@unmarshal SalesReportSale, SalesReportSubscription, SalesReportSubscriptionEvent, SalesReportSubscriber
 func (srr *SalesReportsResource) GetReport(filter *SalesReportsFilter) (*Response, error) {
 	filter.VendorNumber = srr.config.VendorNo
 	err := filter.IsValid()

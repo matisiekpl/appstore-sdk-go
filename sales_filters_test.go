@@ -15,6 +15,18 @@ func Test_SalesReports_Filter_FillByDefault(t *testing.T) {
 	assert.Equal(t, SalesReportVersion10, filter.Version)
 }
 
+func Test_SalesReports_Filter_ToQueryParamsMapOnlyRequired(t *testing.T) {
+	filter := &SalesReportsFilter{}
+	filter.Yearly().TypeSales().SubTypeSummary()
+
+	qs := make(map[string]interface{})
+	qs["filter[reportSubType]"] = string(SalesReportSubTypeSummary)
+	qs["filter[reportType]"] = string(SalesReportTypeSales)
+	qs["filter[frequency]"] = string(SalesReportFrequencyYearly)
+	qs["filter[vendorNumber]"] = ""
+	assert.Equal(t, qs, filter.ToQueryParamsMap())
+}
+
 func Test_SalesReports_Filter_ToQueryParamsMap(t *testing.T) {
 	filter := &SalesReportsFilter{}
 	date, _ := time.Parse("2006-01-02", "2020-05-05")
@@ -82,14 +94,6 @@ func Test_SalesReports_Filter_IsValid(t *testing.T) {
 	filter.Daily().TypeSales().SubTypeSummary().Version10().SetReportDate(date)
 	err := filter.IsValid()
 	assert.Nil(t, err)
-}
-
-func Test_SalesReports_Filter_IsInValidReportDate(t *testing.T) {
-	filter := &SalesReportsFilter{}
-	filter.Daily().TypeSales().SubTypeSummary().Version10()
-	err := filter.IsValid()
-	assert.Error(t, err)
-	assert.Equal(t, "SalesReportsFilter@IsValid: ReportDate is required", err.Error())
 }
 
 func Test_SalesReports_Filter_IsInValidReportType(t *testing.T) {

@@ -13,14 +13,17 @@ const CustomTimestampFormatDefault = "2006-01-02 15:04:05"
 const CustomDateFormatDefault = "2006-01-02"
 const CustomDateFormatSlash = "01/02/2006"
 
+//Custom integer type
 type CustomInteger struct {
 	Integer int
 }
 
+//Custom integer get value
 func (ci *CustomInteger) Value() int {
 	return ci.Integer
 }
 
+//Custom integer MarshalJSON
 func (ci *CustomInteger) MarshalJSON() ([]byte, error) {
 	jsonData, err := json.Marshal(ci.Integer)
 	if err != nil {
@@ -29,6 +32,7 @@ func (ci *CustomInteger) MarshalJSON() ([]byte, error) {
 	return jsonData, err
 }
 
+//Custom integer UnmarshalCSV
 func (ci *CustomInteger) UnmarshalCSV(csv string) error {
 	if csv != "" {
 		var err error
@@ -40,14 +44,17 @@ func (ci *CustomInteger) UnmarshalCSV(csv string) error {
 	return nil
 }
 
+//Custom float type
 type CustomFloat64 struct {
 	Float64 float64
 }
 
+//Custom float get value
 func (cf *CustomFloat64) Value() float64 {
 	return cf.Float64
 }
 
+//Custom float UnmarshalCSV
 func (cf *CustomFloat64) UnmarshalCSV(csv string) error {
 	if csv != "" {
 		var err error
@@ -59,6 +66,7 @@ func (cf *CustomFloat64) UnmarshalCSV(csv string) error {
 	return nil
 }
 
+//Custom float MarshalJSON
 func (cf *CustomFloat64) MarshalJSON() ([]byte, error) {
 	jsonData, err := json.Marshal(cf.Float64)
 	if err != nil {
@@ -67,14 +75,17 @@ func (cf *CustomFloat64) MarshalJSON() ([]byte, error) {
 	return jsonData, err
 }
 
+//Custom timestamp type
 type CustomTimestamp struct {
 	Timestamp time.Time
 }
 
+//Custom timestamp get value
 func (ct *CustomTimestamp) Value() time.Time {
 	return ct.Timestamp
 }
 
+//Custom timestamp UnmarshalCSV
 func (ct *CustomTimestamp) UnmarshalCSV(csv string) error {
 	if csv != "" {
 		var err error
@@ -86,6 +97,7 @@ func (ct *CustomTimestamp) UnmarshalCSV(csv string) error {
 	return nil
 }
 
+//Custom timestamp MarshalJSON
 func (ct *CustomTimestamp) MarshalJSON() ([]byte, error) {
 	if ct.Timestamp.IsZero() {
 		return []byte(`""`), nil
@@ -98,14 +110,17 @@ func (ct *CustomTimestamp) MarshalJSON() ([]byte, error) {
 	return jsonData, err
 }
 
+//Custom date type
 type CustomDate struct {
 	Date time.Time
 }
 
+//Custom date get value
 func (ct *CustomDate) Value() time.Time {
 	return ct.Date
 }
 
+//Custom date UnmarshalCSV
 func (ct *CustomDate) UnmarshalCSV(csv string) error {
 	if csv == "" {
 		return nil
@@ -125,6 +140,7 @@ func (ct *CustomDate) UnmarshalCSV(csv string) error {
 	return nil
 }
 
+//Custom date MarshalJSON
 func (ct *CustomDate) MarshalJSON() ([]byte, error) {
 	if ct.Date.IsZero() {
 		return []byte(`""`), nil
@@ -136,14 +152,17 @@ func (ct *CustomDate) MarshalJSON() ([]byte, error) {
 	return jsonData, err
 }
 
+//Custom boolean type
 type CustomBoolean struct {
 	Boolean bool
 }
 
+//Custom boolean get value
 func (cb *CustomBoolean) Value() bool {
 	return cb.Boolean
 }
 
+//Custom boolean UnmarshalCSV
 func (cb *CustomBoolean) UnmarshalCSV(csv string) error {
 	switch strings.ToLower(csv) {
 	case "false":
@@ -154,6 +173,7 @@ func (cb *CustomBoolean) UnmarshalCSV(csv string) error {
 	return nil
 }
 
+//Custom boolean MarshalJSON
 func (cb *CustomBoolean) MarshalJSON() ([]byte, error) {
 	jsonData, err := json.Marshal(cb.Boolean)
 	if err != nil {
