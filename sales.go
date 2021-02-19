@@ -2,12 +2,12 @@ package appstore
 
 import "fmt"
 
-//Sales reports resource
+//SalesReportsResource reports
 type SalesReportsResource struct {
 	*ResourceAbstract
 }
 
-//Get sales report by filter
+//GetReport Get sales report by filter
 //@unmarshal SalesReportSale, SalesReportSubscription, SalesReportSubscriptionEvent, SalesReportSubscriber
 func (srr *SalesReportsResource) GetReport(filter *SalesReportsFilter) (*Response, error) {
 	filter.VendorNumber = srr.config.VendorNo

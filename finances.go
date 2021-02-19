@@ -1,6 +1,6 @@
 package appstore
 
-//Financial reports resource
+//FinancialReportsResource reports
 type FinancialReportsResource struct {
 	*ResourceAbstract
 }
