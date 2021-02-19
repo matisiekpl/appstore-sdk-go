@@ -5,39 +5,61 @@ import (
 	"time"
 )
 
+//SalesReportType type
 type SalesReportType string
+
+//SalesReportSubType type
 type SalesReportSubType string
+
+//SalesReportFrequency type
 type SalesReportFrequency string
+
+//SalesReportVersion type
 type SalesReportVersion string
 
 const (
-	SalesReportFrequencyDaily   SalesReportFrequency = "DAILY"
-	SalesReportFrequencyWeekly  SalesReportFrequency = "WEEKLY"
+	//SalesReportFrequencyDaily const
+	SalesReportFrequencyDaily SalesReportFrequency = "DAILY"
+	//SalesReportFrequencyWeekly const
+	SalesReportFrequencyWeekly SalesReportFrequency = "WEEKLY"
+	//SalesReportFrequencyMonthly const
 	SalesReportFrequencyMonthly SalesReportFrequency = "MONTHLY"
-	SalesReportFrequencyYearly  SalesReportFrequency = "YEARLY"
+	//SalesReportFrequencyYearly const
+	SalesReportFrequencyYearly SalesReportFrequency = "YEARLY"
 )
 
 const (
-	SalesReportTypeSales             SalesReportType = "SALES"
-	SalesReportTypePreorder          SalesReportType = "PRE_ORDER"
-	SalesReportTypeNewsStand         SalesReportType = "NEWSSTAND"
-	SalesReportTypeSubscription      SalesReportType = "SUBSCRIPTION"
+	//SalesReportTypeSales const
+	SalesReportTypeSales SalesReportType = "SALES"
+	//SalesReportTypePreorder const
+	SalesReportTypePreorder SalesReportType = "PRE_ORDER"
+	//SalesReportTypeNewsStand const
+	SalesReportTypeNewsStand SalesReportType = "NEWSSTAND"
+	//SalesReportTypeSubscription const
+	SalesReportTypeSubscription SalesReportType = "SUBSCRIPTION"
+	//SalesReportTypeSubscriptionEvent const
 	SalesReportTypeSubscriptionEvent SalesReportType = "SUBSCRIPTION_EVENT"
-	SalesReportTypeSubscriber        SalesReportType = "SUBSCRIBER"
+	//SalesReportTypeSubscriber const
+	SalesReportTypeSubscriber SalesReportType = "SUBSCRIBER"
 )
 
 const (
-	SalesReportSubTypeSummary  SalesReportSubType = "SUMMARY"
+	//SalesReportSubTypeSummary const
+	SalesReportSubTypeSummary SalesReportSubType = "SUMMARY"
+	//SalesReportSubTypeDetailed const
 	SalesReportSubTypeDetailed SalesReportSubType = "DETAILED"
-	SalesReportSubTypeOptIn    SalesReportSubType = "OPT_IN"
+	//SalesReportSubTypeOptIn const
+	SalesReportSubTypeOptIn SalesReportSubType = "OPT_IN"
 )
 
 const (
+	//SalesReportVersion10 const
 	SalesReportVersion10 SalesReportVersion = "1_0"
+	//SalesReportVersion12 const
 	SalesReportVersion12 SalesReportVersion = "1_2"
 )
 
-//Sales reports filter
+//SalesReportsFilter Sales reports filter
 type SalesReportsFilter struct {
 	ReportDate    time.Time            //The report date to download. The date is specified in the YYYY-MM-DD format for all report frequencies except DAILY, which does not require a specified date. For more information, see report availability and storage.
 	ReportSubType SalesReportSubType   //(Required) The report sub type to download. For a list of values, see Allowed Values Based on Sales Report Type below. Possible values: SUMMARY, DETAILED, OPT_IN
@@ -47,112 +69,112 @@ type SalesReportsFilter struct {
 	VendorNumber  string               //(Required) You can find your vendor number in Payments and Financial Reports.
 }
 
-//Set report date
+//SetReportDate Set report date
 func (f *SalesReportsFilter) SetReportDate(value time.Time) *SalesReportsFilter {
 	f.ReportDate = value
 	return f
 }
 
-//Set report sub type
+//SetReportSubType Set report sub type
 func (f *SalesReportsFilter) SetReportSubType(value SalesReportSubType) *SalesReportsFilter {
 	f.ReportSubType = value
 	return f
 }
 
-//Change report sub type to Detailed
+//SubTypeDetailed Change report sub type to Detailed
 func (f *SalesReportsFilter) SubTypeDetailed() *SalesReportsFilter {
 	return f.SetReportSubType(SalesReportSubTypeDetailed)
 }
 
-//Change report sub type to OptIn
+//SubTypeOptIn Change report sub type to OptIn
 func (f *SalesReportsFilter) SubTypeOptIn() *SalesReportsFilter {
 	return f.SetReportSubType(SalesReportSubTypeOptIn)
 }
 
-//Change report sub type to Summary
+//SubTypeSummary Change report sub type to Summary
 func (f *SalesReportsFilter) SubTypeSummary() *SalesReportsFilter {
 	return f.SetReportSubType(SalesReportSubTypeSummary)
 }
 
-//Set report type
+//SetReportType Set report type
 func (f *SalesReportsFilter) SetReportType(value SalesReportType) *SalesReportsFilter {
 	f.ReportType = value
 	return f
 }
 
-//Change report type to Sales
+//TypeSales Change report type to Sales
 func (f *SalesReportsFilter) TypeSales() *SalesReportsFilter {
 	return f.SetReportType(SalesReportTypeSales)
 }
 
-//Change report type to PreOrder
+//TypePreOrder Change report type to PreOrder
 func (f *SalesReportsFilter) TypePreOrder() *SalesReportsFilter {
 	return f.SetReportType(SalesReportTypePreorder)
 }
 
-//Change report type to NewsStand
+//TypeNewsStand Change report type to NewsStand
 func (f *SalesReportsFilter) TypeNewsStand() *SalesReportsFilter {
 	return f.SetReportType(SalesReportTypeNewsStand)
 }
 
-//Change report type to Subscription
+//TypeSubscription Change report type to Subscription
 func (f *SalesReportsFilter) TypeSubscription() *SalesReportsFilter {
 	return f.SetReportType(SalesReportTypeSubscription)
 }
 
-//Change report type to SubscriptionEvent
+//TypeSubscriptionEvent Change report type to SubscriptionEvent
 func (f *SalesReportsFilter) TypeSubscriptionEvent() *SalesReportsFilter {
 	return f.SetReportType(SalesReportTypeSubscriptionEvent)
 }
 
-//Change report type to Subscriber
+//TypeSubscriber Change report type to Subscriber
 func (f *SalesReportsFilter) TypeSubscriber() *SalesReportsFilter {
 	return f.SetReportType(SalesReportTypeSubscriber)
 }
 
-//Set frequency
+//SetFrequency Set frequency
 func (f *SalesReportsFilter) SetFrequency(value SalesReportFrequency) *SalesReportsFilter {
 	f.Frequency = value
 	return f
 }
 
-//Change frequency to Daily
+//Daily Change frequency to Daily
 func (f *SalesReportsFilter) Daily() *SalesReportsFilter {
 	return f.SetFrequency(SalesReportFrequencyDaily)
 }
 
-//Change frequency to Weekly
+//Weekly Change frequency to Weekly
 func (f *SalesReportsFilter) Weekly() *SalesReportsFilter {
 	return f.SetFrequency(SalesReportFrequencyWeekly)
 }
 
-//Change frequency to Monthly
+//Monthly Change frequency to Monthly
 func (f *SalesReportsFilter) Monthly() *SalesReportsFilter {
 	return f.SetFrequency(SalesReportFrequencyMonthly)
 }
 
-//Change frequency to Yearly
+//Yearly Change frequency to Yearly
 func (f *SalesReportsFilter) Yearly() *SalesReportsFilter {
 	return f.SetFrequency(SalesReportFrequencyYearly)
 }
 
-//Set version
+//SetVersion Set version
 func (f *SalesReportsFilter) SetVersion(value SalesReportVersion) *SalesReportsFilter {
 	f.Version = value
 	return f
 }
 
-//Change version to 1_2
+//Version12 Change version to 1_2
 func (f *SalesReportsFilter) Version12() *SalesReportsFilter {
 	return f.SetVersion(SalesReportVersion12)
 }
 
-//Change version to 1_0
+//Version10 Change version to 1_0
 func (f *SalesReportsFilter) Version10() *SalesReportsFilter {
 	return f.SetVersion(SalesReportVersion10)
 }
 
-//Convert filter to query params
+//ToQueryParamsMap Convert filter to query params
 func (f *SalesReportsFilter) ToQueryParamsMap() map[string]interface{} {
 	qs := make(map[string]interface{})
 	qs["filter[reportSubType]"] = string(f.ReportSubType)
@@ -168,7 +190,7 @@ func (f *SalesReportsFilter) ToQueryParamsMap() map[string]interface{} {
 	return qs
 }
 
-//Validate sales report filter params
+//IsValid Validate sales report filter params
 func (f *SalesReportsFilter) IsValid() error {
 	if f.ReportType == "" {
 		return fmt.Errorf("SalesReportsFilter@IsValid: %v", "ReportType is required")

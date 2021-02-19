@@ -9,8 +9,13 @@ import (
 	"time"
 )
 
+//CustomTimestampFormatDefault const
 const CustomTimestampFormatDefault = "2006-01-02 15:04:05"
+
+//CustomDateFormatDefault const
 const CustomDateFormatDefault = "2006-01-02"
+
+//CustomDateFormatSlash const
 const CustomDateFormatSlash = "01/02/2006"
 
 //CustomInteger custom integer type
