@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-//AuthToken
+//AuthToken auth token structure
 type AuthToken struct {
 	Token     string
 	ExpiresAt int64
@@ -22,7 +22,7 @@ func (t *AuthToken) IsNotExpired() bool {
 	return t.ExpiresAt > ts
 }
 
-//TokenBuilder
+//TokenBuilder token builder
 type TokenBuilder struct {
 	cfg        *Config
 	PrivateKey *PrivateKey

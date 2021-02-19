@@ -8,21 +8,21 @@ import (
 	"fmt"
 )
 
-//Private key handler
+//PrivateKey private key handler
 type PrivateKey struct {
 }
 
-//Load private key from file
+//LoadFromFile Load private key from file
 func (pk *PrivateKey) LoadFromFile(path string) ([]byte, error) {
 	return readFile(path)
 }
 
-//Load private key from string
+//LoadFromContent Load private key from string
 func (pk *PrivateKey) LoadFromContent(content string) ([]byte, error) {
 	return []byte(content), nil
 }
 
-//Load private key from string or file path
+//LoadData Load private key from string or file path
 func (pk *PrivateKey) LoadData(pathOrContent string) ([]byte, error) {
 	if fileExists(pathOrContent) {
 		return pk.LoadFromFile(pathOrContent)
@@ -40,7 +40,7 @@ func (pk *PrivateKey) Load(path string) (*ecdsa.PrivateKey, error) {
 	return pk.ParseP8(data)
 }
 
-//Parse private key .p8
+//ParseP8 Parse private key .p8
 func (pk *PrivateKey) ParseP8(rawBytes []byte) (*ecdsa.PrivateKey, error) {
 	block, err := pk.DecodePem(rawBytes)
 	if err != nil {
@@ -49,7 +49,7 @@ func (pk *PrivateKey) ParseP8(rawBytes []byte) (*ecdsa.PrivateKey, error) {
 	return pk.ParsePKCS8(block.Bytes)
 }
 
-//Parse PKCS private key .p8
+//ParsePKCS8 Parse PKCS private key .p8
 func (pk *PrivateKey) ParsePKCS8(rawBytes []byte) (*ecdsa.PrivateKey, error) {
 	key, err := x509.ParsePKCS8PrivateKey(rawBytes)
 	if err != nil {
@@ -63,7 +63,7 @@ func (pk *PrivateKey) ParsePKCS8(rawBytes []byte) (*ecdsa.PrivateKey, error) {
 	}
 }
 
-//Decode private key pem
+//DecodePem Decode private key pem
 func (pk *PrivateKey) DecodePem(rawBytes []byte) (*pem.Block, error) {
 	block, _ := pem.Decode(rawBytes)
 	if block == nil {

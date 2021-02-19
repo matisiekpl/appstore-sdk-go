@@ -10,6 +10,7 @@ import (
 	"strings"
 )
 
+//NewDefaultHttpClient create new http client
 func NewDefaultHttpClient() *http.Client {
 	tr := &http.Transport{
 		MaxIdleConns:    AppStoreConnectAPIHttpMaxIdleConnection,
@@ -18,15 +19,18 @@ func NewDefaultHttpClient() *http.Client {
 	return &http.Client{Transport: tr}
 }
 
+//RequestBuilder handler
 type RequestBuilder struct {
 	cfg   *Config
 	token *AuthToken
 }
 
+//isValidToken method
 func (rb *RequestBuilder) isValidToken() bool {
 	return rb.token.IsValid()
 }
 
+//buildUri method
 func (rb *RequestBuilder) buildUri(path string, query map[string]interface{}) (uri *url.URL, err error) {
 	u, err := url.Parse(rb.cfg.Uri)
 	if err != nil {
@@ -37,6 +41,7 @@ func (rb *RequestBuilder) buildUri(path string, query map[string]interface{}) (u
 	return u, err
 }
 
+//buildQueryParams method
 func (rb *RequestBuilder) buildQueryParams(query map[string]interface{}) string {
 	q := url.Values{}
 	if query != nil {
@@ -47,6 +52,7 @@ func (rb *RequestBuilder) buildQueryParams(query map[string]interface{}) string 
 	return q.Encode()
 }
 
+//buildHeaders method
 func (rb *RequestBuilder) buildHeaders() http.Header {
 	headers := http.Header{}
 	headers.Set("Accept", "application/a-gzip")
@@ -55,6 +61,7 @@ func (rb *RequestBuilder) buildHeaders() http.Header {
 	return headers
 }
 
+//NewHttpTransport create new http transport
 func NewHttpTransport(config *Config, token *AuthToken, h *http.Client) *Transport {
 	if h == nil {
 		h = NewDefaultHttpClient()
@@ -63,11 +70,13 @@ func NewHttpTransport(config *Config, token *AuthToken, h *http.Client) *Transpo
 	return &Transport{http: h, rb: rb}
 }
 
+//Transport wrapper
 type Transport struct {
 	http *http.Client
 	rb   *RequestBuilder
 }
 
+//Request method
 func (t *Transport) Request(method string, path string, query map[string]interface{}, body map[string]interface{}) (resp *http.Response, err error) {
 	if !t.rb.isValidToken() {
 		return nil, fmt.Errorf("transport@request invalid token: %v", err)
@@ -87,28 +96,34 @@ func (t *Transport) Request(method string, path string, query map[string]interfa
 	return t.http.Do(req)
 }
 
+//Get method
 func (t *Transport) Get(path string, query map[string]interface{}) (resp *http.Response, err error) {
 	return t.Request("GET", path, query, nil)
 }
 
+//Response wrapper
 type Response struct {
 	raw *http.Response
 	csv *CSV
 }
 
+//IsSuccess method
 func (r *Response) IsSuccess() bool {
 	return r.raw.StatusCode < http.StatusMultipleChoices
 }
 
+//GetRawResponse method
 func (r *Response) GetRawResponse() *http.Response {
 	return r.raw
 }
 
+//GetRawBody method
 func (r *Response) GetRawBody() (string, error) {
 	data, err := r.ReadBody()
 	return string(data), err
 }
 
+//UnmarshalCSV method
 func (r *Response) UnmarshalCSV(v interface{}) error {
 	body, err := r.ReadBody()
 	if err != nil {
@@ -117,6 +132,7 @@ func (r *Response) UnmarshalCSV(v interface{}) error {
 	return r.csv.Unmarshal(body, v)
 }
 
+//UnmarshalError method
 func (r *Response) UnmarshalError(v interface{}) error {
 	body, err := r.ReadBody()
 	if err != nil {
@@ -125,6 +141,7 @@ func (r *Response) UnmarshalError(v interface{}) error {
 	return json.Unmarshal(body, v)
 }
 
+//ReadBody method
 func (r *Response) ReadBody() ([]byte, error) {
 	defer r.raw.Body.Close()
 	if !r.IsSuccess() {
@@ -136,6 +153,7 @@ func (r *Response) ReadBody() ([]byte, error) {
 	}
 }
 
+//NewResponse create new response
 func NewResponse(raw *http.Response) *Response {
 	return &Response{raw: raw, csv: &CSV{}}
 }

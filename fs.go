@@ -5,7 +5,7 @@ import (
 	"os"
 )
 
-//Check file is exists
+//fileExists Check file is exists
 func fileExists(filename string) bool {
 	info, err := os.Stat(filename)
 	if os.IsNotExist(err) {
@@ -14,7 +14,7 @@ func fileExists(filename string) bool {
 	return !info.IsDir()
 }
 
-//Read file
+//readFile Read file
 func readFile(filename string) ([]byte, error) {
 	data, err := ioutil.ReadFile(filename)
 	return data, err
