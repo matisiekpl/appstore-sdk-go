@@ -1,4 +1,4 @@
-package appstore_sdk
+package appstore
 
 //Aggregated sales and download data for your apps and In-App Purchases
 type SalesReportSale struct {

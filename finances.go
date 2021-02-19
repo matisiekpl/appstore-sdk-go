@@ -1,4 +1,4 @@
-package appstore_sdk
+package appstore
 
 //Financial reports resource
 type FinancialReportsResource struct {

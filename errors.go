@@ -1,4 +1,4 @@
-package appstore_sdk
+package appstore
 
 //Information with error details that an API returns in the response body whenever the API request is not successful.
 // @see https://developer.apple.com/documentation/appstoreconnectapi/errorresponse
