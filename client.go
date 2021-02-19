@@ -13,7 +13,7 @@ type Client struct {
 	Cfg       *Config
 }
 
-//Initialization of client
+//Init of client
 func (cl *Client) Init() error {
 	token, err := cl.auth.BuildAuthToken()
 	if err != nil {
@@ -23,17 +23,17 @@ func (cl *Client) Init() error {
 	return nil
 }
 
-//Get SalesReports resource
+//SalesReports resource
 func (cl *Client) SalesReports() *SalesReportsResource {
 	return &SalesReportsResource{ResourceAbstract: newResourceAbstract(cl.transport, cl.Cfg)}
 }
 
-//Get FinancialReports resource
+//FinancialReports resource
 func (cl *Client) FinancialReports() *FinancialReportsResource {
 	return &FinancialReportsResource{ResourceAbstract: newResourceAbstract(cl.transport, cl.Cfg)}
 }
 
-//Create new client from config
+//NewClientFromConfig Create new client from config
 func NewClientFromConfig(cfg *Config, cl *http.Client) *Client {
 	if cl == nil {
 		cl = NewDefaultHttpClient()

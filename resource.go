@@ -2,13 +2,13 @@ package appstore
 
 import "fmt"
 
-//Resource abstract
+//ResourceAbstract
 type ResourceAbstract struct {
 	transport *Transport
 	config    *Config
 }
 
-//HTTP method Get wrapper
+//Get HTTP methodt wrapper
 func (r *ResourceAbstract) get(path string, query map[string]interface{}) (*Response, error) {
 	rsp, err := r.transport.Get(path, query)
 	if err != nil {

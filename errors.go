@@ -1,17 +1,17 @@
 package appstore
 
-//Information with error details that an API returns in the response body whenever the API request is not successful.
+//ErrorResult Information with error details that an API returns in the response body whenever the API request is not successful.
 // @see https://developer.apple.com/documentation/appstoreconnectapi/errorresponse
 type ErrorResult struct {
 	Errors []*Error `json:"errors"` //An array of one or more errors.
 }
 
-//Get first error from stack
+//GetError Get first error from stack
 func (e *ErrorResult) GetError() *Error {
 	return e.Errors[0]
 }
 
-//The details about one error that is returned when an API request is not successful.
+//Error The details about one error that is returned when an API request is not successful.
 // @see https://developer.apple.com/documentation/appstoreconnectapi/errorresponse/errors
 type Error struct {
 	Id     string       `json:"id"`     //(Required) A machine-readable code indicating the type of error. The code is a hierarchical value with levels of specificity separated by the '.' character. This value is parseable for programmatic error handling in code.
@@ -22,7 +22,7 @@ type Error struct {
 	Source *ErrorSource `json:"source"` //One of two possible types of values: source.parameter, provided when a query parameter produced the error, or source.JsonPointer, provided when a problem with the entity produced the error.
 }
 
-//An object that contains the query parameter that produced the error.
+//ErrorSource An object that contains the query parameter that produced the error.
 //An object that contains the JSON pointer that indicates the location of the error.
 type ErrorSource struct {
 	Parameter string `json:"parameter"` //The query parameter that produced the error.
