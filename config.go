@@ -17,7 +17,7 @@ const AppStoreConnectAPIHttpMaxIdleConnection = 10
 //AppStoreConnectAPIHttpIdleConnectionTimeout const
 const AppStoreConnectAPIHttpIdleConnectionTimeout = 30 * time.Second
 
-//Config config structure
+//Config structure
 type Config struct {
 	Uri        string
 	VendorNo   string
