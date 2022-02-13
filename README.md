@@ -5,6 +5,7 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/kachit/appstore-sdk-go)](https://goreportcard.com/report/github.com/kachit/appstore-sdk-go)
 [![Release](https://img.shields.io/github/v/release/Kachit/appstore-sdk-go.svg)](https://github.com/Kachit/appstore-sdk-go/releases)
 [![License](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/kachit/appstore-sdk-go/blob/master/LICENSE)
+[![Mentioned in Awesome Go](https://awesome.re/mentioned-badge.svg)](https://github.com/avelino/awesome-go#third-party-apis) 
 
 ## Description
 Unofficial Golang SDK for AppStore Connect API
