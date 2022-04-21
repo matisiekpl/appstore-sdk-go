@@ -32,9 +32,8 @@ func Test_PrivateKey_LoadDataAsFile(t *testing.T) {
 
 func Test_PrivateKey_LoadDataAsContent(t *testing.T) {
 	pk := &PrivateKey{}
-	data, _ := pk.LoadFromFile(StubAuthKeyPath)
-	data, _ = pk.LoadData(string(data))
-	assert.NotEmpty(t, data)
+	dataBt, _ := pk.LoadData("foo")
+	assert.NotEmpty(t, dataBt)
 }
 
 func Test_PrivateKey_ParseP8Success(t *testing.T) {
