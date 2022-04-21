@@ -1,7 +1,9 @@
 package appstore
 
 import (
+	"context"
 	"fmt"
+	"github.com/jarcoal/httpmock"
 	"github.com/stretchr/testify/assert"
 	"io/ioutil"
 	"net/http"
@@ -56,6 +58,22 @@ func Test_HTTP_RequestBuilder_BuildUriWithQueryParams(t *testing.T) {
 	assert.NotEmpty(t, uri)
 	assert.Equal(t, "https://github.com/qwerty?bar=baz&foo=bar", uri.String())
 	assert.Nil(t, err)
+}
+
+func Test_HTTP_RequestBuilder_BuildRequestGET(t *testing.T) {
+	cfg := buildStubConfig()
+	token := buildStubAuthToken()
+	builder := RequestBuilder{cfg: cfg, token: token}
+
+	ctx := context.Background()
+	result, err := builder.BuildRequest(ctx, "get", "foo", map[string]interface{}{"foo": "bar"}, map[string]interface{}{"foo": "bar"})
+	assert.NoError(t, err)
+	assert.Equal(t, http.MethodGet, result.Method)
+	assert.Equal(t, "https://github.com/foo?foo=bar", result.URL.String())
+	assert.Equal(t, "application/a-gzip", result.Header.Get("Accept"))
+	assert.Equal(t, "gzip", result.Header.Get("Accept-Encoding"))
+	assert.Equal(t, "Bearer "+token.Token, result.Header.Get("Authorization"))
+	assert.Nil(t, result.Body)
 }
 
 func Test_HTTP_NewResponseHandler_ResponseContentTypeGzip(t *testing.T) {
@@ -166,36 +184,38 @@ func Test_HTTP_ResponseHandlerGzip_RestoreBody(t *testing.T) {
 	//assert.Equal(t, expectedGzipped, body)
 }
 
-//func Test_HTTP_Transport_RequestSuccess(t *testing.T) {
-//	httpmock.Activate()
-//	defer httpmock.DeactivateAndReset()
-//
-//	cfg := buildStubConfig()
-//	transport := buildStubHttpTransport()
-//
-//	body, _ := loadStubResponseData("stubs/reports/sales/sales.tsv")
-//
-//	httpmock.RegisterResponder("GET", cfg.Uri+"/foo", httpmock.NewBytesResponder(http.StatusOK, body))
-//
-//	resp, _ := transport.Request("GET", "foo", nil, nil)
-//	assert.NotEmpty(t, resp)
-//}
-//
-//func Test_HTTP_Transport_RequestGETSuccess(t *testing.T) {
-//	httpmock.Activate()
-//	defer httpmock.DeactivateAndReset()
-//
-//	cfg := buildStubConfig()
-//	transport := buildStubHttpTransport()
-//
-//	body, _ := loadStubResponseData("stubs/reports/sales/sales.tsv")
-//
-//	httpmock.RegisterResponder("GET", cfg.Uri+"/foo", httpmock.NewBytesResponder(http.StatusOK, body))
-//
-//	resp, _ := transport.Get("foo", nil)
-//	assert.NotEmpty(t, resp)
-//}
-//
+func Test_HTTP_Transport_RequestSuccess(t *testing.T) {
+	httpmock.Activate()
+	defer httpmock.DeactivateAndReset()
+
+	cfg := buildStubConfig()
+	transport := buildStubHttpTransport()
+
+	body, _ := loadStubResponseData("stubs/reports/sales/sales.tsv")
+
+	httpmock.RegisterResponder("GET", cfg.Uri+"/foo", httpmock.NewBytesResponder(http.StatusOK, body))
+
+	ctx := context.Background()
+	resp, _ := transport.SendRequest(ctx, "GET", "foo", nil, nil)
+	assert.NotEmpty(t, resp)
+}
+
+func Test_HTTP_Transport_RequestGETSuccess(t *testing.T) {
+	httpmock.Activate()
+	defer httpmock.DeactivateAndReset()
+
+	cfg := buildStubConfig()
+	transport := buildStubHttpTransport()
+
+	body, _ := loadStubResponseData("stubs/reports/sales/sales.tsv")
+
+	httpmock.RegisterResponder("GET", cfg.Uri+"/foo", httpmock.NewBytesResponder(http.StatusOK, body))
+
+	ctx := context.Background()
+	resp, _ := transport.Get(ctx, "foo", nil)
+	assert.NotEmpty(t, resp)
+}
+
 //func Test_HTTP_Transport_RequestGETInvalidToken(t *testing.T) {
 //	httpmock.Activate()
 //	defer httpmock.DeactivateAndReset()
@@ -208,7 +228,8 @@ func Test_HTTP_ResponseHandlerGzip_RestoreBody(t *testing.T) {
 //
 //	httpmock.RegisterResponder("GET", cfg.Uri+"/foo", httpmock.NewBytesResponder(http.StatusOK, body))
 //
-//	_, err := transport.Get("foo", nil)
+//	ctx := context.Background()
+//	_, err := transport.Get(ctx, "foo", nil)
 //	assert.Error(t, err)
 //	assert.Equal(t, "transport@request invalid token: <nil>", err.Error())
 //}
@@ -227,12 +248,11 @@ func Test_HTTP_NewDefaultHttpClient(t *testing.T) {
 	assert.NotEmpty(t, client)
 }
 
-//func Test_HTTP_Response_IsSuccessTrue(t *testing.T) {
-//	response := &Response{raw: buildStubResponseFromFile(http.StatusOK, "stubs/reports/sales/sales.tsv")}
-//	assert.True(t, response.IsSuccess())
-//}
-//
-//func Test_HTTP_Response_IsSuccessFalse(t *testing.T) {
-//	response := &Response{raw: buildStubResponseFromFile(http.StatusBadRequest, "stubs/reports/sales/sales.tsv")}
-//	assert.False(t, response.IsSuccess())
-//}
+func Test_HTTP_ResponseBody_IsSuccess(t *testing.T) {
+	rsp := &ResponseBody{status: http.StatusAccepted}
+	assert.True(t, rsp.IsSuccess())
+	rsp.status = http.StatusMultipleChoices
+	assert.False(t, rsp.IsSuccess())
+	rsp.status = http.StatusBadRequest
+	assert.False(t, rsp.IsSuccess())
+}
