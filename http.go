@@ -1,14 +1,20 @@
 package appstore
 
 import (
+	"bytes"
 	"compress/gzip"
+	"context"
 	"encoding/json"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strings"
 )
+
+const ResponseContentTypeJson = "application/json; charset=utf-8"
+const ResponseContentTypeOctetStream = "application/octet-stream"
 
 //NewDefaultHttpClient create new http client
 func NewDefaultHttpClient() *http.Client {
@@ -61,6 +67,24 @@ func (rb *RequestBuilder) buildHeaders() http.Header {
 	return headers
 }
 
+//BuildRequest method
+func (rb *RequestBuilder) BuildRequest(ctx context.Context, method string, path string, query map[string]interface{}, body map[string]interface{}) (req *http.Request, err error) {
+	method = strings.ToUpper(method)
+	//build uri
+	uri, err := rb.buildUri(path, query)
+	if err != nil {
+		return nil, fmt.Errorf("transport.request build uri: %v", err)
+	}
+	//build request
+	req, err = http.NewRequestWithContext(ctx, method, uri.String(), nil)
+	if err != nil {
+		return nil, fmt.Errorf("transport.request new request error: %v", err)
+	}
+	//build headers
+	req.Header = rb.buildHeaders()
+	return req, nil
+}
+
 //NewHttpTransport create new http transport
 func NewHttpTransport(config *Config, token *AuthToken, h *http.Client) *Transport {
 	if h == nil {
@@ -76,84 +100,107 @@ type Transport struct {
 	rb   *RequestBuilder
 }
 
-//Request method
-func (t *Transport) Request(method string, path string, query map[string]interface{}, body map[string]interface{}) (resp *http.Response, err error) {
-	if !t.rb.isValidToken() {
-		return nil, fmt.Errorf("transport@request invalid token: %v", err)
-	}
-	//build uri
-	uri, err := t.rb.buildUri(path, query)
+//SendRequest method
+func (t *Transport) SendRequest(ctx context.Context, method string, path string, query map[string]interface{}, body map[string]interface{}) (resp *http.Response, err error) {
+	req, err := t.rb.BuildRequest(ctx, method, path, query, body)
 	if err != nil {
-		return nil, fmt.Errorf("transport@request build uri: %v", err)
+		return nil, fmt.Errorf("transport.SendRequest: %v", err)
 	}
-	//build request
-	req, err := http.NewRequest(strings.ToUpper(method), uri.String(), nil)
-	if err != nil {
-		return nil, fmt.Errorf("transport@request new request error: %v", err)
-	}
-	//build headers
-	req.Header = t.rb.buildHeaders()
 	return t.http.Do(req)
 }
 
 //Get method
-func (t *Transport) Get(path string, query map[string]interface{}) (resp *http.Response, err error) {
-	return t.Request("GET", path, query, nil)
+func (t *Transport) Get(ctx context.Context, path string, query map[string]interface{}) (resp *http.Response, err error) {
+	return t.SendRequest(ctx, http.MethodGet, path, query, nil)
 }
 
-//Response wrapper
-type Response struct {
-	raw *http.Response
-	csv *CSV
+//ResponseBody struct
+type ResponseBody struct {
+	status int
+	Error  *ResponseBodyError `json:"error,omitempty"`
+}
+
+//ResponseBodyError struct
+type ResponseBodyError struct {
+	Id     string `json:"id"`
+	Status string `json:"status"`
+	Code   int64  `json:"code"`
+	Title  int64  `json:"title"`
+	Detail int64  `json:"detail"`
 }
 
 //IsSuccess method
-func (r *Response) IsSuccess() bool {
-	return r.raw.StatusCode < http.StatusMultipleChoices
+func (r *ResponseBody) IsSuccess() bool {
+	return r.status < http.StatusMultipleChoices
 }
 
-//GetRawResponse method
-func (r *Response) GetRawResponse() *http.Response {
-	return r.raw
+type ResponseHandlerInterface interface {
+	ReadBody(resp *http.Response) ([]byte, error)
+	UnmarshalBody(data []byte, v interface{}) error
+	RestoreBody(data []byte) (io.ReadCloser, error)
 }
 
-//GetRawBody method
-func (r *Response) GetRawBody() (string, error) {
-	data, err := r.ReadBody()
-	return string(data), err
+type ResponseHandlerJson struct {
 }
 
-//UnmarshalCSV method
-func (r *Response) UnmarshalCSV(v interface{}) error {
-	body, err := r.ReadBody()
+func (r *ResponseHandlerJson) ReadBody(resp *http.Response) ([]byte, error) {
+	defer resp.Body.Close()
+	return ioutil.ReadAll(resp.Body)
+}
+
+func (r *ResponseHandlerJson) UnmarshalBody(data []byte, v interface{}) error {
+	return json.Unmarshal(data, &v)
+}
+
+func (r *ResponseHandlerJson) RestoreBody(data []byte) (io.ReadCloser, error) {
+	return ioutil.NopCloser(bytes.NewBuffer(data)), nil
+}
+
+type ResponseHandlerStream struct {
+}
+
+func (r *ResponseHandlerStream) ReadBody(resp *http.Response) ([]byte, error) {
+	defer resp.Body.Close()
+	zr, err := gzip.NewReader(resp.Body)
 	if err != nil {
-		return err
+		return nil, err
 	}
-	return r.csv.Unmarshal(body, v)
+	defer zr.Close()
+	return ioutil.ReadAll(zr)
 }
 
-//UnmarshalError method
-func (r *Response) UnmarshalError(v interface{}) error {
-	body, err := r.ReadBody()
+func (r *ResponseHandlerStream) UnmarshalBody(data []byte, v interface{}) error {
+	return UnmarshalCSV(data, v)
+}
+
+func (r *ResponseHandlerStream) RestoreBody(data []byte) (io.ReadCloser, error) {
+	var b bytes.Buffer
+	gz := gzip.NewWriter(&b)
+	_, err := gz.Write(data)
 	if err != nil {
-		return err
+		return nil, err
 	}
-	return json.Unmarshal(body, v)
+	if err = gz.Flush(); err != nil {
+		return nil, err
+	}
+
+	if err = gz.Close(); err != nil {
+		return nil, err
+	}
+	return ioutil.NopCloser(bytes.NewBuffer(b.Bytes())), nil
 }
 
-//ReadBody method
-func (r *Response) ReadBody() ([]byte, error) {
-	defer r.raw.Body.Close()
-	if !r.IsSuccess() {
-		return ioutil.ReadAll(r.raw.Body)
-	} else {
-		zr, _ := gzip.NewReader(r.raw.Body)
-		defer zr.Close()
-		return ioutil.ReadAll(zr)
+func NewResponseHandler(contentType string) ResponseHandlerInterface {
+	var handler ResponseHandlerInterface
+	switch contentType {
+	case ResponseContentTypeOctetStream:
+		handler = &ResponseHandlerStream{}
+		break
+	case ResponseContentTypeJson:
+		handler = &ResponseHandlerJson{}
+		break
+	default:
+		handler = &ResponseHandlerJson{}
 	}
-}
-
-//NewResponse create new response
-func NewResponse(raw *http.Response) *Response {
-	return &Response{raw: raw, csv: &CSV{}}
+	return handler
 }

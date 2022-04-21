@@ -8,16 +8,14 @@ import (
 )
 
 func Test_CSV_NewCSVReader(t *testing.T) {
-	c := &CSV{}
-	result := c.NewCSVReader(bytes.NewReader([]byte("")))
+	result := NewCSVReader(bytes.NewReader([]byte("")))
 	assert.NotEmpty(t, result)
 }
 
-func Test_CSV_UnmarshalSalesReportSales(t *testing.T) {
+func Test_CSV_UnmarshalCSVSalesReportSales(t *testing.T) {
 	reportData, _ := ioutil.ReadFile("stubs/reports/sales/sales.tsv")
-	c := &CSV{}
 	reports := []*SalesReportSale{}
-	_ = c.Unmarshal(reportData, &reports)
+	_ = UnmarshalCSV(reportData, &reports)
 	assert.Equal(t, 1234567890, reports[0].AppleIdentifier.Value())
 	assert.Equal(t, "2020-10-05", reports[0].BeginDate.Value().Format(CustomDateFormatDefault))
 	assert.Equal(t, "2020-10-05", reports[0].EndDate.Value().Format(CustomDateFormatDefault))
@@ -28,9 +26,8 @@ func Test_CSV_UnmarshalSalesReportSales(t *testing.T) {
 
 func Test_CSV_UnmarshalSalesReportSubscription(t *testing.T) {
 	reportData, _ := ioutil.ReadFile("stubs/reports/sales/subscription.tsv")
-	c := &CSV{}
 	reports := []*SalesReportSubscription{}
-	_ = c.Unmarshal(reportData, &reports)
+	_ = UnmarshalCSV(reportData, &reports)
 	assert.Equal(t, "FooBarApp", reports[0].AppName)
 	assert.Equal(t, 1234567890, reports[0].AppAppleID.Value())
 	assert.Equal(t, 1234567890, reports[0].SubscriptionAppleID.Value())
@@ -51,9 +48,8 @@ func Test_CSV_UnmarshalSalesReportSubscription(t *testing.T) {
 
 func Test_CSV_UnmarshalSalesReportSubscriptionEvent(t *testing.T) {
 	reportData, _ := ioutil.ReadFile("stubs/reports/sales/subscription-event.tsv")
-	c := &CSV{}
 	reports := []*SalesReportSubscriptionEvent{}
-	_ = c.Unmarshal(reportData, &reports)
+	_ = UnmarshalCSV(reportData, &reports)
 	assert.Equal(t, 1234567890, reports[0].AppAppleID.Value())
 	assert.Equal(t, 1234567890, reports[0].SubscriptionAppleID.Value())
 	assert.Equal(t, 1234567890, reports[0].SubscriptionGroupID.Value())
@@ -65,9 +61,8 @@ func Test_CSV_UnmarshalSalesReportSubscriptionEvent(t *testing.T) {
 
 func Test_CSV_UnmarshalSalesReportSubscriber(t *testing.T) {
 	reportData, _ := ioutil.ReadFile("stubs/reports/sales/subscriber.tsv")
-	c := &CSV{}
 	reports := []*SalesReportSubscriber{}
-	_ = c.Unmarshal(reportData, &reports)
+	_ = UnmarshalCSV(reportData, &reports)
 	assert.Equal(t, 1234567890, reports[0].AppAppleID.Value())
 	assert.Equal(t, 1234567890, reports[0].SubscriptionAppleID.Value())
 	assert.Equal(t, 1234567890, reports[0].SubscriptionGroupID.Value())

@@ -1,6 +1,10 @@
 package appstore
 
-import "fmt"
+import (
+	"context"
+	"fmt"
+	"net/http"
+)
 
 //SalesReportsResource reports
 type SalesReportsResource struct {
@@ -8,12 +12,11 @@ type SalesReportsResource struct {
 }
 
 //GetReport Get sales report by filter
-//@unmarshal SalesReportSale, SalesReportSubscription, SalesReportSubscriptionEvent, SalesReportSubscriber
-func (srr *SalesReportsResource) GetReport(filter *SalesReportsFilter) (*Response, error) {
+func (srr *SalesReportsResource) GetReport(ctx context.Context, filter *SalesReportsFilter) (*http.Response, error) {
 	filter.VendorNumber = srr.config.VendorNo
 	err := filter.IsValid()
 	if err != nil {
 		return nil, fmt.Errorf("SalesReportsResource@GetReport invalid filter: %v", err)
 	}
-	return srr.get("v1/salesReports", filter.ToQueryParamsMap())
+	return srr.transport.Get(ctx, "v1/salesReports", filter.ToQueryParamsMap())
 }
