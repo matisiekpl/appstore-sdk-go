@@ -14,7 +14,7 @@ import (
 )
 
 const ResponseContentTypeJson = "application/json; charset=utf-8"
-const ResponseContentTypeOctetStream = "application/octet-stream"
+const ResponseContentTypeGzip = "application/a-gzip"
 
 //NewDefaultHttpClient create new http client
 func NewDefaultHttpClient() *http.Client {
@@ -117,16 +117,16 @@ func (t *Transport) Get(ctx context.Context, path string, query map[string]inter
 //ResponseBody struct
 type ResponseBody struct {
 	status int
-	Error  *ResponseBodyError `json:"error,omitempty"`
+	Errors []*ResponseBodyError `json:"errors,omitempty"`
 }
 
 //ResponseBodyError struct
 type ResponseBodyError struct {
 	Id     string `json:"id"`
 	Status string `json:"status"`
-	Code   int64  `json:"code"`
-	Title  int64  `json:"title"`
-	Detail int64  `json:"detail"`
+	Code   string `json:"code"`
+	Title  string `json:"title"`
+	Detail string `json:"detail"`
 }
 
 //IsSuccess method
@@ -156,10 +156,10 @@ func (r *ResponseHandlerJson) RestoreBody(data []byte) (io.ReadCloser, error) {
 	return ioutil.NopCloser(bytes.NewBuffer(data)), nil
 }
 
-type ResponseHandlerStream struct {
+type ResponseHandlerGzip struct {
 }
 
-func (r *ResponseHandlerStream) ReadBody(resp *http.Response) ([]byte, error) {
+func (r *ResponseHandlerGzip) ReadBody(resp *http.Response) ([]byte, error) {
 	defer resp.Body.Close()
 	zr, err := gzip.NewReader(resp.Body)
 	if err != nil {
@@ -169,11 +169,11 @@ func (r *ResponseHandlerStream) ReadBody(resp *http.Response) ([]byte, error) {
 	return ioutil.ReadAll(zr)
 }
 
-func (r *ResponseHandlerStream) UnmarshalBody(data []byte, v interface{}) error {
+func (r *ResponseHandlerGzip) UnmarshalBody(data []byte, v interface{}) error {
 	return UnmarshalCSV(data, v)
 }
 
-func (r *ResponseHandlerStream) RestoreBody(data []byte) (io.ReadCloser, error) {
+func (r *ResponseHandlerGzip) RestoreBody(data []byte) (io.ReadCloser, error) {
 	var b bytes.Buffer
 	gz := gzip.NewWriter(&b)
 	_, err := gz.Write(data)
@@ -193,8 +193,8 @@ func (r *ResponseHandlerStream) RestoreBody(data []byte) (io.ReadCloser, error) 
 func NewResponseHandler(contentType string) ResponseHandlerInterface {
 	var handler ResponseHandlerInterface
 	switch contentType {
-	case ResponseContentTypeOctetStream:
-		handler = &ResponseHandlerStream{}
+	case ResponseContentTypeGzip:
+		handler = &ResponseHandlerGzip{}
 		break
 	case ResponseContentTypeJson:
 		handler = &ResponseHandlerJson{}
