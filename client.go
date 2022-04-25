@@ -17,7 +17,7 @@ type Client struct {
 func (cl *Client) Init() error {
 	token, err := cl.auth.BuildAuthToken()
 	if err != nil {
-		return fmt.Errorf("client@init error: %v", err)
+		return fmt.Errorf("client.init error: %v", err)
 	}
 	cl.transport = NewHttpTransport(cl.Cfg, token, cl.http)
 	return nil

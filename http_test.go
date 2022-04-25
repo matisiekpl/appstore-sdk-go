@@ -231,7 +231,7 @@ func Test_HTTP_Transport_RequestGETSuccess(t *testing.T) {
 //	ctx := context.Background()
 //	_, err := transport.Get(ctx, "foo", nil)
 //	assert.Error(t, err)
-//	assert.Equal(t, "transport@request invalid token: <nil>", err.Error())
+//	assert.Equal(t, "transport.request invalid token: <nil>", err.Error())
 //}
 
 func Test_HTTP_NewHttpTransport(t *testing.T) {

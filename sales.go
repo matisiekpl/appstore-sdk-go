@@ -11,12 +11,44 @@ type SalesReportsResource struct {
 	*ResourceAbstract
 }
 
-//GetReport Get sales report by filter
-func (srr *SalesReportsResource) GetReport(ctx context.Context, filter *SalesReportsFilter) (*http.Response, error) {
+//SalesReportSaleResponse struct
+type SalesReportSaleResponse struct {
+	*ResponseBody
+	Data []*SalesReportSale `json:"data,omitempty"`
+}
+
+//GetReports Get sales report by filter
+func (srr *SalesReportsResource) GetReports(ctx context.Context, filter *SalesReportsFilter) (*http.Response, error) {
 	filter.VendorNumber = srr.config.VendorNo
 	err := filter.IsValid()
 	if err != nil {
-		return nil, fmt.Errorf("SalesReportsResource@GetReport invalid filter: %v", err)
+		return nil, fmt.Errorf("SalesReportsResource.GetReports invalid filter: %v", err)
 	}
 	return srr.transport.Get(ctx, "v1/salesReports", filter.ToQueryParamsMap())
+}
+
+//GetSalesReportSale
+func (srr *SalesReportsResource) GetSalesReportSale(ctx context.Context, filter *SalesReportsFilter) (*SalesReportSaleResponse, *http.Response, error) {
+	filter.ReportType = SalesReportTypeSales
+	resp, err := srr.GetReports(ctx, filter)
+	if err != nil {
+		return nil, nil, fmt.Errorf("SalesReportsResource.GetSalesReportSale error: %v", err)
+	}
+	result := SalesReportSaleResponse{ResponseBody: &ResponseBody{}}
+	result.status = resp.StatusCode
+	if result.IsSuccess() {
+		reports := []*SalesReportSale{}
+		err = srr.unmarshalResponse(resp, &reports)
+		if err != nil {
+			return &result, resp, fmt.Errorf("SalesReportsResource.GetSalesReportSale error: %v", err)
+		}
+		result.Data = reports
+	} else {
+		err = srr.unmarshalResponse(resp, &result)
+		if err != nil {
+			return &result, resp, fmt.Errorf("SalesReportsResource.GetSalesReportSale error: %v", err)
+		}
+		return &result, resp, fmt.Errorf(result.GetError())
+	}
+	return &result, resp, nil
 }

@@ -52,5 +52,5 @@ func Test_Client_InitError(t *testing.T) {
 	result := NewClientFromConfig(config, nil)
 	err := result.Init()
 	assert.Error(t, err)
-	assert.Equal(t, "client@init error: PrivateKey@DecodePem: AuthKey must be a valid .p8 PEM file", err.Error())
+	assert.Equal(t, "client.init error: PrivateKey.DecodePem: AuthKey must be a valid .p8 PEM file", err.Error())
 }

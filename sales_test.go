@@ -14,7 +14,7 @@ func Test_Sales_GetReport_InvalidFilter(t *testing.T) {
 	filter := &SalesReportsFilter{}
 	filter.TypeSales().SubTypeSummary().Version10()
 	ctx := context.Background()
-	_, err := resource.GetReport(ctx, filter)
+	_, err := resource.GetReports(ctx, filter)
 	assert.Error(t, err)
-	assert.Equal(t, "SalesReportsResource@GetReport invalid filter: SalesReportsFilter@IsValid: Frequency is required", err.Error())
+	assert.Equal(t, "SalesReportsResource.GetReports invalid filter: SalesReportsFilter.IsValid: Frequency is required", err.Error())
 }

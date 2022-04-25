@@ -42,7 +42,7 @@ func Test_Types_CustomInteger_UnmarshalCSVError(t *testing.T) {
 	str := "foo"
 	err := c.UnmarshalCSV(str)
 	assert.Error(t, err)
-	assert.Equal(t, `CustomInteger@UnmarshalCSV Parse int: strconv.Atoi: parsing "foo": invalid syntax`, err.Error())
+	assert.Equal(t, `CustomInteger.UnmarshalCSV Parse int: strconv.Atoi: parsing "foo": invalid syntax`, err.Error())
 }
 
 func Test_Types_CustomFloat64_MarshalJSONSuccess(t *testing.T) {
@@ -81,7 +81,7 @@ func Test_Types_CustomFloat64_UnmarshalCSVError(t *testing.T) {
 	str := "foo"
 	err := c.UnmarshalCSV(str)
 	assert.Error(t, err)
-	assert.Equal(t, `CustomFloat64@UnmarshalCSV Parse float: strconv.ParseFloat: parsing "foo": invalid syntax`, err.Error())
+	assert.Equal(t, `CustomFloat64.UnmarshalCSV Parse float: strconv.ParseFloat: parsing "foo": invalid syntax`, err.Error())
 }
 
 func Test_Types_CustomTimestamp_UnmarshalCSVFilled(t *testing.T) {
@@ -103,7 +103,7 @@ func Test_Types_CustomTimestamp_UnmarshalCSVError(t *testing.T) {
 	str := "foo"
 	err := c.UnmarshalCSV(str)
 	assert.Error(t, err)
-	assert.Equal(t, `CustomTimestamp@UnmarshalJSON ParseTime: parsing time "foo" as "2006-01-02 15:04:05": cannot parse "foo" as "2006"`, err.Error())
+	assert.Equal(t, `CustomTimestamp.UnmarshalJSON ParseTime: parsing time "foo" as "2006-01-02 15:04:05": cannot parse "foo" as "2006"`, err.Error())
 }
 
 func Test_Types_CustomTimestamp_MarshalJSONSuccess(t *testing.T) {
@@ -147,7 +147,7 @@ func Test_Types_CustomDate_UnmarshalCSVError(t *testing.T) {
 	str := "foo"
 	err := c.UnmarshalCSV(str)
 	assert.Error(t, err)
-	assert.Equal(t, `CustomDate@UnmarshalJSON ParseTime: parsing time "foo" as "2006-01-02": cannot parse "foo" as "2006"`, err.Error())
+	assert.Equal(t, `CustomDate.UnmarshalJSON ParseTime: parsing time "foo" as "2006-01-02": cannot parse "foo" as "2006"`, err.Error())
 }
 
 func Test_Types_CustomDate_MarshalJSONSuccess(t *testing.T) {

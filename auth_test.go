@@ -83,5 +83,5 @@ func Test_Auth_TokenBuilder_BuildAuthTokenError(t *testing.T) {
 	auth := NewTokenBuilder(cfg)
 	_, err := auth.BuildAuthToken()
 	assert.Error(t, err)
-	assert.Equal(t, "PrivateKey@DecodePem: AuthKey must be a valid .p8 PEM file", err.Error())
+	assert.Equal(t, "PrivateKey.DecodePem: AuthKey must be a valid .p8 PEM file", err.Error())
 }

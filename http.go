@@ -40,7 +40,7 @@ func (rb *RequestBuilder) isValidToken() bool {
 func (rb *RequestBuilder) buildUri(path string, query map[string]interface{}) (uri *url.URL, err error) {
 	u, err := url.Parse(rb.cfg.Uri)
 	if err != nil {
-		return nil, fmt.Errorf("RequestBuilder@buildUri parse: %v", err)
+		return nil, fmt.Errorf("RequestBuilder.buildUri parse: %v", err)
 	}
 	u.Path = "/" + path
 	u.RawQuery = rb.buildQueryParams(query)
@@ -118,6 +118,15 @@ func (t *Transport) Get(ctx context.Context, path string, query map[string]inter
 type ResponseBody struct {
 	status int
 	Errors []*ResponseBodyError `json:"errors,omitempty"`
+}
+
+//GetError method
+func (r *ResponseBody) GetError() string {
+	err := ""
+	if len(r.Errors) > 0 {
+		err = r.Errors[0].Detail
+	}
+	return err
 }
 
 //ResponseBodyError struct

@@ -193,13 +193,13 @@ func (f *SalesReportsFilter) ToQueryParamsMap() map[string]interface{} {
 //IsValid Validate sales report filter params
 func (f *SalesReportsFilter) IsValid() error {
 	if f.ReportType == "" {
-		return fmt.Errorf("SalesReportsFilter@IsValid: %v", "ReportType is required")
+		return fmt.Errorf("SalesReportsFilter.IsValid: %v", "ReportType is required")
 	}
 	if f.ReportSubType == "" {
-		return fmt.Errorf("SalesReportsFilter@IsValid: %v", "ReportSubType is required")
+		return fmt.Errorf("SalesReportsFilter.IsValid: %v", "ReportSubType is required")
 	}
 	if f.Frequency == "" {
-		return fmt.Errorf("SalesReportsFilter@IsValid: %v", "Frequency is required")
+		return fmt.Errorf("SalesReportsFilter.IsValid: %v", "Frequency is required")
 	}
 	return nil
 }

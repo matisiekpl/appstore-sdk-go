@@ -102,7 +102,7 @@ func Test_SalesReports_Filter_IsInValidReportType(t *testing.T) {
 	filter.Daily().SubTypeSummary().Version10().SetReportDate(date)
 	err := filter.IsValid()
 	assert.Error(t, err)
-	assert.Equal(t, "SalesReportsFilter@IsValid: ReportType is required", err.Error())
+	assert.Equal(t, "SalesReportsFilter.IsValid: ReportType is required", err.Error())
 }
 
 func Test_SalesReports_Filter_IsInValidReportSubType(t *testing.T) {
@@ -111,7 +111,7 @@ func Test_SalesReports_Filter_IsInValidReportSubType(t *testing.T) {
 	filter.Daily().TypeSales().Version10().SetReportDate(date)
 	err := filter.IsValid()
 	assert.Error(t, err)
-	assert.Equal(t, "SalesReportsFilter@IsValid: ReportSubType is required", err.Error())
+	assert.Equal(t, "SalesReportsFilter.IsValid: ReportSubType is required", err.Error())
 }
 
 func Test_SalesReports_Filter_IsInValidFrequency(t *testing.T) {
@@ -120,5 +120,5 @@ func Test_SalesReports_Filter_IsInValidFrequency(t *testing.T) {
 	filter.SubTypeSummary().TypeSales().Version10().SetReportDate(date)
 	err := filter.IsValid()
 	assert.Error(t, err)
-	assert.Equal(t, "SalesReportsFilter@IsValid: Frequency is required", err.Error())
+	assert.Equal(t, "SalesReportsFilter.IsValid: Frequency is required", err.Error())
 }

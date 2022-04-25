@@ -32,7 +32,7 @@ func (ci *CustomInteger) Value() int {
 func (ci *CustomInteger) MarshalJSON() ([]byte, error) {
 	jsonData, err := json.Marshal(ci.Integer)
 	if err != nil {
-		return nil, errors.New("CustomInteger@MarshalJSON: " + err.Error())
+		return nil, errors.New("CustomInteger.MarshalJSON: " + err.Error())
 	}
 	return jsonData, err
 }
@@ -43,7 +43,7 @@ func (ci *CustomInteger) UnmarshalCSV(csv string) error {
 		var err error
 		ci.Integer, err = strconv.Atoi(csv)
 		if err != nil {
-			return fmt.Errorf("CustomInteger@UnmarshalCSV Parse int: %v", err)
+			return fmt.Errorf("CustomInteger.UnmarshalCSV Parse int: %v", err)
 		}
 	}
 	return nil
@@ -65,7 +65,7 @@ func (cf *CustomFloat64) UnmarshalCSV(csv string) error {
 		var err error
 		cf.Float64, err = strconv.ParseFloat(csv, 32)
 		if err != nil {
-			return fmt.Errorf("CustomFloat64@UnmarshalCSV Parse float: %v", err)
+			return fmt.Errorf("CustomFloat64.UnmarshalCSV Parse float: %v", err)
 		}
 	}
 	return nil
@@ -75,7 +75,7 @@ func (cf *CustomFloat64) UnmarshalCSV(csv string) error {
 func (cf *CustomFloat64) MarshalJSON() ([]byte, error) {
 	jsonData, err := json.Marshal(cf.Float64)
 	if err != nil {
-		return nil, errors.New("CustomFloat64@MarshalJSON: " + err.Error())
+		return nil, errors.New("CustomFloat64.MarshalJSON: " + err.Error())
 	}
 	return jsonData, err
 }
@@ -96,7 +96,7 @@ func (ct *CustomTimestamp) UnmarshalCSV(csv string) error {
 		var err error
 		ct.Timestamp, err = time.Parse(CustomTimestampFormatDefault, csv)
 		if err != nil {
-			return fmt.Errorf("CustomTimestamp@UnmarshalJSON ParseTime: %v", err)
+			return fmt.Errorf("CustomTimestamp.UnmarshalJSON ParseTime: %v", err)
 		}
 	}
 	return nil
@@ -110,7 +110,7 @@ func (ct *CustomTimestamp) MarshalJSON() ([]byte, error) {
 	formatted := ct.Timestamp.Format(CustomTimestampFormatDefault)
 	jsonData, err := json.Marshal(formatted)
 	if err != nil {
-		return nil, errors.New("CustomTimestamp@MarshalJSON: " + err.Error())
+		return nil, errors.New("CustomTimestamp.MarshalJSON: " + err.Error())
 	}
 	return jsonData, err
 }
@@ -140,7 +140,7 @@ func (ct *CustomDate) UnmarshalCSV(csv string) error {
 	var err error
 	ct.Date, err = time.Parse(format, csv)
 	if err != nil {
-		return fmt.Errorf("CustomDate@UnmarshalJSON ParseTime: %v", err)
+		return fmt.Errorf("CustomDate.UnmarshalJSON ParseTime: %v", err)
 	}
 	return nil
 }
@@ -152,7 +152,7 @@ func (ct *CustomDate) MarshalJSON() ([]byte, error) {
 	}
 	jsonData, err := json.Marshal(ct.Date.Format(CustomDateFormatDefault))
 	if err != nil {
-		return nil, errors.New("CustomDate@MarshalJSON: " + err.Error())
+		return nil, errors.New("CustomDate.MarshalJSON: " + err.Error())
 	}
 	return jsonData, err
 }
@@ -182,7 +182,7 @@ func (cb *CustomBoolean) UnmarshalCSV(csv string) error {
 func (cb *CustomBoolean) MarshalJSON() ([]byte, error) {
 	jsonData, err := json.Marshal(cb.Boolean)
 	if err != nil {
-		return nil, errors.New("CustomBoolean@MarshalJSON: " + err.Error())
+		return nil, errors.New("CustomBoolean.MarshalJSON: " + err.Error())
 	}
 	return jsonData, err
 }
