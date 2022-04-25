@@ -39,6 +39,8 @@ const (
 	SalesReportTypeSubscription SalesReportType = "SUBSCRIPTION"
 	//SalesReportTypeSubscriptionEvent const
 	SalesReportTypeSubscriptionEvent SalesReportType = "SUBSCRIPTION_EVENT"
+	//SalesReportTypeSubscriptionOfferCodeRedemption const
+	SalesReportTypeSubscriptionOfferCodeRedemption SalesReportType = "SUBSCRIPTION_OFFER_CODE_REDEMPTION"
 	//SalesReportTypeSubscriber const
 	SalesReportTypeSubscriber SalesReportType = "SUBSCRIBER"
 )
@@ -57,6 +59,8 @@ const (
 	SalesReportVersion10 SalesReportVersion = "1_0"
 	//SalesReportVersion12 const
 	SalesReportVersion12 SalesReportVersion = "1_2"
+	//SalesReportVersion13 const
+	SalesReportVersion13 SalesReportVersion = "1_3"
 )
 
 //SalesReportsFilter Sales reports filter
@@ -164,6 +168,17 @@ func (f *SalesReportsFilter) SetVersion(value SalesReportVersion) *SalesReportsF
 	return f
 }
 
+//SetVersion Set version
+func (f *SalesReportsFilter) SetVendorNumber(value string) SalesReportsFilterInterface {
+	f.VendorNumber = value
+	return f
+}
+
+//Version13 Change version to 1_3
+func (f *SalesReportsFilter) Version13() *SalesReportsFilter {
+	return f.SetVersion(SalesReportVersion13)
+}
+
 //Version12 Change version to 1_2
 func (f *SalesReportsFilter) Version12() *SalesReportsFilter {
 	return f.SetVersion(SalesReportVersion12)
@@ -202,4 +217,123 @@ func (f *SalesReportsFilter) IsValid() error {
 		return fmt.Errorf("SalesReportsFilter.IsValid: %v", "Frequency is required")
 	}
 	return nil
+}
+
+type SalesReportsFilterInterface interface {
+	IsValid() error
+	SetVendorNumber(vn string) SalesReportsFilterInterface
+	ToQueryParamsMap() map[string]interface{}
+}
+
+type SalesReportsSalesFilter struct {
+	*SalesReportsFilter
+}
+
+//IsValid Validate sales report filter params
+func (f *SalesReportsSalesFilter) IsValid() error {
+	err := f.SalesReportsFilter.IsValid()
+	if err != nil {
+		return err
+	}
+	if f.ReportType != SalesReportTypeSales {
+		return fmt.Errorf("SalesReportsSalesFilter.IsValid: %v", "ReportType is not valid")
+	}
+	if f.ReportSubType != SalesReportSubTypeSummary {
+		return fmt.Errorf("SalesReportsSalesFilter.IsValid: %v", "ReportSubType is not valid")
+	}
+	if f.Version != SalesReportVersion10 {
+		return fmt.Errorf("SalesReportsSalesFilter.IsValid: %v", "Version is not valid")
+	}
+	return nil
+}
+
+type SalesReportsSubscriptionsFilter struct {
+	*SalesReportsFilter
+}
+
+//IsValid Validate sales report filter params
+func (f *SalesReportsSubscriptionsFilter) IsValid() error {
+	err := f.SalesReportsFilter.IsValid()
+	if err != nil {
+		return err
+	}
+	if f.ReportType != SalesReportTypeSubscription {
+		return fmt.Errorf("SalesReportsSubscriptionsFilter.IsValid: %v", "ReportType is not valid")
+	}
+	if f.ReportSubType != SalesReportSubTypeSummary {
+		return fmt.Errorf("SalesReportsSubscriptionsFilter.IsValid: %v", "ReportSubType is not valid")
+	}
+	if f.Frequency != SalesReportFrequencyDaily {
+		return fmt.Errorf("SalesReportsSubscriptionsFilter.IsValid: %v", "Frequency is not valid")
+	}
+	if f.Version != SalesReportVersion12 && f.Version != SalesReportVersion13 {
+		return fmt.Errorf("SalesReportsSubscriptionsFilter.IsValid: %v", "Version is not valid")
+	}
+	return nil
+}
+
+type SalesReportsSubscriptionsEventsFilter struct {
+	*SalesReportsFilter
+}
+
+//IsValid Validate sales report filter params
+func (f *SalesReportsSubscriptionsEventsFilter) IsValid() error {
+	err := f.SalesReportsFilter.IsValid()
+	if err != nil {
+		return err
+	}
+	if f.ReportType != SalesReportTypeSubscriptionEvent {
+		return fmt.Errorf("SalesReportsSubscriptionsEventsFilter.IsValid: %v", "ReportType is not valid")
+	}
+	if f.ReportSubType != SalesReportSubTypeSummary {
+		return fmt.Errorf("SalesReportsSubscriptionsEventsFilter.IsValid: %v", "ReportSubType is not valid")
+	}
+	if f.Frequency != SalesReportFrequencyDaily {
+		return fmt.Errorf("SalesReportsSubscriptionsEventsFilter.IsValid: %v", "Frequency is not valid")
+	}
+	if f.Version != SalesReportVersion12 && f.Version != SalesReportVersion13 {
+		return fmt.Errorf("SalesReportsSubscriptionsEventsFilter.IsValid: %v", "Version is not valid")
+	}
+	return nil
+}
+
+type SalesReportsSubscribersFilter struct {
+	*SalesReportsFilter
+}
+
+//IsValid Validate sales report filter params
+func (f *SalesReportsSubscribersFilter) IsValid() error {
+	err := f.SalesReportsFilter.IsValid()
+	if err != nil {
+		return err
+	}
+	if f.ReportType != SalesReportTypeSubscriber {
+		return fmt.Errorf("SalesReportsSubscribersFilter.IsValid: %v", "ReportType is not valid")
+	}
+	if f.ReportSubType != SalesReportSubTypeDetailed {
+		return fmt.Errorf("SalesReportsSubscribersFilter.IsValid: %v", "ReportSubType is not valid")
+	}
+	if f.Frequency != SalesReportFrequencyDaily {
+		return fmt.Errorf("SalesReportsSubscribersFilter.IsValid: %v", "Frequency is not valid")
+	}
+	if f.Version != SalesReportVersion12 && f.Version != SalesReportVersion13 {
+		return fmt.Errorf("SalesReportsSubscribersFilter.IsValid: %v", "Version is not valid")
+	}
+	return nil
+}
+
+func NewSalesReportsSalesFilter() *SalesReportsSalesFilter {
+	return &SalesReportsSalesFilter{&SalesReportsFilter{ReportType: SalesReportTypeSales}}
+}
+
+func NewSalesReportsSubscriptionsFilter() *SalesReportsSubscriptionsFilter {
+	return &SalesReportsSubscriptionsFilter{&SalesReportsFilter{ReportType: SalesReportTypeSubscription}}
+}
+
+func NewSalesReportsSubscriptionsEventsFilter() *SalesReportsSubscriptionsEventsFilter {
+	return &SalesReportsSubscriptionsEventsFilter{&SalesReportsFilter{ReportType: SalesReportTypeSubscriptionEvent}}
+}
+
+func NewSalesReportsSubscribersFilter() *SalesReportsSubscribersFilter {
+	return &SalesReportsSubscribersFilter{&SalesReportsFilter{ReportType: SalesReportTypeSubscriber}}
 }

@@ -18,8 +18,8 @@ type SalesReportSaleResponse struct {
 }
 
 //GetReports Get sales report by filter
-func (srr *SalesReportsResource) GetReports(ctx context.Context, filter *SalesReportsFilter) (*http.Response, error) {
-	filter.VendorNumber = srr.config.VendorNo
+func (srr *SalesReportsResource) GetReports(ctx context.Context, filter SalesReportsFilterInterface) (*http.Response, error) {
+	filter.SetVendorNumber(srr.config.VendorNo)
 	err := filter.IsValid()
 	if err != nil {
 		return nil, fmt.Errorf("SalesReportsResource.GetReports invalid filter: %v", err)
@@ -28,8 +28,7 @@ func (srr *SalesReportsResource) GetReports(ctx context.Context, filter *SalesRe
 }
 
 //GetSalesReportSale
-func (srr *SalesReportsResource) GetSalesReportSale(ctx context.Context, filter *SalesReportsFilter) (*SalesReportSaleResponse, *http.Response, error) {
-	filter.ReportType = SalesReportTypeSales
+func (srr *SalesReportsResource) GetSalesReportSale(ctx context.Context, filter *SalesReportsSalesFilter) (*SalesReportSaleResponse, *http.Response, error) {
 	resp, err := srr.GetReports(ctx, filter)
 	if err != nil {
 		return nil, nil, fmt.Errorf("SalesReportsResource.GetSalesReportSale error: %v", err)
