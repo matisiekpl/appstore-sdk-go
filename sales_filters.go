@@ -70,7 +70,6 @@ type SalesReportsFilter struct {
 	ReportType    SalesReportType      //(Required) The report to download. For more details on each report type see About Reports. Possible values: SALES, PRE_ORDER, NEWSSTAND, SUBSCRIPTION, SUBSCRIPTION_EVENT, SUBSCRIBER
 	Frequency     SalesReportFrequency //(Required) Frequency of the report to download. For a list of values, see Allowed Values Based on Sales Report Type below. Possible values: DAILY, WEEKLY, MONTHLY, YEARLY
 	Version       SalesReportVersion   //The version of the report. For a list of values, see Allowed Values Based on Sales Report Type below.
-	VendorNumber  string               //(Required) You can find your vendor number in Payments and Financial Reports.
 }
 
 //SetReportDate Set report date
@@ -168,12 +167,6 @@ func (f *SalesReportsFilter) SetVersion(value SalesReportVersion) *SalesReportsF
 	return f
 }
 
-//SetVersion Set version
-func (f *SalesReportsFilter) SetVendorNumber(value string) SalesReportsFilterInterface {
-	f.VendorNumber = value
-	return f
-}
-
 //Version13 Change version to 1_3
 func (f *SalesReportsFilter) Version13() *SalesReportsFilter {
 	return f.SetVersion(SalesReportVersion13)
@@ -195,7 +188,6 @@ func (f *SalesReportsFilter) ToQueryParamsMap() map[string]interface{} {
 	qs["filter[reportSubType]"] = string(f.ReportSubType)
 	qs["filter[reportType]"] = string(f.ReportType)
 	qs["filter[frequency]"] = string(f.Frequency)
-	qs["filter[vendorNumber]"] = f.VendorNumber
 	if !f.ReportDate.IsZero() {
 		qs["filter[reportDate]"] = f.ReportDate.Format("2006-01-02")
 	}
@@ -221,7 +213,6 @@ func (f *SalesReportsFilter) IsValid() error {
 
 type SalesReportsFilterInterface interface {
 	IsValid() error
-	SetVendorNumber(vn string) SalesReportsFilterInterface
 	ToQueryParamsMap() map[string]interface{}
 }
 
@@ -322,6 +313,78 @@ func (f *SalesReportsSubscribersFilter) IsValid() error {
 	return nil
 }
 
+type SalesSubscriptionOfferCodeRedemptionFilter struct {
+	*SalesReportsFilter
+}
+
+//IsValid Validate sales report filter params
+func (f *SalesSubscriptionOfferCodeRedemptionFilter) IsValid() error {
+	err := f.SalesReportsFilter.IsValid()
+	if err != nil {
+		return err
+	}
+	if f.ReportType != SalesReportTypeSubscriptionOfferCodeRedemption {
+		return fmt.Errorf("SalesSubscriptionOfferCodeRedemptionFilter.IsValid: %v", "ReportType is not valid")
+	}
+	if f.ReportSubType != SalesReportSubTypeSummary {
+		return fmt.Errorf("SalesSubscriptionOfferCodeRedemptionFilter.IsValid: %v", "ReportSubType is not valid")
+	}
+	if f.Frequency != SalesReportFrequencyDaily {
+		return fmt.Errorf("SalesSubscriptionOfferCodeRedemptionFilter.IsValid: %v", "Frequency is not valid")
+	}
+	if f.Version != SalesReportVersion10 {
+		return fmt.Errorf("SalesSubscriptionOfferCodeRedemptionFilter.IsValid: %v", "Version is not valid")
+	}
+	return nil
+}
+
+type SalesNewsstandFilter struct {
+	*SalesReportsFilter
+}
+
+//IsValid Validate sales report filter params
+func (f *SalesNewsstandFilter) IsValid() error {
+	err := f.SalesReportsFilter.IsValid()
+	if err != nil {
+		return err
+	}
+	if f.ReportType != SalesReportTypeNewsStand {
+		return fmt.Errorf("SalesNewsstandFilter.IsValid: %v", "ReportType is not valid")
+	}
+	if f.ReportSubType != SalesReportSubTypeDetailed {
+		return fmt.Errorf("SalesNewsstandFilter.IsValid: %v", "ReportSubType is not valid")
+	}
+	if f.Frequency != SalesReportFrequencyDaily && f.Frequency != SalesReportFrequencyWeekly {
+		return fmt.Errorf("SalesNewsstandFilter.IsValid: %v", "Frequency is not valid")
+	}
+	if f.Version != SalesReportVersion10 {
+		return fmt.Errorf("SalesNewsstandFilter.IsValid: %v", "Version is not valid")
+	}
+	return nil
+}
+
+type SalesPreOrderFilter struct {
+	*SalesReportsFilter
+}
+
+//IsValid Validate sales report filter params
+func (f *SalesPreOrderFilter) IsValid() error {
+	err := f.SalesReportsFilter.IsValid()
+	if err != nil {
+		return err
+	}
+	if f.ReportType != SalesReportTypePreorder {
+		return fmt.Errorf("SalesPreOrderFilter.IsValid: %v", "ReportType is not valid")
+	}
+	if f.ReportSubType != SalesReportSubTypeSummary {
+		return fmt.Errorf("SalesPreOrderFilter.IsValid: %v", "ReportSubType is not valid")
+	}
+	if f.Version != SalesReportVersion10 {
+		return fmt.Errorf("SalesPreOrderFilter.IsValid: %v", "Version is not valid")
+	}
+	return nil
+}
+
 func NewSalesReportsSalesFilter() *SalesReportsSalesFilter {
 	return &SalesReportsSalesFilter{&SalesReportsFilter{ReportType: SalesReportTypeSales}}
 }
@@ -336,4 +399,16 @@ func NewSalesReportsSubscriptionsEventsFilter() *SalesReportsSubscriptionsEvents
 
 func NewSalesReportsSubscribersFilter() *SalesReportsSubscribersFilter {
 	return &SalesReportsSubscribersFilter{&SalesReportsFilter{ReportType: SalesReportTypeSubscriber}}
+}
+
+func NewSalesSubscriptionOfferCodeRedemptionFilter() *SalesSubscriptionOfferCodeRedemptionFilter {
+	return &SalesSubscriptionOfferCodeRedemptionFilter{&SalesReportsFilter{ReportType: SalesReportTypeSubscriptionOfferCodeRedemption}}
+}
+
+func NewSalesNewsstandFilter() *SalesNewsstandFilter {
+	return &SalesNewsstandFilter{&SalesReportsFilter{ReportType: SalesReportTypeNewsStand}}
+}
+
+func NewSalesPreOrderFilter() *SalesPreOrderFilter {
+	return &SalesPreOrderFilter{&SalesReportsFilter{ReportType: SalesReportTypePreorder}}
 }

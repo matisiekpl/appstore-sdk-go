@@ -19,12 +19,12 @@ type SalesReportSaleResponse struct {
 
 //GetReports Get sales report by filter
 func (srr *SalesReportsResource) GetReports(ctx context.Context, filter SalesReportsFilterInterface) (*http.Response, error) {
-	filter.SetVendorNumber(srr.config.VendorNo)
 	err := filter.IsValid()
 	if err != nil {
 		return nil, fmt.Errorf("SalesReportsResource.GetReports invalid filter: %v", err)
 	}
-	return srr.transport.Get(ctx, "v1/salesReports", filter.ToQueryParamsMap())
+	queryParams := srr.buildQueryParams(filter)
+	return srr.transport.Get(ctx, "v1/salesReports", queryParams)
 }
 
 //GetSalesReportSale
@@ -50,4 +50,10 @@ func (srr *SalesReportsResource) GetSalesReportSale(ctx context.Context, filter 
 		return &result, resp, fmt.Errorf(result.GetError())
 	}
 	return &result, resp, nil
+}
+
+func (srr *SalesReportsResource) buildQueryParams(filter SalesReportsFilterInterface) map[string]interface{} {
+	queryParams := filter.ToQueryParamsMap()
+	queryParams["filter[vendorNumber]"] = srr.config.VendorNo
+	return queryParams
 }

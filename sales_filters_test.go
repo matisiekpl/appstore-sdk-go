@@ -23,7 +23,6 @@ func Test_Sales_SalesReportsFilter_ToQueryParamsMapOnlyRequired(t *testing.T) {
 	qs["filter[reportSubType]"] = string(SalesReportSubTypeSummary)
 	qs["filter[reportType]"] = string(SalesReportTypeSales)
 	qs["filter[frequency]"] = string(SalesReportFrequencyYearly)
-	qs["filter[vendorNumber]"] = ""
 	assert.Equal(t, qs, filter.ToQueryParamsMap())
 }
 
@@ -38,7 +37,6 @@ func Test_Sales_SalesReportsFilter_ToQueryParamsMap(t *testing.T) {
 	qs["filter[reportType]"] = string(SalesReportTypeSales)
 	qs["filter[frequency]"] = string(SalesReportFrequencyDaily)
 	qs["filter[version]"] = string(SalesReportVersion10)
-	qs["filter[vendorNumber]"] = ""
 	assert.Equal(t, qs, filter.ToQueryParamsMap())
 }
 
@@ -186,4 +184,175 @@ func Test_Sales_SalesReportsSubscriptionsFilter_IsInvalidVersion(t *testing.T) {
 	err := filter.IsValid()
 	assert.Error(t, err)
 	assert.Equal(t, "SalesReportsSubscriptionsFilter.IsValid: Version is not valid", err.Error())
+}
+
+func Test_Sales_SalesReportsSubscriptionsEventsFilter_IsInvalidReportType(t *testing.T) {
+	filter := NewSalesReportsSubscriptionsEventsFilter()
+	filter.SubTypeSummary().Version12().Daily()
+	filter.TypePreOrder()
+	err := filter.IsValid()
+	assert.Error(t, err)
+	assert.Equal(t, "SalesReportsSubscriptionsEventsFilter.IsValid: ReportType is not valid", err.Error())
+}
+
+func Test_Sales_SalesReportsSubscriptionsEventsFilter_IsInvalidReportSubType(t *testing.T) {
+	filter := NewSalesReportsSubscriptionsEventsFilter()
+	filter.Version12().Daily()
+	filter.SubTypeOptIn()
+	err := filter.IsValid()
+	assert.Error(t, err)
+	assert.Equal(t, "SalesReportsSubscriptionsEventsFilter.IsValid: ReportSubType is not valid", err.Error())
+}
+
+func Test_Sales_SalesReportsSubscriptionsEventsFilter_IsInvalidReportFrequency(t *testing.T) {
+	filter := NewSalesReportsSubscriptionsEventsFilter()
+	filter.SubTypeSummary().Version12()
+	filter.Yearly()
+	err := filter.IsValid()
+	assert.Error(t, err)
+	assert.Equal(t, "SalesReportsSubscriptionsEventsFilter.IsValid: Frequency is not valid", err.Error())
+}
+
+func Test_Sales_SalesReportsSubscriptionsEventsFilter_IsInvalidReportVersion(t *testing.T) {
+	filter := NewSalesReportsSubscriptionsEventsFilter()
+	filter.SubTypeSummary().Daily()
+	filter.Version10()
+	err := filter.IsValid()
+	assert.Error(t, err)
+	assert.Equal(t, "SalesReportsSubscriptionsEventsFilter.IsValid: Version is not valid", err.Error())
+}
+
+func Test_Sales_SalesReportsSubscribersFilter_IsInvalidReportType(t *testing.T) {
+	filter := NewSalesReportsSubscribersFilter()
+	filter.SubTypeDetailed().Version12().Daily()
+	filter.TypePreOrder()
+	err := filter.IsValid()
+	assert.Error(t, err)
+	assert.Equal(t, "SalesReportsSubscribersFilter.IsValid: ReportType is not valid", err.Error())
+}
+
+func Test_Sales_SalesReportsSubscribersFilter_IsInvalidReportSubType(t *testing.T) {
+	filter := NewSalesReportsSubscribersFilter()
+	filter.Version12().Daily()
+	filter.SubTypeSummary()
+	err := filter.IsValid()
+	assert.Error(t, err)
+	assert.Equal(t, "SalesReportsSubscribersFilter.IsValid: ReportSubType is not valid", err.Error())
+}
+
+func Test_Sales_SalesReportsSubscribersFilter_IsInvalidReportFrequency(t *testing.T) {
+	filter := NewSalesReportsSubscribersFilter()
+	filter.SubTypeDetailed().Version12()
+	filter.Yearly()
+	err := filter.IsValid()
+	assert.Error(t, err)
+	assert.Equal(t, "SalesReportsSubscribersFilter.IsValid: Frequency is not valid", err.Error())
+}
+
+func Test_Sales_SalesReportsSubscribersFilter_IsInvalidReportVersion(t *testing.T) {
+	filter := NewSalesReportsSubscribersFilter()
+	filter.SubTypeDetailed().Daily()
+	filter.Version10()
+	err := filter.IsValid()
+	assert.Error(t, err)
+	assert.Equal(t, "SalesReportsSubscribersFilter.IsValid: Version is not valid", err.Error())
+}
+
+func Test_Sales_SalesSubscriptionOfferCodeRedemptionFilter_IsInvalidReportType(t *testing.T) {
+	filter := NewSalesSubscriptionOfferCodeRedemptionFilter()
+	filter.SubTypeDetailed().Version12().Daily()
+	filter.TypePreOrder()
+	err := filter.IsValid()
+	assert.Error(t, err)
+	assert.Equal(t, "SalesSubscriptionOfferCodeRedemptionFilter.IsValid: ReportType is not valid", err.Error())
+}
+
+func Test_Sales_SalesSubscriptionOfferCodeRedemptionFilter_IsInvalidReportSubType(t *testing.T) {
+	filter := NewSalesSubscriptionOfferCodeRedemptionFilter()
+	filter.Version10().Daily()
+	filter.SubTypeDetailed()
+	err := filter.IsValid()
+	assert.Error(t, err)
+	assert.Equal(t, "SalesSubscriptionOfferCodeRedemptionFilter.IsValid: ReportSubType is not valid", err.Error())
+}
+
+func Test_Sales_SalesSubscriptionOfferCodeRedemptionFilter_IsInvalidReportFrequency(t *testing.T) {
+	filter := NewSalesSubscriptionOfferCodeRedemptionFilter()
+	filter.SubTypeSummary().Version10()
+	filter.Yearly()
+	err := filter.IsValid()
+	assert.Error(t, err)
+	assert.Equal(t, "SalesSubscriptionOfferCodeRedemptionFilter.IsValid: Frequency is not valid", err.Error())
+}
+
+func Test_Sales_SalesSubscriptionOfferCodeRedemptionFilter_IsInvalidReportVersion(t *testing.T) {
+	filter := NewSalesSubscriptionOfferCodeRedemptionFilter()
+	filter.SubTypeSummary().Daily()
+	filter.Version12()
+	err := filter.IsValid()
+	assert.Error(t, err)
+	assert.Equal(t, "SalesSubscriptionOfferCodeRedemptionFilter.IsValid: Version is not valid", err.Error())
+}
+
+func Test_Sales_SalesNewsstandFilter_IsInvalidReportType(t *testing.T) {
+	filter := NewSalesNewsstandFilter()
+	filter.SubTypeDetailed().Version10().Daily()
+	filter.TypePreOrder()
+	err := filter.IsValid()
+	assert.Error(t, err)
+	assert.Equal(t, "SalesNewsstandFilter.IsValid: ReportType is not valid", err.Error())
+}
+
+func Test_Sales_SalesNewsstandFilter_IsInvalidReportSubType(t *testing.T) {
+	filter := NewSalesNewsstandFilter()
+	filter.Version10().Daily()
+	filter.SubTypeSummary()
+	err := filter.IsValid()
+	assert.Error(t, err)
+	assert.Equal(t, "SalesNewsstandFilter.IsValid: ReportSubType is not valid", err.Error())
+}
+
+func Test_Sales_SalesNewsstandFilter_IsInvalidReportFrequency(t *testing.T) {
+	filter := NewSalesNewsstandFilter()
+	filter.SubTypeDetailed().Version10()
+	filter.Yearly()
+	err := filter.IsValid()
+	assert.Error(t, err)
+	assert.Equal(t, "SalesNewsstandFilter.IsValid: Frequency is not valid", err.Error())
+}
+
+func Test_Sales_SalesNewsstandFilter_IsInvalidReportVersion(t *testing.T) {
+	filter := NewSalesNewsstandFilter()
+	filter.SubTypeDetailed().Daily()
+	filter.Version12()
+	err := filter.IsValid()
+	assert.Error(t, err)
+	assert.Equal(t, "SalesNewsstandFilter.IsValid: Version is not valid", err.Error())
+}
+
+func Test_Sales_SalesPreOrderFilter_IsInvalidReportType(t *testing.T) {
+	filter := NewSalesPreOrderFilter()
+	filter.SubTypeSummary().Version10().Daily()
+	filter.TypeNewsStand()
+	err := filter.IsValid()
+	assert.Error(t, err)
+	assert.Equal(t, "SalesPreOrderFilter.IsValid: ReportType is not valid", err.Error())
+}
+
+func Test_Sales_SalesPreOrderFilter_IsInvalidReportSubType(t *testing.T) {
+	filter := NewSalesPreOrderFilter()
+	filter.Version10().Daily()
+	filter.SubTypeDetailed()
+	err := filter.IsValid()
+	assert.Error(t, err)
+	assert.Equal(t, "SalesPreOrderFilter.IsValid: ReportSubType is not valid", err.Error())
+}
+
+func Test_Sales_SalesPreOrderFilter_IsInvalidReportVersion(t *testing.T) {
+	filter := NewSalesPreOrderFilter()
+	filter.SubTypeSummary().Daily()
+	filter.Version12()
+	err := filter.IsValid()
+	assert.Error(t, err)
+	assert.Equal(t, "SalesPreOrderFilter.IsValid: Version is not valid", err.Error())
 }

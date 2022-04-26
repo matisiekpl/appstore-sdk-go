@@ -117,7 +117,9 @@ func (t *Transport) Get(ctx context.Context, path string, query map[string]inter
 //ResponseBody struct
 type ResponseBody struct {
 	status int
-	Errors []*ResponseBodyError `json:"errors,omitempty"`
+	//ErrorResult Information with error details that an API returns in the response body whenever the API request is not successful.
+	// .see https://developer.apple.com/documentation/appstoreconnectapi/errorresponse
+	Errors []*Error `json:"errors,omitempty"`
 }
 
 //GetError method
@@ -127,15 +129,6 @@ func (r *ResponseBody) GetError() string {
 		err = r.Errors[0].Detail
 	}
 	return err
-}
-
-//ResponseBodyError struct
-type ResponseBodyError struct {
-	Id     string `json:"id"`
-	Status string `json:"status"`
-	Code   string `json:"code"`
-	Title  string `json:"title"`
-	Detail string `json:"detail"`
 }
 
 //IsSuccess method

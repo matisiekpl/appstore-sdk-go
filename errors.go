@@ -1,16 +1,5 @@
 package appstore
 
-//ErrorResult Information with error details that an API returns in the response body whenever the API request is not successful.
-// .see https://developer.apple.com/documentation/appstoreconnectapi/errorresponse
-type ErrorResult struct {
-	Errors []*Error `json:"errors"` //An array of one or more errors.
-}
-
-//GetError Get first error from stack
-func (e *ErrorResult) GetError() *Error {
-	return e.Errors[0]
-}
-
 //Error The details about one error that is returned when an API request is not successful.
 // .see https://developer.apple.com/documentation/appstoreconnectapi/errorresponse/errors
 type Error struct {
