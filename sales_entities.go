@@ -1,7 +1,7 @@
 package appstore
 
-//SalesReportSale Aggregated sales and download data for your apps and In-App Purchases
-type SalesReportSale struct {
+//SalesReport Aggregated sales and download data for your apps and In-App Purchases
+type SalesReport struct {
 	Provider              string        `csv:"Provider" json:"provider"`                               //The service provider in your reports (typically Apple).
 	ProviderCountry       string        `csv:"Provider Country" json:"provider_country"`               //The service provider country code (typically U.S.).
 	SKU                   string        `csv:"SKU" json:"sku"`                                         //A product identifier provided by you during app setup.
@@ -32,8 +32,8 @@ type SalesReportSale struct {
 	OrderType             string        `csv:"Order Type" json:"order_type"`                           //For introductory offers or subscription offers, indicates what type of transaction this line item is: Pay Up Front or Pay As You Go. For pre-orders, indicates whether a purchase originated from a Pre-Order. For promotional offers, the field will populate the Order ID.
 }
 
-//SalesReportSubscription Total number of Active Subscriptions, Subscriptions with Introductory Prices, and Marketing Opt-Ins for your auto-renewable subscriptions.
-type SalesReportSubscription struct {
+//SubscriptionsReport Total number of Active Subscriptions, Subscriptions with Introductory Prices, and Marketing Opt-Ins for your auto-renewable subscriptions.
+type SubscriptionsReport struct {
 	AppName                                        string        `csv:"App Name" json:"app_name"`
 	AppAppleID                                     CustomInteger `csv:"App Apple ID" json:"app_apple_id"`
 	SubscriptionName                               string        `csv:"Subscription Name" json:"subscription_name"`
@@ -64,8 +64,8 @@ type SalesReportSubscription struct {
 	GracePeriod                                    CustomInteger `csv:"Grace Period" json:"grace_period"`
 }
 
-//SalesReportSubscriptionEvent Aggregated data about subscriber activity, including upgrades, renewals, and introductory price conversions
-type SalesReportSubscriptionEvent struct {
+//SubscriptionsEventsReport Aggregated data about subscriber activity, including upgrades, renewals, and introductory price conversions
+type SubscriptionsEventsReport struct {
 	EventDate                    CustomDate    `csv:"Event Date" json:"event_date"`
 	Event                        string        `csv:"Event" json:"event"`
 	AppName                      string        `csv:"App Name" json:"app_name"`
@@ -96,8 +96,8 @@ type SalesReportSubscriptionEvent struct {
 	Quantity                     CustomInteger `csv:"Quantity" json:"quantity"`
 }
 
-//SalesReportSubscriber Transaction-level data about subscriber activity using randomly generated Subscriber IDs.
-type SalesReportSubscriber struct {
+//SubscribersReport Transaction-level data about subscriber activity using randomly generated Subscriber IDs.
+type SubscribersReport struct {
 	EventDate                    CustomDate    `csv:"Event Date" json:"event_date"`
 	AppName                      string        `csv:"App Name" json:"app_name"`
 	AppAppleID                   CustomInteger `csv:"App Apple ID" json:"app_apple_id"`

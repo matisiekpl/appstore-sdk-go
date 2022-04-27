@@ -30,29 +30,35 @@ import (
     appstore_sdk "github.com/kachit/appstore-sdk-go/v1"
 )
 
-func yourFuncName(){ 
-    cfg := appstore_sdk.NewConfig("foo", "bar", "baz", "path/to/your/private.key")
+func main(){
+    cfg := appstore_sdk.NewConfig("Issuer Id", "Key Id", "Vendor No", "path/to/your/private.key")
     client := appstore_sdk.NewClientFromConfig(cfg, nil)
     
     //Build auth token
     err := client.Init()
-    fmt.Println(err)
-
-    //Build filter
-    date, _ := time.Parse("2006-01-02", "2020-05-05")
-    filter := &appstore_sdk.SalesReportsFilter{}
-    filter.Daily().TypeSales().SubTypeSummary().Version10().SetReportDate(date)
-
-    //Get data
-    resp, err := client.SalesReports().GetReport(filter)
-    if resp.IsSuccess() {
-        reports := []*appstore_sdk.SalesReportSale{}
-        err = resp.UnmarshalCSV(&reports)
-        fmt.Println(reports[0])
-    } else {
-        var errorResult *appstore_sdk.ErrorResult
-        _ = resp.UnmarshalError(&errorResult)
-        err := errorResult.GetError()
-        fmt.Println(err)
+    if err != nil {
+        fmt.Printf("Wrong API client init " + err.Error())
+        panic(err)
     }
 }
+```
+
+### Get sales reports sales
+```go
+ctx := context.Background()
+date, _ := time.Parse("2006-01-02", "2020-05-05")
+filter := appstore_sdk.NewSalesReportsSalesFilter()
+filter.Daily().SubTypeSummary().Version10().SetReportDate(date)
+
+result, resp, err := client.SalesReports().GetSalesReports(ctx, filter)
+if err != nil {
+    fmt.Printf("Wrong API request " + err.Error())
+    panic(err)
+}
+
+//Dump raw response
+fmt.Println(response)
+
+//Dump result
+fmt.Println(result.Data[0])
+```

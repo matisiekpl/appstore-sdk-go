@@ -11,10 +11,28 @@ type SalesReportsResource struct {
 	*ResourceAbstract
 }
 
-//SalesReportSaleResponse struct
-type SalesReportSaleResponse struct {
+//SalesReportsResponse struct
+type SalesReportsResponse struct {
 	*ResponseBody
-	Data []*SalesReportSale `json:"data,omitempty"`
+	Data []*SalesReport `json:"data,omitempty"`
+}
+
+//SubscriptionsReportsResponse struct
+type SubscriptionsReportsResponse struct {
+	*ResponseBody
+	Data []*SubscriptionsReport `json:"data,omitempty"`
+}
+
+//SubscriptionsEventsReportsResponse struct
+type SubscriptionsEventsReportsResponse struct {
+	*ResponseBody
+	Data []*SubscriptionsEventsReport `json:"data,omitempty"`
+}
+
+//SubscribersReportsResponse struct
+type SubscribersReportsResponse struct {
+	*ResponseBody
+	Data []*SubscribersReport `json:"data,omitempty"`
 }
 
 //GetReports Get sales report by filter
@@ -27,25 +45,75 @@ func (srr *SalesReportsResource) GetReports(ctx context.Context, filter SalesRep
 	return srr.transport.Get(ctx, "v1/salesReports", queryParams)
 }
 
-//GetSalesReportSale
-func (srr *SalesReportsResource) GetSalesReportSale(ctx context.Context, filter *SalesReportsSalesFilter) (*SalesReportSaleResponse, *http.Response, error) {
+//GetSalesReports
+func (srr *SalesReportsResource) GetSalesReports(ctx context.Context, filter *SalesReportsSalesFilter) (*SalesReportsResponse, *http.Response, error) {
 	resp, err := srr.GetReports(ctx, filter)
 	if err != nil {
-		return nil, nil, fmt.Errorf("SalesReportsResource.GetSalesReportSale error: %v", err)
+		return nil, nil, fmt.Errorf("SalesReportsResource.GetSalesReports error: %v", err)
 	}
-	result := SalesReportSaleResponse{ResponseBody: &ResponseBody{}}
+	result := SalesReportsResponse{ResponseBody: &ResponseBody{}}
 	result.status = resp.StatusCode
 	if result.IsSuccess() {
-		reports := []*SalesReportSale{}
+		reports := []*SalesReport{}
 		err = srr.unmarshalResponse(resp, &reports)
 		if err != nil {
-			return &result, resp, fmt.Errorf("SalesReportsResource.GetSalesReportSale error: %v", err)
+			return &result, resp, fmt.Errorf("SalesReportsResource.GetSalesReports error: %v", err)
 		}
 		result.Data = reports
 	} else {
 		err = srr.unmarshalResponse(resp, &result)
 		if err != nil {
-			return &result, resp, fmt.Errorf("SalesReportsResource.GetSalesReportSale error: %v", err)
+			return &result, resp, fmt.Errorf("SalesReportsResource.GetSalesReports error: %v", err)
+		}
+		return &result, resp, fmt.Errorf(result.GetError())
+	}
+	return &result, resp, nil
+}
+
+//GetSubscriptionsReports
+func (srr *SalesReportsResource) GetSubscriptionsReports(ctx context.Context, filter *SalesReportsSubscriptionsFilter) (*SubscriptionsReportsResponse, *http.Response, error) {
+	resp, err := srr.GetReports(ctx, filter)
+	if err != nil {
+		return nil, nil, fmt.Errorf("SalesReportsResource.GetSubscriptionsReports error: %v", err)
+	}
+	result := SubscriptionsReportsResponse{ResponseBody: &ResponseBody{}}
+	result.status = resp.StatusCode
+	if result.IsSuccess() {
+		reports := []*SubscriptionsReport{}
+		err = srr.unmarshalResponse(resp, &reports)
+		if err != nil {
+			return &result, resp, fmt.Errorf("SalesReportsResource.GetSubscriptionsReports error: %v", err)
+		}
+		result.Data = reports
+	} else {
+		err = srr.unmarshalResponse(resp, &result)
+		if err != nil {
+			return &result, resp, fmt.Errorf("SalesReportsResource.GetSubscriptionsReports error: %v", err)
+		}
+		return &result, resp, fmt.Errorf(result.GetError())
+	}
+	return &result, resp, nil
+}
+
+//GetSubscriptionsEventsReports
+func (srr *SalesReportsResource) GetSubscriptionsEventsReports(ctx context.Context, filter *SalesReportsSubscriptionsEventsFilter) (*SubscriptionsEventsReportsResponse, *http.Response, error) {
+	resp, err := srr.GetReports(ctx, filter)
+	if err != nil {
+		return nil, nil, fmt.Errorf("SalesReportsResource.GetSubscriptionsReports error: %v", err)
+	}
+	result := SubscriptionsEventsReportsResponse{ResponseBody: &ResponseBody{}}
+	result.status = resp.StatusCode
+	if result.IsSuccess() {
+		reports := []*SubscriptionsEventsReport{}
+		err = srr.unmarshalResponse(resp, &reports)
+		if err != nil {
+			return &result, resp, fmt.Errorf("SalesReportsResource.GetSubscriptionsReports error: %v", err)
+		}
+		result.Data = reports
+	} else {
+		err = srr.unmarshalResponse(resp, &result)
+		if err != nil {
+			return &result, resp, fmt.Errorf("SalesReportsResource.GetSubscriptionsReports error: %v", err)
 		}
 		return &result, resp, fmt.Errorf(result.GetError())
 	}

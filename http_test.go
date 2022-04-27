@@ -140,7 +140,7 @@ func Test_HTTP_ResponseHandlerJson_RestoreBody(t *testing.T) {
 func Test_HTTP_ResponseHandlerGzip_UnmarshalBody(t *testing.T) {
 	handler := &ResponseHandlerGzip{}
 	reportData, _ := ioutil.ReadFile("stubs/reports/sales/sales.tsv")
-	reports := []*SalesReportSale{}
+	reports := []*SalesReport{}
 	err := handler.UnmarshalBody(reportData, &reports)
 	assert.NoError(t, err)
 	assert.Equal(t, 1234567890, reports[0].AppleIdentifier.Value())
