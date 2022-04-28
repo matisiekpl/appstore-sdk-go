@@ -148,7 +148,7 @@ func Test_HTTP_ResponseHandlerGzip_UnmarshalBody(t *testing.T) {
 	assert.Equal(t, "2020-10-05", reports[0].EndDate.Value().Format(CustomDateFormatDefault))
 	assert.Equal(t, float64(299), reports[0].CustomerPrice.Value())
 	assert.Equal(t, 209.3000030517578, reports[0].DeveloperProceeds.Value())
-	assert.Equal(t, 12, reports[0].Units.Value())
+	assert.Equal(t, float64(12), reports[0].Units.Value())
 }
 
 func Test_HTTP_ResponseHandlerGzip_ReadBody(t *testing.T) {

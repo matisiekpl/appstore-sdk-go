@@ -46,7 +46,7 @@ func (srr *SalesReportsResource) GetReports(ctx context.Context, filter SalesRep
 }
 
 //GetSalesReports
-func (srr *SalesReportsResource) GetSalesReports(ctx context.Context, filter *SalesReportsSalesFilter) (*SalesReportsResponse, *http.Response, error) {
+func (srr *SalesReportsResource) GetSalesReports(ctx context.Context, filter *SalesReportsFilter) (*SalesReportsResponse, *http.Response, error) {
 	resp, err := srr.GetReports(ctx, filter)
 	if err != nil {
 		return nil, nil, fmt.Errorf("SalesReportsResource.GetSalesReports error: %v", err)
@@ -71,7 +71,7 @@ func (srr *SalesReportsResource) GetSalesReports(ctx context.Context, filter *Sa
 }
 
 //GetSubscriptionsReports
-func (srr *SalesReportsResource) GetSubscriptionsReports(ctx context.Context, filter *SalesReportsSubscriptionsFilter) (*SubscriptionsReportsResponse, *http.Response, error) {
+func (srr *SalesReportsResource) GetSubscriptionsReports(ctx context.Context, filter *SubscriptionsReportsFilter) (*SubscriptionsReportsResponse, *http.Response, error) {
 	resp, err := srr.GetReports(ctx, filter)
 	if err != nil {
 		return nil, nil, fmt.Errorf("SalesReportsResource.GetSubscriptionsReports error: %v", err)
@@ -96,7 +96,7 @@ func (srr *SalesReportsResource) GetSubscriptionsReports(ctx context.Context, fi
 }
 
 //GetSubscriptionsEventsReports
-func (srr *SalesReportsResource) GetSubscriptionsEventsReports(ctx context.Context, filter *SalesReportsSubscriptionsEventsFilter) (*SubscriptionsEventsReportsResponse, *http.Response, error) {
+func (srr *SalesReportsResource) GetSubscriptionsEventsReports(ctx context.Context, filter *SubscriptionsEventsReportsFilter) (*SubscriptionsEventsReportsResponse, *http.Response, error) {
 	resp, err := srr.GetReports(ctx, filter)
 	if err != nil {
 		return nil, nil, fmt.Errorf("SalesReportsResource.GetSubscriptionsReports error: %v", err)
@@ -114,6 +114,31 @@ func (srr *SalesReportsResource) GetSubscriptionsEventsReports(ctx context.Conte
 		err = srr.unmarshalResponse(resp, &result)
 		if err != nil {
 			return &result, resp, fmt.Errorf("SalesReportsResource.GetSubscriptionsReports error: %v", err)
+		}
+		return &result, resp, fmt.Errorf(result.GetError())
+	}
+	return &result, resp, nil
+}
+
+//GetSubscriptionsReports
+func (srr *SalesReportsResource) GetSubscribersReports(ctx context.Context, filter *SubscribersReportsFilter) (*SubscribersReportsResponse, *http.Response, error) {
+	resp, err := srr.GetReports(ctx, filter)
+	if err != nil {
+		return nil, nil, fmt.Errorf("SalesReportsResource.GetSubscribersReports error: %v", err)
+	}
+	result := SubscribersReportsResponse{ResponseBody: &ResponseBody{}}
+	result.status = resp.StatusCode
+	if result.IsSuccess() {
+		reports := []*SubscribersReport{}
+		err = srr.unmarshalResponse(resp, &reports)
+		if err != nil {
+			return &result, resp, fmt.Errorf("SalesReportsResource.GetSubscribersReports error: %v", err)
+		}
+		result.Data = reports
+	} else {
+		err = srr.unmarshalResponse(resp, &result)
+		if err != nil {
+			return &result, resp, fmt.Errorf("SalesReportsResource.GetSubscribersReports error: %v", err)
 		}
 		return &result, resp, fmt.Errorf(result.GetError())
 	}

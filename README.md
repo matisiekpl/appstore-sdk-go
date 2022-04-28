@@ -47,7 +47,7 @@ func main(){
 ```go
 ctx := context.Background()
 date, _ := time.Parse("2006-01-02", "2020-05-05")
-filter := appstore_sdk.NewSalesReportsSalesFilter()
+filter := appstore_sdk.NewSalesReportsFilter()
 filter.Daily().SubTypeSummary().Version10().SetReportDate(date)
 
 result, resp, err := client.SalesReports().GetSalesReports(ctx, filter)

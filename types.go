@@ -39,6 +39,7 @@ func (ci *CustomInteger) MarshalJSON() ([]byte, error) {
 
 //UnmarshalCSV Custom integer UnmarshalCSV
 func (ci *CustomInteger) UnmarshalCSV(csv string) error {
+	csv = strings.Trim(csv, " ")
 	if csv != "" {
 		var err error
 		ci.Integer, err = strconv.Atoi(csv)
@@ -61,6 +62,7 @@ func (cf *CustomFloat64) Value() float64 {
 
 //UnmarshalCSV Custom float UnmarshalCSV
 func (cf *CustomFloat64) UnmarshalCSV(csv string) error {
+	csv = strings.Trim(csv, " ")
 	if csv != "" {
 		var err error
 		cf.Float64, err = strconv.ParseFloat(csv, 32)
@@ -92,6 +94,7 @@ func (ct *CustomTimestamp) Value() time.Time {
 
 //UnmarshalCSV Custom timestamp UnmarshalCSV
 func (ct *CustomTimestamp) UnmarshalCSV(csv string) error {
+	csv = strings.Trim(csv, " ")
 	if csv != "" {
 		var err error
 		ct.Timestamp, err = time.Parse(CustomTimestampFormatDefault, csv)
@@ -127,6 +130,7 @@ func (ct *CustomDate) Value() time.Time {
 
 //UnmarshalCSV Custom date UnmarshalCSV
 func (ct *CustomDate) UnmarshalCSV(csv string) error {
+	csv = strings.Trim(csv, " ")
 	if csv == "" {
 		return nil
 	}

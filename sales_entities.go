@@ -6,10 +6,11 @@ type SalesReport struct {
 	ProviderCountry       string        `csv:"Provider Country" json:"provider_country"`               //The service provider country code (typically U.S.).
 	SKU                   string        `csv:"SKU" json:"sku"`                                         //A product identifier provided by you during app setup.
 	Developer             string        `csv:"Developer" json:"developer"`                             //Provided by you during the initial account setup.
+	Name                  string        `csv:"Name" json:"name"`                                       //Provided by you during app setup.
 	Title                 string        `csv:"Title" json:"title"`                                     //Provided by you during app setup.
 	Version               string        `csv:"SalesReportVersion" json:"version"`                      //Provided by you during app setup.
 	ProductTypeIdentifier string        `csv:"Product Type Identifier" json:"product_type_identifier"` //Defines the type of transaction (for example, initial download, update, and so on). For more information, see Product Type Identifiers.
-	Units                 CustomInteger `csv:"Units" json:"units"`                                     //The aggregated number of units. Negative values indicate refunds, or CMB credits for previously purchased apps when CMB column shows ‘CMB-C’.
+	Units                 CustomFloat64 `csv:"Units" json:"units"`                                     //The aggregated number of units. Negative values indicate refunds, or CMB credits for previously purchased apps when CMB column shows ‘CMB-C’.
 	DeveloperProceeds     CustomFloat64 `csv:"Developer Proceeds" json:"developer_proceeds"`           //The amount you receive per unit. This is the Customer Price minus applicable taxes and Apple’s commission, per Schedule 2 of your Paid Applications agreement.
 	BeginDate             CustomDate    `csv:"Begin Date" json:"begin_date"`                           //Start date of report.
 	EndDate               CustomDate    `csv:"End Date" json:"end_date"`                               //End date of report.
@@ -62,6 +63,10 @@ type SubscriptionsReport struct {
 	MarketingOptIns                                CustomInteger `csv:"Marketing Opt-Ins" json:"marketing_opt_ins"`
 	BillingRetry                                   CustomInteger `csv:"Billing Retry" json:"billing_retry"`
 	GracePeriod                                    CustomInteger `csv:"Grace Period" json:"grace_period"`
+	FreeTrialOfferCodeSubscriptions                CustomInteger `csv:"Free Trial Offer Code Subscriptions" json:"free_trial_offer_code_subscriptions"`
+	PayUpFrontOfferCodeSubscriptions               CustomInteger `csv:"Pay Up Front Offer Code Subscriptions" json:"pay_up_front_offer_code_subscriptions"`
+	PayAsYouGoOfferCodeSubscriptions               CustomInteger `csv:"Pay As You Go Offer Code Subscriptions" json:"pay_up_front_offer_code_subscriptions"`
+	Subscribers                                    string        `csv:"Subscribers" json:"subscribers"`
 }
 
 //SubscriptionsEventsReport Aggregated data about subscriber activity, including upgrades, renewals, and introductory price conversions
@@ -89,10 +94,10 @@ type SubscriptionsEventsReport struct {
 	State                        string        `csv:"State" json:"state"`
 	Country                      string        `csv:"Country" json:"country"`
 	PreviousSubscriptionName     string        `csv:"Previous Subscription Name" json:"previous_subscription_name"`
-	PreviousSubscriptionAppleID  string        `csv:"Previous Subscription Apple ID" json:"previous_subscription_apple_id"`
-	DaysBeforeCanceling          string        `csv:"Days Before Canceling" json:"days_before_canceling"`
+	PreviousSubscriptionAppleID  CustomInteger `csv:"Previous Subscription Apple ID" json:"previous_subscription_apple_id"`
+	DaysBeforeCanceling          CustomInteger `csv:"Days Before Canceling" json:"days_before_canceling"`
 	CancellationReason           string        `csv:"Cancellation Reason" json:"cancellation_reason"`
-	DaysCanceled                 string        `csv:"Days Canceled" json:"days_canceled"`
+	DaysCanceled                 CustomInteger `csv:"Days Canceled" json:"days_canceled"`
 	Quantity                     CustomInteger `csv:"Quantity" json:"quantity"`
 }
 
@@ -105,8 +110,10 @@ type SubscribersReport struct {
 	SubscriptionAppleID          CustomInteger `csv:"Subscription Apple ID" json:"subscription_apple_id"`
 	SubscriptionGroupID          CustomInteger `csv:"Subscription Group ID" json:"subscription_group_id"`
 	StandardSubscriptionDuration string        `csv:"Standard Subscription Duration" json:"standard_subscription_duration"`
+	IntroductoryPriceType        string        `csv:"Introductory Price Type" json:"introductory_price_type"`
 	PromotionalOfferName         string        `csv:"Promotional Offer Name" json:"promotional_offer_name"`
 	PromotionalOfferID           string        `csv:"Promotional Offer ID" json:"promotional_offer_id"`
+	SubscriptionOfferName        string        `csv:"Subscription Offer Name" json:"subscription_offer_name"`
 	SubscriptionOfferType        string        `csv:"Subscription Offer Type" json:"subscription_offer_type"`
 	SubscriptionOfferDuration    string        `csv:"Subscription Offer Duration" json:"subscription_offer_duration"`
 	MarketingOptInDuration       string        `csv:"Marketing Opt-In Duration" json:"marketing_opt_in_duration"`

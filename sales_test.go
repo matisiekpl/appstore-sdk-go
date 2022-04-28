@@ -11,12 +11,12 @@ func Test_Sales_GetReport_InvalidFilter(t *testing.T) {
 	token := buildStubAuthToken()
 	transport := NewHttpTransport(config, token, nil)
 	resource := &SalesReportsResource{ResourceAbstract: newResourceAbstract(transport, config)}
-	filter := &SalesReportsFilter{}
+	filter := &SalesReportsBaseFilter{}
 	filter.TypeSales().SubTypeSummary().Version10()
 	ctx := context.Background()
 	_, err := resource.GetReports(ctx, filter)
 	assert.Error(t, err)
-	assert.Equal(t, "SalesReportsResource.GetReports invalid filter: SalesReportsFilter.IsValid: Frequency is required", err.Error())
+	assert.Equal(t, "SalesReportsResource.GetReports invalid filter: SalesReportsBaseFilter.IsValid: Frequency is required", err.Error())
 }
 
 func Test_Sales_GetReport_BuildQueryParams(t *testing.T) {
@@ -24,7 +24,7 @@ func Test_Sales_GetReport_BuildQueryParams(t *testing.T) {
 	token := buildStubAuthToken()
 	transport := NewHttpTransport(config, token, nil)
 	resource := &SalesReportsResource{ResourceAbstract: newResourceAbstract(transport, config)}
-	filter := &SalesReportsFilter{}
+	filter := &SalesReportsBaseFilter{}
 	filter.TypeSales().SubTypeSummary().Version10().Daily()
 	result := resource.buildQueryParams(filter)
 	qs := make(map[string]interface{})
