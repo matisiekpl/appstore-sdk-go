@@ -102,6 +102,9 @@ type Transport struct {
 
 //SendRequest method
 func (t *Transport) SendRequest(ctx context.Context, method string, path string, query map[string]interface{}, body map[string]interface{}) (resp *http.Response, err error) {
+	if !t.rb.isValidToken() {
+		return nil, fmt.Errorf("transport.request invalid token: %v", err)
+	}
 	req, err := t.rb.BuildRequest(ctx, method, path, query, body)
 	if err != nil {
 		return nil, fmt.Errorf("transport.SendRequest: %v", err)

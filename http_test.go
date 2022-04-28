@@ -180,7 +180,7 @@ func Test_HTTP_ResponseHandlerGzip_RestoreBody(t *testing.T) {
 	assert.Equal(t, expectedRaw, data)
 	assert.NotEmpty(t, body)
 	fmt.Println(expectedGzipped)
-	fmt.Println(body)
+	//fmt.Println(body)
 	//assert.Equal(t, expectedGzipped, body)
 }
 
@@ -216,23 +216,23 @@ func Test_HTTP_Transport_RequestGETSuccess(t *testing.T) {
 	assert.NotEmpty(t, resp)
 }
 
-//func Test_HTTP_Transport_RequestGETInvalidToken(t *testing.T) {
-//	httpmock.Activate()
-//	defer httpmock.DeactivateAndReset()
-//
-//	cfg := buildStubConfig()
-//	transport := buildStubHttpTransport()
-//	transport.rb.token.ExpiresAt = time.Now().Unix() - 1000
-//
-//	body, _ := loadStubResponseData("stubs/reports/sales/sales.tsv")
-//
-//	httpmock.RegisterResponder("GET", cfg.Uri+"/foo", httpmock.NewBytesResponder(http.StatusOK, body))
-//
-//	ctx := context.Background()
-//	_, err := transport.Get(ctx, "foo", nil)
-//	assert.Error(t, err)
-//	assert.Equal(t, "transport.request invalid token: <nil>", err.Error())
-//}
+func Test_HTTP_Transport_RequestGETInvalidToken(t *testing.T) {
+	httpmock.Activate()
+	defer httpmock.DeactivateAndReset()
+
+	cfg := buildStubConfig()
+	transport := buildStubHttpTransport()
+	transport.rb.token.ExpiresAt = time.Now().Unix() - 10000
+
+	body, _ := loadStubResponseData("stubs/reports/sales/sales.tsv")
+
+	httpmock.RegisterResponder("GET", cfg.Uri+"/foo", httpmock.NewBytesResponder(http.StatusOK, body))
+
+	ctx := context.Background()
+	_, err := transport.Get(ctx, "foo", nil)
+	assert.Error(t, err)
+	assert.Equal(t, "transport.request invalid token: <nil>", err.Error())
+}
 
 func Test_HTTP_NewHttpTransport(t *testing.T) {
 	cfg := buildStubConfig()
@@ -255,4 +255,13 @@ func Test_HTTP_ResponseBody_IsSuccess(t *testing.T) {
 	assert.False(t, rsp.IsSuccess())
 	rsp.status = http.StatusBadRequest
 	assert.False(t, rsp.IsSuccess())
+}
+
+func Test_HTTP_ResponseBody_GetError(t *testing.T) {
+	rsp := &ResponseBody{}
+	assert.Equal(t, "", rsp.GetError())
+	handler := &ResponseHandlerJson{}
+	data, _ := ioutil.ReadFile("stubs/errors/invalid.parameter.json")
+	_ = handler.UnmarshalBody(data, &rsp)
+	assert.Equal(t, "The version parameter you have specified is invalid. The latest version for this report is 1_0.", rsp.GetError())
 }

@@ -51,17 +51,17 @@ func loadStubResponseDataGzipped(path string) ([]byte, error) {
 
 func buildStubResponseFromString(statusCode int, str string) *http.Response {
 	body := ioutil.NopCloser(strings.NewReader(str))
-	return &http.Response{Body: body, StatusCode: statusCode}
+	return &http.Response{Body: body, StatusCode: statusCode, Header: http.Header{}}
 }
 
 func buildStubResponseFromFile(statusCode int, path string) *http.Response {
 	data, _ := loadStubResponseData(path)
 	body := ioutil.NopCloser(bytes.NewReader(data))
-	return &http.Response{Body: body, StatusCode: statusCode}
+	return &http.Response{Body: body, StatusCode: statusCode, Header: http.Header{}}
 }
 
 func buildStubResponseFromGzip(statusCode int, path string) *http.Response {
 	data, _ := loadStubResponseDataGzipped(path)
 	body := ioutil.NopCloser(bytes.NewReader(data))
-	return &http.Response{Body: body, StatusCode: statusCode}
+	return &http.Response{Body: body, StatusCode: statusCode, Header: http.Header{}}
 }
