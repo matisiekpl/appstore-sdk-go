@@ -35,6 +35,12 @@ type SubscribersReportsResponse struct {
 	Data []*SubscribersReport `json:"data,omitempty"`
 }
 
+//PreOrdersReportsResponse struct
+type PreOrdersReportsResponse struct {
+	*ResponseBody
+	Data []*PreOrdersReport `json:"data,omitempty"`
+}
+
 //GetReports Get sales report by filter
 func (srr *SalesReportsResource) GetReports(ctx context.Context, filter SalesReportsFilterInterface) (*http.Response, error) {
 	err := filter.IsValid()
@@ -139,6 +145,31 @@ func (srr *SalesReportsResource) GetSubscribersReports(ctx context.Context, filt
 		err = srr.unmarshalResponse(resp, &result)
 		if err != nil {
 			return &result, resp, fmt.Errorf("SalesReportsResource.GetSubscribersReports error: %v", err)
+		}
+		return &result, resp, fmt.Errorf(result.GetError())
+	}
+	return &result, resp, nil
+}
+
+//GetPreOrdersReports
+func (srr *SalesReportsResource) GetPreOrdersReports(ctx context.Context, filter *PreOrderReportsFilter) (*PreOrdersReportsResponse, *http.Response, error) {
+	resp, err := srr.GetReports(ctx, filter)
+	if err != nil {
+		return nil, nil, fmt.Errorf("SalesReportsResource.GetPreOrdersReports error: %v", err)
+	}
+	result := PreOrdersReportsResponse{ResponseBody: &ResponseBody{}}
+	result.status = resp.StatusCode
+	if result.IsSuccess() {
+		reports := []*PreOrdersReport{}
+		err = srr.unmarshalResponse(resp, &reports)
+		if err != nil {
+			return &result, resp, fmt.Errorf("SalesReportsResource.GetPreOrdersReports error: %v", err)
+		}
+		result.Data = reports
+	} else {
+		err = srr.unmarshalResponse(resp, &result)
+		if err != nil {
+			return &result, resp, fmt.Errorf("SalesReportsResource.GetPreOrdersReports error: %v", err)
 		}
 		return &result, resp, fmt.Errorf(result.GetError())
 	}

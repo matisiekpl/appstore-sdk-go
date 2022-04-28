@@ -65,7 +65,7 @@ type SubscriptionsReport struct {
 	GracePeriod                                    CustomInteger `csv:"Grace Period" json:"grace_period"`
 	FreeTrialOfferCodeSubscriptions                CustomInteger `csv:"Free Trial Offer Code Subscriptions" json:"free_trial_offer_code_subscriptions"`
 	PayUpFrontOfferCodeSubscriptions               CustomInteger `csv:"Pay Up Front Offer Code Subscriptions" json:"pay_up_front_offer_code_subscriptions"`
-	PayAsYouGoOfferCodeSubscriptions               CustomInteger `csv:"Pay As You Go Offer Code Subscriptions" json:"pay_up_front_offer_code_subscriptions"`
+	PayAsYouGoOfferCodeSubscriptions               CustomInteger `csv:"Pay As You Go Offer Code Subscriptions" json:"pay_as_you_go_offer_code_subscriptions"`
 	Subscribers                                    string        `csv:"Subscribers" json:"subscribers"`
 }
 
@@ -130,4 +130,40 @@ type SubscribersReport struct {
 	Refund                       string        `csv:"Refund" json:"refund"`
 	PurchaseDate                 CustomDate    `csv:"Purchase Date" json:"purchase_date"`
 	Units                        CustomInteger `csv:"Units" json:"units"`
+}
+
+//PreOrdersReport Aggregated data for your apps made available for pre-order, including the number of units ordered and canceled by customers.
+type PreOrdersReport struct {
+	Provider           string        `csv:"Provider" json:"provider"`
+	ProviderCountry    string        `csv:"Provider Country" json:"provider_country"`
+	SKU                string        `csv:"SKU" json:"sku"`
+	Developer          string        `csv:"Developer" json:"developer"`
+	Title              string        `csv:"Title" json:"title"`
+	PreOrderStartDate  CustomDate    `csv:"Pre-Order Start Date" json:"pre_order_start_date"`
+	PreOrderEndDate    CustomDate    `csv:"Pre-Order End Date" json:"pre_order_end_date"`
+	Ordered            CustomFloat64 `csv:"Ordered" json:"ordered"`
+	Canceled           CustomFloat64 `csv:"Canceled" json:"canceled"`
+	CumulativeOrdered  CustomFloat64 `csv:"Cumulative Ordered" json:"cumulative_ordered"`
+	CumulativeCanceled CustomFloat64 `csv:"Cumulative Canceled" json:"cumulative_canceled"`
+	StartDate          CustomDate    `csv:"Start Date" json:"start_date"`
+	EndDate            CustomDate    `csv:"End Date" json:"end_date"`
+	CountryCode        string        `csv:"Country Code" json:"country_code"`
+	AppleIdentifier    CustomInteger `csv:"Apple Identifier" json:"apple_identifier"`
+	Device             string        `csv:"Device" json:"device"`
+	SupportedPlatforms string        `csv:"Supported Platforms" json:"supported_platforms"`
+	Category           string        `csv:"Category" json:"category"`
+	Client             string        `csv:"Client" json:"client"`
+}
+
+//SubscriptionsOffersRedemptionReport
+type SubscriptionsOffersRedemptionReport struct {
+	Date                CustomDate    `csv:"Date" json:"date"`
+	AppName             string        `csv:"App Name" json:"app_name"`
+	AppAppleID          CustomInteger `csv:"App Apple ID" json:"app_apple_id"`
+	SubscriptionName    string        `csv:"Subscription Name" json:"subscription_name"`
+	SubscriptionAppleID CustomInteger `csv:"Subscription Apple ID" json:"subscription_apple_id"`
+	OfferReferenceName  string        `csv:"Offer Reference Name" json:"offer_reference_name"`
+	OfferCode           string        `csv:"Offer Code" json:"offer_code"`
+	Territory           string        `csv:"Territory" json:"territory"`
+	Redemptions         CustomInteger `csv:"Redemptions" json:"redemptions"`
 }
