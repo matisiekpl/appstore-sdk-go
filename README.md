@@ -43,12 +43,12 @@ func main(){
 }
 ```
 
-### Get sales reports sales
+### Get sales reports
 ```go
 ctx := context.Background()
 date, _ := time.Parse("2006-01-02", "2020-05-05")
 filter := appstore_sdk.NewSalesReportsFilter()
-filter.Daily().SubTypeSummary().Version10().SetReportDate(date)
+filter.SubTypeSummary().Version10().Daily().SetReportDate(date)
 
 result, resp, err := client.SalesReports().GetSalesReports(ctx, filter)
 if err != nil {
@@ -60,5 +60,80 @@ if err != nil {
 fmt.Println(response)
 
 //Dump result
-fmt.Println(result.Data[0])
+fmt.Println(result.Data[0].Provider)
+fmt.Println(result.Data[0].ProviderCountry)
+fmt.Println(result.Data[0].SKU)
+fmt.Println(result.Data[0].Developer)
+fmt.Println(result.Data[0].Title)
+fmt.Println(result.Data[0].Version)
+fmt.Println(result.Data[0].ProductTypeIdentifier)
+fmt.Println(result.Data[0].Units.Value())
+fmt.Println(result.Data[0].AppleIdentifier.Value())
+fmt.Println(result.Data[0].DeveloperProceeds.Value())
+fmt.Println(result.Data[0].BeginDate.Value().Format(CustomDateFormatDefault))
+fmt.Println(result.Data[0].EndDate.Value().Format(CustomDateFormatDefault))
+fmt.Println(result.Data[0].CustomerCurrency)
+fmt.Println(result.Data[0].CountryCode)
+fmt.Println(result.Data[0].CurrencyOfProceeds)
+fmt.Println(result.Data[0].AppleIdentifier.Value())
+fmt.Println(result.Data[0].CustomerPrice.Value())
+fmt.Println(result.Data[0].PromoCode)
+fmt.Println(result.Data[0].ParentIdentifier)
+fmt.Println(result.Data[0].Subscription)
+fmt.Println(result.Data[0].Period)
+fmt.Println(result.Data[0].Category)
+fmt.Println(result.Data[0].CMB)
+fmt.Println(result.Data[0].Device)
+fmt.Println(result.Data[0].SupportedPlatforms)
+fmt.Println(result.Data[0].ProceedsReason)
+fmt.Println(result.Data[0].PreservedPricing)
+fmt.Println(result.Data[0].Client)
+fmt.Println(result.Data[0].OrderType)
+```
+
+### Get subscriptions reports
+```go
+ctx := context.Background()
+date, _ := time.Parse("2006-01-02", "2020-05-05")
+filter := appstore_sdk.NewSubscriptionsReportsFilter()
+filter.SubTypeSummary().Version12().Daily().SetReportDate(date)
+
+result, resp, err := client.SalesReports().GetSubscriptionsReports(ctx, filter)
+if err != nil {
+    fmt.Printf("Wrong API request " + err.Error())
+    panic(err)
+}
+
+//Dump raw response
+fmt.Println(response)
+
+//Dump result
+fmt.Println(result.Data[0].AppName)
+fmt.Println(result.Data[0].AppAppleID.Value())
+fmt.Println(result.Data[0].SubscriptionName)
+fmt.Println(result.Data[0].SubscriptionAppleID.Value())
+fmt.Println(result.Data[0].SubscriptionGroupID.Value())
+fmt.Println(result.Data[0].StandardSubscriptionDuration)
+fmt.Println(result.Data[0].PromotionalOfferName)
+fmt.Println(result.Data[0].PromotionalOfferID)
+fmt.Println(result.Data[0].CustomerPrice.Value())
+fmt.Println(result.Data[0].CustomerCurrency)
+fmt.Println(result.Data[0].DeveloperProceeds.Value())
+fmt.Println(result.Data[0].ProceedsCurrency)
+fmt.Println(result.Data[0].PreservedPricing)
+fmt.Println(result.Data[0].ProceedsReason)
+fmt.Println(result.Data[0].Client)
+fmt.Println(result.Data[0].Device)
+fmt.Println(result.Data[0].State)
+fmt.Println(result.Data[0].Country)
+fmt.Println(result.Data[0].ActiveStandardPriceSubscriptions.Value())
+fmt.Println(result.Data[0].ActiveFreeTrialIntroductoryOfferSubscriptions.Value())
+fmt.Println(result.Data[0].ActivePayUpFrontIntroductoryOfferSubscriptions.Value())
+fmt.Println(result.Data[0].ActivePayAsYouGoIntroductoryOfferSubscriptions.Value())
+fmt.Println(result.Data[0].FreeTrialPromotionalOfferSubscriptions.Value())
+fmt.Println(result.Data[0].PayUpFrontPromotionalOfferSubscriptions.Value())
+fmt.Println(result.Data[0].PayAsYouGoPromotionalOfferSubscriptions.Value())
+fmt.Println(result.Data[0].MarketingOptIns.Value())
+fmt.Println(result.Data[0].BillingRetry.Value())
+fmt.Println(result.Data[0].GracePeriod.Value())
 ```

@@ -65,12 +65,35 @@ func Test_Sales_GetSalesReports_Success(t *testing.T) {
 	assert.True(t, result.IsSuccess())
 	assert.Empty(t, result.GetError())
 	assert.Empty(t, result.Errors)
+	assert.Equal(t, "APPLE", result.Data[0].Provider)
+	assert.Equal(t, "US", result.Data[0].ProviderCountry)
+	assert.Equal(t, "foo.bar.baz", result.Data[0].SKU)
+	assert.Equal(t, " ", result.Data[0].Developer)
+	assert.Equal(t, "FooBarTitle", result.Data[0].Title)
+	assert.Equal(t, "", result.Data[0].Version)
+	assert.Equal(t, "IAY", result.Data[0].ProductTypeIdentifier)
+	assert.Equal(t, float64(12), result.Data[0].Units.Value())
 	assert.Equal(t, 1234567890, result.Data[0].AppleIdentifier.Value())
+	assert.Equal(t, 209.3000030517578, result.Data[0].DeveloperProceeds.Value())
 	assert.Equal(t, "2020-10-05", result.Data[0].BeginDate.Value().Format(CustomDateFormatDefault))
 	assert.Equal(t, "2020-10-05", result.Data[0].EndDate.Value().Format(CustomDateFormatDefault))
+	assert.Equal(t, "RUB", result.Data[0].CustomerCurrency)
+	assert.Equal(t, "RU", result.Data[0].CountryCode)
+	assert.Equal(t, "RUB", result.Data[0].CurrencyOfProceeds)
+	assert.Equal(t, 1234567890, result.Data[0].AppleIdentifier.Value())
 	assert.Equal(t, float64(299), result.Data[0].CustomerPrice.Value())
-	assert.Equal(t, 209.3000030517578, result.Data[0].DeveloperProceeds.Value())
-	assert.Equal(t, float64(12), result.Data[0].Units.Value())
+	assert.Equal(t, " ", result.Data[0].PromoCode)
+	assert.Equal(t, "foo.bar.baz", result.Data[0].ParentIdentifier)
+	assert.Equal(t, "Renewal", result.Data[0].Subscription)
+	assert.Equal(t, "7 Days", result.Data[0].Period)
+	assert.Equal(t, "Lifestyle", result.Data[0].Category)
+	assert.Equal(t, "", result.Data[0].CMB)
+	assert.Equal(t, "iPhone", result.Data[0].Device)
+	assert.Equal(t, "iOS", result.Data[0].SupportedPlatforms)
+	assert.Equal(t, " ", result.Data[0].ProceedsReason)
+	assert.Equal(t, "Yes", result.Data[0].PreservedPricing)
+	assert.Equal(t, " ", result.Data[0].Client)
+	assert.Equal(t, " ", result.Data[0].OrderType)
 
 	defer resp.Body.Close()
 	body, _ := ioutil.ReadAll(resp.Body)
@@ -184,6 +207,102 @@ func Test_Sales_GetSubscriptionsReports_Error(t *testing.T) {
 	filter.SubTypeSummary().Version12().Daily()
 	ctx := context.Background()
 	result, resp, err := resource.GetSubscriptionsReports(ctx, filter)
+	assert.Error(t, err)
+	assert.NotEmpty(t, resp)
+	assert.NotEmpty(t, result)
+	assert.Equal(t, "The version parameter you have specified is invalid. The latest version for this report is 1_0.", err.Error())
+
+	assert.False(t, result.IsSuccess())
+	assert.Equal(t, "The version parameter you have specified is invalid. The latest version for this report is 1_0.", result.GetError())
+	assert.Len(t, result.Errors, 1)
+	assert.Empty(t, result.Data)
+
+	defer resp.Body.Close()
+	body, _ := ioutil.ReadAll(resp.Body)
+	assert.NotEmpty(t, body)
+}
+
+func Test_Sales_GetSubscriptionsEventsReports_Error(t *testing.T) {
+	httpmock.Activate()
+	defer httpmock.DeactivateAndReset()
+
+	config := buildStubConfig()
+	transport := buildStubHttpTransport()
+	ar := newResourceAbstract(transport, config)
+
+	rsp := buildStubResponseFromFile(http.StatusBadRequest, "stubs/errors/invalid.parameter.json")
+	rsp.Header.Set("Content-Type", ResponseContentTypeJson)
+	httpmock.RegisterResponder("GET", config.Uri+"/v1/salesReports", httpmock.ResponderFromResponse(rsp))
+
+	resource := &SalesReportsResource{ar}
+	filter := NewSubscriptionsEventsReportsFilter()
+	filter.SubTypeSummary().Version12().Daily()
+	ctx := context.Background()
+	result, resp, err := resource.GetSubscriptionsEventsReports(ctx, filter)
+	assert.Error(t, err)
+	assert.NotEmpty(t, resp)
+	assert.NotEmpty(t, result)
+	assert.Equal(t, "The version parameter you have specified is invalid. The latest version for this report is 1_0.", err.Error())
+
+	assert.False(t, result.IsSuccess())
+	assert.Equal(t, "The version parameter you have specified is invalid. The latest version for this report is 1_0.", result.GetError())
+	assert.Len(t, result.Errors, 1)
+	assert.Empty(t, result.Data)
+
+	defer resp.Body.Close()
+	body, _ := ioutil.ReadAll(resp.Body)
+	assert.NotEmpty(t, body)
+}
+
+func Test_Sales_GetSubscribersReports_Error(t *testing.T) {
+	httpmock.Activate()
+	defer httpmock.DeactivateAndReset()
+
+	config := buildStubConfig()
+	transport := buildStubHttpTransport()
+	ar := newResourceAbstract(transport, config)
+
+	rsp := buildStubResponseFromFile(http.StatusBadRequest, "stubs/errors/invalid.parameter.json")
+	rsp.Header.Set("Content-Type", ResponseContentTypeJson)
+	httpmock.RegisterResponder("GET", config.Uri+"/v1/salesReports", httpmock.ResponderFromResponse(rsp))
+
+	resource := &SalesReportsResource{ar}
+	filter := NewSubscribersReportsFilter()
+	filter.SubTypeDetailed().Version12().Daily()
+	ctx := context.Background()
+	result, resp, err := resource.GetSubscribersReports(ctx, filter)
+	assert.Error(t, err)
+	assert.NotEmpty(t, resp)
+	assert.NotEmpty(t, result)
+	assert.Equal(t, "The version parameter you have specified is invalid. The latest version for this report is 1_0.", err.Error())
+
+	assert.False(t, result.IsSuccess())
+	assert.Equal(t, "The version parameter you have specified is invalid. The latest version for this report is 1_0.", result.GetError())
+	assert.Len(t, result.Errors, 1)
+	assert.Empty(t, result.Data)
+
+	defer resp.Body.Close()
+	body, _ := ioutil.ReadAll(resp.Body)
+	assert.NotEmpty(t, body)
+}
+
+func Test_Sales_GetPreOrdersReports_Error(t *testing.T) {
+	httpmock.Activate()
+	defer httpmock.DeactivateAndReset()
+
+	config := buildStubConfig()
+	transport := buildStubHttpTransport()
+	ar := newResourceAbstract(transport, config)
+
+	rsp := buildStubResponseFromFile(http.StatusBadRequest, "stubs/errors/invalid.parameter.json")
+	rsp.Header.Set("Content-Type", ResponseContentTypeJson)
+	httpmock.RegisterResponder("GET", config.Uri+"/v1/salesReports", httpmock.ResponderFromResponse(rsp))
+
+	resource := &SalesReportsResource{ar}
+	filter := NewPreOrderReportsFilter()
+	filter.SubTypeSummary().Version10().Daily()
+	ctx := context.Background()
+	result, resp, err := resource.GetPreOrdersReports(ctx, filter)
 	assert.Error(t, err)
 	assert.NotEmpty(t, resp)
 	assert.NotEmpty(t, result)
