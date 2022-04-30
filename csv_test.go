@@ -25,7 +25,7 @@ func Test_CSV_UnmarshalCSVSalesReport(t *testing.T) {
 }
 
 func Test_CSV_UnmarshalSalesSubscriptionsReport(t *testing.T) {
-	reportData, _ := ioutil.ReadFile("stubs/reports/sales/subscription.tsv")
+	reportData, _ := ioutil.ReadFile("stubs/reports/sales/subscriptions.tsv")
 	reports := []*SubscriptionsReport{}
 	_ = UnmarshalCSV(reportData, &reports)
 	assert.Equal(t, "FooBarApp", reports[0].AppName)
@@ -47,7 +47,7 @@ func Test_CSV_UnmarshalSalesSubscriptionsReport(t *testing.T) {
 }
 
 func Test_CSV_UnmarshalSalesSubscriptionsEventsReport(t *testing.T) {
-	reportData, _ := ioutil.ReadFile("stubs/reports/sales/subscription-event.tsv")
+	reportData, _ := ioutil.ReadFile("stubs/reports/sales/subscriptions-events.tsv")
 	reports := []*SubscriptionsEventsReport{}
 	_ = UnmarshalCSV(reportData, &reports)
 	assert.Equal(t, 1234567890, reports[0].AppAppleID.Value())
@@ -60,7 +60,7 @@ func Test_CSV_UnmarshalSalesSubscriptionsEventsReport(t *testing.T) {
 }
 
 func Test_CSV_UnmarshalSalesSubscribersReport(t *testing.T) {
-	reportData, _ := ioutil.ReadFile("stubs/reports/sales/subscriber.tsv")
+	reportData, _ := ioutil.ReadFile("stubs/reports/sales/subscribers.tsv")
 	reports := []*SubscribersReport{}
 	_ = UnmarshalCSV(reportData, &reports)
 	assert.Equal(t, 1234567890, reports[0].AppAppleID.Value())

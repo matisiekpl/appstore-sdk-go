@@ -222,7 +222,7 @@ func Test_HTTP_Transport_RequestGETInvalidToken(t *testing.T) {
 
 	cfg := buildStubConfig()
 	transport := buildStubHttpTransport()
-	transport.rb.token.ExpiresAt = time.Now().Unix() - 10000
+	transport.rb.token.ExpiresAt = time.Now().Unix() - 1000
 
 	body, _ := loadStubResponseData("stubs/reports/sales/sales.tsv")
 

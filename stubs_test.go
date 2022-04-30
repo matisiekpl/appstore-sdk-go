@@ -30,7 +30,7 @@ func buildStubAuthToken() *AuthToken {
 }
 
 func buildStubHttpTransport() *Transport {
-	return NewHttpTransport(buildStubConfig(), buildStubAuthToken(), nil)
+	return NewHttpTransport(buildStubConfig(), buildStubAuthToken(), &http.Client{})
 }
 
 func loadStubResponseData(path string) ([]byte, error) {

@@ -1,5 +1,5 @@
 App Name	App Apple ID	Subscription Name	Subscription Apple ID	Subscription Group ID	Standard Subscription Duration	Promotional Offer Name	Promotional Offer ID	Customer Price	Customer Currency	Developer Proceeds	Proceeds Currency	Preserved Pricing	Proceeds Reason	Client	Device	State	Country	Active Standard Price Subscriptions	Active Free Trial Introductory Offer Subscriptions	Active Pay Up Front Introductory Offer Subscriptions	Active Pay As You Go Introductory Offer Subscriptions	Free Trial Promotional Offer Subscriptions	Pay Up Front Promotional Offer Subscriptions	Pay As You Go Promotional Offer Subscriptions	Marketing Opt-Ins	Billing Retry	Grace Period
-FooBarApp	1234567890	foo.bar.baz	1234567890	1234567890	1 Year	 	 	2950.00	RUB	2065.00	RUB      				iPhone	 	RU	20	0	0	0	0	0	0	0	0	0
+FooBarApp	1234567890	foo.bar.baz	1234567890	1234567890	1 Year	 	 	2950.00	RUB	2065.00	RUB				iPhone	 	RU	20	0	0	0	0	0	0	0	0	0
 FooBarApp	1234567891	foo.bar.baz	1234567891	1234567891	1 Month	 	 	10.49	USD	6.12	USD				iPhone	 	BY	1	0	0	0	0	0	0	0	0	0
 FooBarApp	1234567892	foo.bar.baz	1234567892	1234567892	1 Month	 	 	14.49	USD	10.15	USD				iPhone	 	UA	0	0	0	0	0	0	0	0	1	0
 FooBarApp	1234567893	foo.bar.baz	1234567893	1234567893	1 Month	 	 	4700.00	NGN	3290.00	NGN				iPhone	Lagos	NG	0	0	0	0	0	0	0	0	1	0

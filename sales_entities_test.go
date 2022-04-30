@@ -17,17 +17,17 @@ func Test_SalesReports_SalesReport_MarshalJson(t *testing.T) {
 }
 
 func Test_SalesReports_SubscriptionsReport_MarshalJson(t *testing.T) {
-	reportData, _ := ioutil.ReadFile("stubs/reports/sales/subscription.tsv")
+	reportData, _ := ioutil.ReadFile("stubs/reports/sales/subscriptions.tsv")
 	reports := []*SubscriptionsReport{}
 	_ = UnmarshalCSV(reportData, &reports)
-	expected := `{"app_name":"FooBarApp","app_apple_id":1234567890,"subscription_name":"foo.bar.baz","subscription_apple_id":1234567890,"subscription_group_id":1234567890,"standard_subscription_duration":"1 Year","promotional_offer_name":" ","promotional_offer_id":" ","customer_price":2950,"customer_currency":"RUB","developer_proceeds":2065,"proceeds_currency":"RUB      ","preserved_pricing":"","proceeds_reason":"","client":"","device":"iPhone","state":" ","country":"RU","active_standard_price_subscriptions":20,"active_free_trial_introductory_offer_subscriptions":0,"active_pay_up_front_introductory_offer_subscriptions":0,"active_pay_as_you_go_introductory_offer_subscriptions":0,"free_trial_promotional_offer_subscriptions":0,"pay_up_front_promotional_offer_subscriptions":0,"pay_as_you_go_promotional_offer_subscriptions":0,"marketing_opt_ins":0,"billing_retry":0,"grace_period":0,"free_trial_offer_code_subscriptions":0,"pay_up_front_offer_code_subscriptions":0,"pay_as_you_go_offer_code_subscriptions":0,"subscribers":""}`
+	expected := `{"app_name":"FooBarApp","app_apple_id":1234567890,"subscription_name":"foo.bar.baz","subscription_apple_id":1234567890,"subscription_group_id":1234567890,"standard_subscription_duration":"1 Year","promotional_offer_name":" ","promotional_offer_id":" ","customer_price":2950,"customer_currency":"RUB","developer_proceeds":2065,"proceeds_currency":"RUB","preserved_pricing":"","proceeds_reason":"","client":"","device":"iPhone","state":" ","country":"RU","active_standard_price_subscriptions":20,"active_free_trial_introductory_offer_subscriptions":0,"active_pay_up_front_introductory_offer_subscriptions":0,"active_pay_as_you_go_introductory_offer_subscriptions":0,"free_trial_promotional_offer_subscriptions":0,"pay_up_front_promotional_offer_subscriptions":0,"pay_as_you_go_promotional_offer_subscriptions":0,"marketing_opt_ins":0,"billing_retry":0,"grace_period":0,"free_trial_offer_code_subscriptions":0,"pay_up_front_offer_code_subscriptions":0,"pay_as_you_go_offer_code_subscriptions":0,"subscribers":""}`
 	data, _ := json.Marshal(reports[0])
 	//fmt.Println(string(data))
 	assert.Equal(t, expected, string(data))
 }
 
 func Test_SalesReports_SubscriptionsEventsReport_MarshalJson(t *testing.T) {
-	reportData, _ := ioutil.ReadFile("stubs/reports/sales/subscription-event.tsv")
+	reportData, _ := ioutil.ReadFile("stubs/reports/sales/subscriptions-events.tsv")
 	reports := []*SubscriptionsEventsReport{}
 	_ = UnmarshalCSV(reportData, &reports)
 	expected := `{"event_date":"2020-10-06","event":"Renew","app_name":"AppFooBar","app_apple_id":1234567890,"subscription_name":"foo.bar.baz","subscription_apple_id":1234567890,"subscription_group_id":1234567890,"standard_subscription_duration":"7 Days","promotional_offer_name":" ","promotional_offer_id":" ","subscription_offer_type":"","subscription_offer_duration":"","marketing_opt_in":"","marketing_opt_in_duration":" ","preserved_pricing":"","proceeds_reason":"","consecutive_paid_periods":11,"original_start_date":"2020-07-25","client":"","device":"iPhone","state":" ","country":"RU","previous_subscription_name":"","previous_subscription_apple_id":0,"days_before_canceling":0,"cancellation_reason":" ","days_canceled":0,"quantity":1}`
@@ -37,7 +37,7 @@ func Test_SalesReports_SubscriptionsEventsReport_MarshalJson(t *testing.T) {
 }
 
 func Test_SalesReports_SubscribersReport_MarshalJson(t *testing.T) {
-	reportData, _ := ioutil.ReadFile("stubs/reports/sales/subscriber.tsv")
+	reportData, _ := ioutil.ReadFile("stubs/reports/sales/subscribers.tsv")
 	reports := []*SubscribersReport{}
 	_ = UnmarshalCSV(reportData, &reports)
 	expected := `{"event_date":"2020-10-05","app_name":"FooBarApp","app_apple_id":1234567890,"subscription_name":"foo.bar.baz","subscription_apple_id":1234567890,"subscription_group_id":1234567890,"standard_subscription_duration":"7 Days","introductory_price_type":"","promotional_offer_name":"","promotional_offer_id":"","subscription_offer_name":"","subscription_offer_type":"","subscription_offer_duration":"","marketing_opt_in_duration":"","customer_price":4.489999771118164,"customer_currency":"USD","developer_proceeds":3.1500000953674316,"proceeds_currency":"USD","preserved_pricing":" ","proceeds_reason":" ","client":" ","country":"UA","subscriber_id":1234567890000,"subscriber_id_reset":"","refund":"","purchase_date":"","units":1}`
