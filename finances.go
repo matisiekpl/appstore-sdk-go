@@ -12,7 +12,7 @@ type FinancesReportsResource struct {
 }
 
 //GetReports Get financial reports by filter
-func (frr *FinancesReportsResource) GetReports(ctx context.Context, filter FinancesReportsFilter) (*http.Response, error) {
+func (frr *FinancesReportsResource) GetReports(ctx context.Context, filter *FinancesReportsFilter) (*http.Response, error) {
 	err := filter.IsValid()
 	if err != nil {
 		return nil, fmt.Errorf("FinancesReportsResource.GetReports invalid filter: %v", err)
@@ -22,8 +22,8 @@ func (frr *FinancesReportsResource) GetReports(ctx context.Context, filter Finan
 }
 
 //buildQueryParams
-func (frr *FinancesReportsResource) buildQueryParams(filter FinancesReportsFilter) map[string]interface{} {
-	queryParams := filter.ToQueryParamsMap()
+func (frr *FinancesReportsResource) buildQueryParams(filter *FinancesReportsFilter) map[string]interface{} {
+	queryParams := filter.toQueryParamsMap()
 	queryParams["filter[vendorNumber]"] = frr.config.VendorNo
 	return queryParams
 }

@@ -21,14 +21,16 @@ func NewCSVReader(in io.Reader) gocsv.CSVReader {
 	return r
 }
 
-func NewLineSkipDecoder(r io.Reader, LinesToSkip int) (gocsv.SimpleDecoder, error) {
-	reader := csv.NewReader(r)
-	reader.FieldsPerRecord = -1
-	for i := 0; i < LinesToSkip; i++ {
-		if _, err := reader.Read(); err != nil {
-			return nil, err
-		}
-	}
-	reader.FieldsPerRecord = 0
-	return gocsv.NewSimpleDecoderFromCSVReader(reader), nil
-}
+//func NewLineSkipDecoder(r io.Reader, LinesToSkip int) (gocsv.SimpleDecoder, error) {
+//	reader := csv.NewReader(r)
+//	reader.LazyQuotes = true
+//	reader.Comma = '\t'
+//	reader.FieldsPerRecord = -1
+//	for i := 0; i < LinesToSkip; i++ {
+//		if _, err := reader.Read(); err != nil {
+//			return nil, err
+//		}
+//	}
+//	reader.FieldsPerRecord = 0
+//	return gocsv.NewSimpleDecoderFromCSVReader(reader), nil
+//}

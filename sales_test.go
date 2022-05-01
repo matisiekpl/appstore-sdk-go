@@ -9,7 +9,7 @@ import (
 	"testing"
 )
 
-func Test_Sales_GetReports_InvalidFilter(t *testing.T) {
+func Test_Sales_SalesReportsBaseFilter_GetReports_InvalidFilter(t *testing.T) {
 	config := buildStubConfig()
 	transport := buildStubHttpTransport()
 	resource := &SalesReportsResource{ResourceAbstract: newResourceAbstract(transport, config)}
@@ -21,7 +21,7 @@ func Test_Sales_GetReports_InvalidFilter(t *testing.T) {
 	assert.Equal(t, "SalesReportsResource.GetReports invalid filter: SalesReportsBaseFilter.IsValid: Frequency is required", err.Error())
 }
 
-func Test_Sales_GetReports_Success(t *testing.T) {
+func Test_Sales_SalesReportsBaseFilter_GetReports_Success(t *testing.T) {
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
 
@@ -41,7 +41,7 @@ func Test_Sales_GetReports_Success(t *testing.T) {
 	assert.NotEmpty(t, rsp)
 }
 
-func Test_Sales_GetSalesReports_Success(t *testing.T) {
+func Test_Sales_SalesReportsBaseFilter_GetSalesReports_Success(t *testing.T) {
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
 
@@ -100,7 +100,7 @@ func Test_Sales_GetSalesReports_Success(t *testing.T) {
 	assert.NotEmpty(t, body)
 }
 
-func Test_Sales_GetSalesReports_Error(t *testing.T) {
+func Test_Sales_SalesReportsBaseFilter_GetSalesReports_Error(t *testing.T) {
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
 
@@ -132,7 +132,7 @@ func Test_Sales_GetSalesReports_Error(t *testing.T) {
 	assert.NotEmpty(t, body)
 }
 
-func Test_Sales_GetSubscriptionsReports_Success(t *testing.T) {
+func Test_Sales_SalesReportsBaseFilter_GetSubscriptionsReports_Success(t *testing.T) {
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
 
@@ -190,7 +190,7 @@ func Test_Sales_GetSubscriptionsReports_Success(t *testing.T) {
 	assert.NotEmpty(t, body)
 }
 
-func Test_Sales_GetSubscriptionsReports_Error(t *testing.T) {
+func Test_Sales_SalesReportsBaseFilter_GetSubscriptionsReports_Error(t *testing.T) {
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
 
@@ -280,7 +280,7 @@ func Test_Sales_GetSubscriptionsEventsReports_Success(t *testing.T) {
 	assert.NotEmpty(t, body)
 }
 
-func Test_Sales_GetSubscriptionsEventsReports_Error(t *testing.T) {
+func Test_Sales_SalesReportsBaseFilter_GetSubscriptionsEventsReports_Error(t *testing.T) {
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
 
@@ -312,7 +312,7 @@ func Test_Sales_GetSubscriptionsEventsReports_Error(t *testing.T) {
 	assert.NotEmpty(t, body)
 }
 
-func Test_Sales_GetSubscribersReports_Success(t *testing.T) {
+func Test_Sales_SalesReportsBaseFilter_GetSubscribersReports_Success(t *testing.T) {
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
 
@@ -367,7 +367,7 @@ func Test_Sales_GetSubscribersReports_Success(t *testing.T) {
 	assert.NotEmpty(t, body)
 }
 
-func Test_Sales_GetSubscribersReports_Error(t *testing.T) {
+func Test_Sales_SalesReportsBaseFilter_GetSubscribersReports_Error(t *testing.T) {
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
 
@@ -399,7 +399,7 @@ func Test_Sales_GetSubscribersReports_Error(t *testing.T) {
 	assert.NotEmpty(t, body)
 }
 
-func Test_Sales_GetPreOrdersReports_Success(t *testing.T) {
+func Test_Sales_SalesReportsBaseFilter_GetPreOrdersReports_Success(t *testing.T) {
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
 
@@ -449,7 +449,7 @@ func Test_Sales_GetPreOrdersReports_Success(t *testing.T) {
 	assert.NotEmpty(t, body)
 }
 
-func Test_Sales_GetPreOrdersReports_Error(t *testing.T) {
+func Test_Sales_SalesReportsBaseFilter_GetPreOrdersReports_Error(t *testing.T) {
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
 
@@ -481,7 +481,7 @@ func Test_Sales_GetPreOrdersReports_Error(t *testing.T) {
 	assert.NotEmpty(t, body)
 }
 
-func Test_Sales_GetReport_BuildQueryParams(t *testing.T) {
+func Test_Sales_SalesReportsBaseFilter_GetReport_BuildQueryParams(t *testing.T) {
 	config := buildStubConfig()
 	token := buildStubAuthToken()
 	transport := NewHttpTransport(config, token, nil)

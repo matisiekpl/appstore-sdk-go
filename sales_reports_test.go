@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-func Test_SalesReports_SalesReport_MarshalJson(t *testing.T) {
+func Test_Sales_SalesReport_MarshalJson(t *testing.T) {
 	reportData, _ := ioutil.ReadFile("stubs/reports/sales/sales.tsv")
 	reports := []*SalesReport{}
 	_ = UnmarshalCSV(reportData, &reports)
@@ -16,7 +16,7 @@ func Test_SalesReports_SalesReport_MarshalJson(t *testing.T) {
 	assert.Equal(t, expected, string(data))
 }
 
-func Test_SalesReports_SubscriptionsReport_MarshalJson(t *testing.T) {
+func Test_Sales_SubscriptionsReport_MarshalJson(t *testing.T) {
 	reportData, _ := ioutil.ReadFile("stubs/reports/sales/subscriptions.tsv")
 	reports := []*SubscriptionsReport{}
 	_ = UnmarshalCSV(reportData, &reports)
@@ -26,7 +26,7 @@ func Test_SalesReports_SubscriptionsReport_MarshalJson(t *testing.T) {
 	assert.Equal(t, expected, string(data))
 }
 
-func Test_SalesReports_SubscriptionsEventsReport_MarshalJson(t *testing.T) {
+func Test_Sales_SubscriptionsEventsReport_MarshalJson(t *testing.T) {
 	reportData, _ := ioutil.ReadFile("stubs/reports/sales/subscriptions-events.tsv")
 	reports := []*SubscriptionsEventsReport{}
 	_ = UnmarshalCSV(reportData, &reports)
@@ -36,7 +36,7 @@ func Test_SalesReports_SubscriptionsEventsReport_MarshalJson(t *testing.T) {
 	assert.Equal(t, expected, string(data))
 }
 
-func Test_SalesReports_SubscribersReport_MarshalJson(t *testing.T) {
+func Test_Sales_SubscribersReport_MarshalJson(t *testing.T) {
 	reportData, _ := ioutil.ReadFile("stubs/reports/sales/subscribers.tsv")
 	reports := []*SubscribersReport{}
 	_ = UnmarshalCSV(reportData, &reports)
@@ -45,7 +45,7 @@ func Test_SalesReports_SubscribersReport_MarshalJson(t *testing.T) {
 	assert.Equal(t, expected, string(data))
 }
 
-func Test_SalesReports_PreOrdersReport_MarshalJson(t *testing.T) {
+func Test_Sales_PreOrdersReport_MarshalJson(t *testing.T) {
 	reportData, _ := ioutil.ReadFile("stubs/reports/sales/preorders.tsv")
 	reports := []*PreOrdersReport{}
 	_ = UnmarshalCSV(reportData, &reports)

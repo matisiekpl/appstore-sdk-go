@@ -23,7 +23,7 @@ type FinancesReportsFilter struct {
 }
 
 //ToQueryParamsMap Convert filter to query params
-func (f *FinancesReportsFilter) ToQueryParamsMap() map[string]interface{} {
+func (f *FinancesReportsFilter) toQueryParamsMap() map[string]interface{} {
 	qs := make(map[string]interface{})
 	qs["filter[reportType]"] = string(f.ReportType)
 	qs["filter[regionCode]"] = f.RegionCode
