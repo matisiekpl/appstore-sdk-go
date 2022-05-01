@@ -41,7 +41,7 @@ type PreOrdersReportsResponse struct {
 	Data []*PreOrdersReport `json:"data,omitempty"`
 }
 
-//GetReports Get sales report by filter
+//GetReports Get sales reports by filter
 func (srr *SalesReportsResource) GetReports(ctx context.Context, filter SalesReportsFilterInterface) (*http.Response, error) {
 	err := filter.IsValid()
 	if err != nil {
@@ -176,6 +176,7 @@ func (srr *SalesReportsResource) GetPreOrdersReports(ctx context.Context, filter
 	return &result, resp, nil
 }
 
+//buildQueryParams
 func (srr *SalesReportsResource) buildQueryParams(filter SalesReportsFilterInterface) map[string]interface{} {
 	queryParams := filter.ToQueryParamsMap()
 	queryParams["filter[vendorNumber]"] = srr.config.VendorNo

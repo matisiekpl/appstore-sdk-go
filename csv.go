@@ -20,3 +20,15 @@ func NewCSVReader(in io.Reader) gocsv.CSVReader {
 	r.Comma = '\t'
 	return r
 }
+
+func NewLineSkipDecoder(r io.Reader, LinesToSkip int) (gocsv.SimpleDecoder, error) {
+	reader := csv.NewReader(r)
+	reader.FieldsPerRecord = -1
+	for i := 0; i < LinesToSkip; i++ {
+		if _, err := reader.Read(); err != nil {
+			return nil, err
+		}
+	}
+	reader.FieldsPerRecord = 0
+	return gocsv.NewSimpleDecoderFromCSVReader(reader), nil
+}

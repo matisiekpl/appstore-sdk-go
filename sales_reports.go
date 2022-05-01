@@ -139,8 +139,8 @@ type PreOrdersReport struct {
 	SKU                string        `csv:"SKU" json:"sku"`
 	Developer          string        `csv:"Developer" json:"developer"`
 	Title              string        `csv:"Title" json:"title"`
-	PreOrderStartDate  CustomDate    `csv:"Pre-Order Start Date" json:"pre_order_start_date"`
-	PreOrderEndDate    CustomDate    `csv:"Pre-Order End Date" json:"pre_order_end_date"`
+	PreOrderStartDate  CustomDate    `csv:"Pre-Order Start Date" json:"preorder_start_date"`
+	PreOrderEndDate    CustomDate    `csv:"Pre-Order End Date" json:"preorder_end_date"`
 	Ordered            CustomFloat64 `csv:"Ordered" json:"ordered"`
 	Canceled           CustomFloat64 `csv:"Canceled" json:"canceled"`
 	CumulativeOrdered  CustomFloat64 `csv:"Cumulative Ordered" json:"cumulative_ordered"`

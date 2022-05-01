@@ -29,8 +29,8 @@ func (cl *Client) SalesReports() *SalesReportsResource {
 }
 
 //FinancialReports resource
-func (cl *Client) FinancialReports() *FinancialReportsResource {
-	return &FinancialReportsResource{ResourceAbstract: newResourceAbstract(cl.transport, cl.Cfg)}
+func (cl *Client) FinancialReports() *FinancesReportsResource {
+	return &FinancesReportsResource{ResourceAbstract: newResourceAbstract(cl.transport, cl.Cfg)}
 }
 
 //NewClientFromConfig Create new client from config
