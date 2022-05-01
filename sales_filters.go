@@ -363,24 +363,24 @@ func (f *NewsstandReportsFilter) IsValid() error {
 	return nil
 }
 
-type PreOrderReportsFilter struct {
+type PreOrdersReportsFilter struct {
 	*SalesReportsBaseFilter
 }
 
 //IsValid Validate sales report filter params
-func (f *PreOrderReportsFilter) IsValid() error {
+func (f *PreOrdersReportsFilter) IsValid() error {
 	err := f.SalesReportsBaseFilter.IsValid()
 	if err != nil {
 		return err
 	}
 	if f.ReportType != SalesReportTypePreorder {
-		return fmt.Errorf("PreOrderReportsFilter.IsValid: %v", "ReportType is not valid")
+		return fmt.Errorf("PreOrdersReportsFilter.IsValid: %v", "ReportType is not valid")
 	}
 	if f.ReportSubType != SalesReportSubTypeSummary {
-		return fmt.Errorf("PreOrderReportsFilter.IsValid: %v", "ReportSubType is not valid")
+		return fmt.Errorf("PreOrdersReportsFilter.IsValid: %v", "ReportSubType is not valid")
 	}
 	if f.Version != SalesReportVersion10 {
-		return fmt.Errorf("PreOrderReportsFilter.IsValid: %v", "Version is not valid")
+		return fmt.Errorf("PreOrdersReportsFilter.IsValid: %v", "Version is not valid")
 	}
 	return nil
 }
@@ -409,6 +409,6 @@ func NewNewsstandReportsFilter() *NewsstandReportsFilter {
 	return &NewsstandReportsFilter{&SalesReportsBaseFilter{ReportType: SalesReportTypeNewsStand}}
 }
 
-func NewPreOrderReportsFilter() *PreOrderReportsFilter {
-	return &PreOrderReportsFilter{&SalesReportsBaseFilter{ReportType: SalesReportTypePreorder}}
+func NewPreOrdersReportsFilter() *PreOrdersReportsFilter {
+	return &PreOrdersReportsFilter{&SalesReportsBaseFilter{ReportType: SalesReportTypePreorder}}
 }

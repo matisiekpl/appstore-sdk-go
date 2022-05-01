@@ -152,7 +152,7 @@ func (srr *SalesReportsResource) GetSubscribersReports(ctx context.Context, filt
 }
 
 //GetPreOrdersReports
-func (srr *SalesReportsResource) GetPreOrdersReports(ctx context.Context, filter *PreOrderReportsFilter) (*PreOrdersReportsResponse, *http.Response, error) {
+func (srr *SalesReportsResource) GetPreOrdersReports(ctx context.Context, filter *PreOrdersReportsFilter) (*PreOrdersReportsResponse, *http.Response, error) {
 	resp, err := srr.GetReports(ctx, filter)
 	if err != nil {
 		return nil, nil, fmt.Errorf("SalesReportsResource.GetPreOrdersReports error: %v", err)

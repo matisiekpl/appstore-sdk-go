@@ -137,3 +137,138 @@ fmt.Println(result.Data[0].MarketingOptIns.Value())
 fmt.Println(result.Data[0].BillingRetry.Value())
 fmt.Println(result.Data[0].GracePeriod.Value())
 ```
+
+### Get subscriptions events reports
+```go
+ctx := context.Background()
+date, _ := time.Parse("2006-01-02", "2020-05-05")
+filter := appstore_sdk.NewSubscriptionsEventsReportsFilter()
+filter.SubTypeSummary().Version12().Daily().SetReportDate(date)
+
+result, resp, err := client.SalesReports().GetSubscriptionsEventsReports(ctx, filter)
+if err != nil {
+    fmt.Printf("Wrong API request " + err.Error())
+    panic(err)
+}
+
+//Dump raw response
+fmt.Println(response)
+
+//Dump result
+fmt.Println(result.Data[0].EventDate.Value().Format(CustomDateFormatDefault))
+fmt.Println(result.Data[0].Event)
+fmt.Println(result.Data[0].AppName)
+fmt.Println(result.Data[0].AppAppleID.Value())
+fmt.Println(result.Data[0].SubscriptionName)
+fmt.Println(result.Data[0].SubscriptionAppleID.Value())
+fmt.Println(result.Data[0].SubscriptionGroupID.Value())
+fmt.Println(result.Data[0].StandardSubscriptionDuration)
+fmt.Println(result.Data[0].PromotionalOfferName)
+fmt.Println(result.Data[0].PromotionalOfferID)
+fmt.Println(result.Data[0].SubscriptionOfferType)
+fmt.Println(result.Data[0].SubscriptionOfferDuration)
+fmt.Println(result.Data[0].MarketingOptIn)
+fmt.Println(result.Data[0].MarketingOptInDuration)
+fmt.Println(result.Data[0].PreservedPricing)
+fmt.Println(result.Data[0].ProceedsReason)
+fmt.Println(result.Data[0].ConsecutivePaidPeriods.Value())
+fmt.Println(result.Data[0].OriginalStartDate.Value().Format(CustomDateFormatDefault))
+fmt.Println(result.Data[0].Client)
+fmt.Println(result.Data[0].Device)
+fmt.Println(result.Data[0].State)
+fmt.Println(result.Data[0].Country)
+fmt.Println(result.Data[0].PreviousSubscriptionName)
+fmt.Println(result.Data[0].PreviousSubscriptionAppleID.Value())
+fmt.Println(result.Data[0].DaysBeforeCanceling.Value())
+fmt.Println(result.Data[0].CancellationReason)
+fmt.Println(result.Data[0].DaysCanceled.Value())
+fmt.Println(result.Data[0].Quantity.Value())
+```
+
+### Get subscribers reports
+```go
+ctx := context.Background()
+date, _ := time.Parse("2006-01-02", "2020-05-05")
+filter := appstore_sdk.NewSubscribersReportsFilter()
+filter.SubTypeDetailed().Version12().Daily().SetReportDate(date)
+
+result, resp, err := client.SalesReports().GetSubscribersReports(ctx, filter)
+if err != nil {
+    fmt.Printf("Wrong API request " + err.Error())
+    panic(err)
+}
+
+//Dump raw response
+fmt.Println(response)
+
+//Dump result
+fmt.Println(result.Data[0].EventDate.Value().Format(CustomDateFormatDefault))
+fmt.Println(result.Data[0].AppName)
+fmt.Println(result.Data[0].AppAppleID.Value())
+fmt.Println(result.Data[0].SubscriptionName)
+fmt.Println(result.Data[0].SubscriptionAppleID.Value())
+fmt.Println(result.Data[0].SubscriptionGroupID.Value())
+fmt.Println(result.Data[0].StandardSubscriptionDuration)
+fmt.Println(result.Data[0].PromotionalOfferName)
+fmt.Println(result.Data[0].PromotionalOfferID)
+fmt.Println(result.Data[0].SubscriptionOfferType)
+fmt.Println(result.Data[0].SubscriptionOfferDuration)
+fmt.Println(result.Data[0].MarketingOptInDuration)
+fmt.Println(result.Data[0].CustomerPrice.Value())
+fmt.Println(result.Data[0].CustomerCurrency)
+fmt.Println(result.Data[0].DeveloperProceeds.Value())
+fmt.Println(result.Data[0].ProceedsCurrency)
+fmt.Println(result.Data[0].PreservedPricing)
+fmt.Println(result.Data[0].ProceedsReason)
+fmt.Println(result.Data[0].Client)
+fmt.Println(result.Data[0].Country)
+fmt.Println(result.Data[0].SubscriberID.Value())
+fmt.Println(result.Data[0].SubscriberIDReset)
+fmt.Println(result.Data[0].Refund)
+fmt.Println(result.Data[0].PurchaseDate.Value())
+fmt.Println(result.Data[0].Units.Value())
+```
+
+### Get preorders reports
+```go
+ctx := context.Background()
+date, _ := time.Parse("2006-01-02", "2020-05-05")
+filter := appstore_sdk.NewSubscribersReportsFilter()
+filter.SubTypeDetailed().Version12().Daily().SetReportDate(date)
+
+result, resp, err := client.SalesReports().GetSubscribersReports(ctx, filter)
+if err != nil {
+    fmt.Printf("Wrong API request " + err.Error())
+    panic(err)
+}
+
+//Dump raw response
+fmt.Println(response)
+
+//Dump result
+fmt.Println(result.Data[0].EventDate.Value().Format(CustomDateFormatDefault))
+fmt.Println(result.Data[0].AppName)
+fmt.Println(result.Data[0].AppAppleID.Value())
+fmt.Println(result.Data[0].SubscriptionName)
+fmt.Println(result.Data[0].SubscriptionAppleID.Value())
+fmt.Println(result.Data[0].SubscriptionGroupID.Value())
+fmt.Println(result.Data[0].StandardSubscriptionDuration)
+fmt.Println(result.Data[0].PromotionalOfferName)
+fmt.Println(result.Data[0].PromotionalOfferID)
+fmt.Println(result.Data[0].SubscriptionOfferType)
+fmt.Println(result.Data[0].SubscriptionOfferDuration)
+fmt.Println(result.Data[0].MarketingOptInDuration)
+fmt.Println(result.Data[0].CustomerPrice.Value())
+fmt.Println(result.Data[0].CustomerCurrency)
+fmt.Println(result.Data[0].DeveloperProceeds.Value())
+fmt.Println(result.Data[0].ProceedsCurrency)
+fmt.Println(result.Data[0].PreservedPricing)
+fmt.Println(result.Data[0].ProceedsReason)
+fmt.Println(result.Data[0].Client)
+fmt.Println(result.Data[0].Country)
+fmt.Println(result.Data[0].SubscriberID.Value())
+fmt.Println(result.Data[0].SubscriberIDReset)
+fmt.Println(result.Data[0].Refund)
+fmt.Println(result.Data[0].PurchaseDate.Value())
+fmt.Println(result.Data[0].Units.Value())
+```

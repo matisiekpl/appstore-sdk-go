@@ -222,6 +222,64 @@ func Test_Sales_GetSubscriptionsReports_Error(t *testing.T) {
 	assert.NotEmpty(t, body)
 }
 
+func Test_Sales_GetSubscriptionsEventsReports_Success(t *testing.T) {
+	httpmock.Activate()
+	defer httpmock.DeactivateAndReset()
+
+	config := buildStubConfig()
+	transport := buildStubHttpTransport()
+	ar := newResourceAbstract(transport, config)
+
+	rsp := buildStubResponseFromGzip(http.StatusOK, "stubs/reports/sales/subscriptions-events.tsv")
+	rsp.Header.Set("Content-Type", ResponseContentTypeGzip)
+	httpmock.RegisterResponder("GET", config.Uri+"/v1/salesReports", httpmock.ResponderFromResponse(rsp))
+
+	resource := &SalesReportsResource{ar}
+	filter := NewSubscriptionsEventsReportsFilter()
+	filter.SubTypeSummary().Version12().Daily()
+	ctx := context.Background()
+	result, resp, err := resource.GetSubscriptionsEventsReports(ctx, filter)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, resp)
+	assert.NotEmpty(t, result)
+
+	assert.True(t, result.IsSuccess())
+	assert.Empty(t, result.GetError())
+	assert.Empty(t, result.Errors)
+	assert.Equal(t, "2020-10-06", result.Data[0].EventDate.Value().Format(CustomDateFormatDefault))
+	assert.Equal(t, "Renew", result.Data[0].Event)
+	assert.Equal(t, "AppFooBar", result.Data[0].AppName)
+	assert.Equal(t, 1234567890, result.Data[0].AppAppleID.Value())
+	assert.Equal(t, "foo.bar.baz", result.Data[0].SubscriptionName)
+	assert.Equal(t, 1234567890, result.Data[0].SubscriptionAppleID.Value())
+	assert.Equal(t, 1234567890, result.Data[0].SubscriptionGroupID.Value())
+	assert.Equal(t, "7 Days", result.Data[0].StandardSubscriptionDuration)
+	assert.Equal(t, " ", result.Data[0].PromotionalOfferName)
+	assert.Equal(t, " ", result.Data[0].PromotionalOfferID)
+	assert.Equal(t, "", result.Data[0].SubscriptionOfferType)
+	assert.Equal(t, "", result.Data[0].SubscriptionOfferDuration)
+	assert.Equal(t, "", result.Data[0].MarketingOptIn)
+	assert.Equal(t, " ", result.Data[0].MarketingOptInDuration)
+	assert.Equal(t, "", result.Data[0].PreservedPricing)
+	assert.Equal(t, "", result.Data[0].ProceedsReason)
+	assert.Equal(t, 11, result.Data[0].ConsecutivePaidPeriods.Value())
+	assert.Equal(t, "2020-07-25", result.Data[0].OriginalStartDate.Value().Format(CustomDateFormatDefault))
+	assert.Equal(t, "", result.Data[0].Client)
+	assert.Equal(t, "iPhone", result.Data[0].Device)
+	assert.Equal(t, " ", result.Data[0].State)
+	assert.Equal(t, "RU", result.Data[0].Country)
+	assert.Equal(t, "", result.Data[0].PreviousSubscriptionName)
+	assert.Equal(t, 0, result.Data[0].PreviousSubscriptionAppleID.Value())
+	assert.Equal(t, 0, result.Data[0].DaysBeforeCanceling.Value())
+	assert.Equal(t, " ", result.Data[0].CancellationReason)
+	assert.Equal(t, 0, result.Data[0].DaysCanceled.Value())
+	assert.Equal(t, 1, result.Data[0].Quantity.Value())
+
+	defer resp.Body.Close()
+	body, _ := ioutil.ReadAll(resp.Body)
+	assert.NotEmpty(t, body)
+}
+
 func Test_Sales_GetSubscriptionsEventsReports_Error(t *testing.T) {
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
@@ -248,6 +306,61 @@ func Test_Sales_GetSubscriptionsEventsReports_Error(t *testing.T) {
 	assert.Equal(t, "The version parameter you have specified is invalid. The latest version for this report is 1_0.", result.GetError())
 	assert.Len(t, result.Errors, 1)
 	assert.Empty(t, result.Data)
+
+	defer resp.Body.Close()
+	body, _ := ioutil.ReadAll(resp.Body)
+	assert.NotEmpty(t, body)
+}
+
+func Test_Sales_GetSubscribersReports_Success(t *testing.T) {
+	httpmock.Activate()
+	defer httpmock.DeactivateAndReset()
+
+	config := buildStubConfig()
+	transport := buildStubHttpTransport()
+	ar := newResourceAbstract(transport, config)
+
+	rsp := buildStubResponseFromGzip(http.StatusOK, "stubs/reports/sales/subscribers.tsv")
+	rsp.Header.Set("Content-Type", ResponseContentTypeGzip)
+	httpmock.RegisterResponder("GET", config.Uri+"/v1/salesReports", httpmock.ResponderFromResponse(rsp))
+
+	resource := &SalesReportsResource{ar}
+	filter := NewSubscribersReportsFilter()
+	filter.SubTypeDetailed().Version12().Daily()
+	ctx := context.Background()
+	result, resp, err := resource.GetSubscribersReports(ctx, filter)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, resp)
+	assert.NotEmpty(t, result)
+
+	assert.True(t, result.IsSuccess())
+	assert.Empty(t, result.GetError())
+	assert.Empty(t, result.Errors)
+	assert.Equal(t, "2020-10-05", result.Data[0].EventDate.Value().Format(CustomDateFormatDefault))
+	assert.Equal(t, "FooBarApp", result.Data[0].AppName)
+	assert.Equal(t, 1234567890, result.Data[0].AppAppleID.Value())
+	assert.Equal(t, "foo.bar.baz", result.Data[0].SubscriptionName)
+	assert.Equal(t, 1234567890, result.Data[0].SubscriptionAppleID.Value())
+	assert.Equal(t, 1234567890, result.Data[0].SubscriptionGroupID.Value())
+	assert.Equal(t, "7 Days", result.Data[0].StandardSubscriptionDuration)
+	assert.Equal(t, "", result.Data[0].PromotionalOfferName)
+	assert.Equal(t, "", result.Data[0].PromotionalOfferID)
+	assert.Equal(t, "", result.Data[0].SubscriptionOfferType)
+	assert.Equal(t, "", result.Data[0].SubscriptionOfferDuration)
+	assert.Equal(t, "", result.Data[0].MarketingOptInDuration)
+	assert.Equal(t, 4.489999771118164, result.Data[0].CustomerPrice.Value())
+	assert.Equal(t, "USD", result.Data[0].CustomerCurrency)
+	assert.Equal(t, 3.1500000953674316, result.Data[0].DeveloperProceeds.Value())
+	assert.Equal(t, "USD", result.Data[0].ProceedsCurrency)
+	assert.Equal(t, " ", result.Data[0].PreservedPricing)
+	assert.Equal(t, " ", result.Data[0].ProceedsReason)
+	assert.Equal(t, " ", result.Data[0].Client)
+	assert.Equal(t, "UA", result.Data[0].Country)
+	assert.Equal(t, 1234567890000, result.Data[0].SubscriberID.Value())
+	assert.Equal(t, "", result.Data[0].SubscriberIDReset)
+	assert.Equal(t, "", result.Data[0].Refund)
+	//assert.Equal(t, "", result.Data[0].PurchaseDate.Value())
+	assert.Equal(t, 1, result.Data[0].Units.Value())
 
 	defer resp.Body.Close()
 	body, _ := ioutil.ReadAll(resp.Body)
@@ -286,6 +399,56 @@ func Test_Sales_GetSubscribersReports_Error(t *testing.T) {
 	assert.NotEmpty(t, body)
 }
 
+func Test_Sales_GetPreOrdersReports_Success(t *testing.T) {
+	httpmock.Activate()
+	defer httpmock.DeactivateAndReset()
+
+	config := buildStubConfig()
+	transport := buildStubHttpTransport()
+	ar := newResourceAbstract(transport, config)
+
+	rsp := buildStubResponseFromGzip(http.StatusOK, "stubs/reports/sales/preorders.tsv")
+	rsp.Header.Set("Content-Type", ResponseContentTypeGzip)
+	httpmock.RegisterResponder("GET", config.Uri+"/v1/salesReports", httpmock.ResponderFromResponse(rsp))
+
+	resource := &SalesReportsResource{ar}
+	filter := NewPreOrdersReportsFilter()
+	filter.SubTypeSummary().Version10().Daily()
+	ctx := context.Background()
+	result, resp, err := resource.GetPreOrdersReports(ctx, filter)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, resp)
+	assert.NotEmpty(t, result)
+
+	assert.True(t, result.IsSuccess())
+	assert.Empty(t, result.GetError())
+	assert.Empty(t, result.Errors)
+	assert.Equal(t, "APPLE", result.Data[0].Provider)
+	assert.Equal(t, "RU", result.Data[0].ProviderCountry)
+	assert.Equal(t, "Foo", result.Data[0].Title)
+	assert.Equal(t, "", result.Data[0].SKU)
+	assert.Equal(t, "", result.Data[0].Developer)
+	assert.Equal(t, "2020-10-05", result.Data[0].PreOrderStartDate.Value().Format(CustomDateFormatDefault))
+	assert.Equal(t, "2020-10-05", result.Data[0].PreOrderEndDate.Value().Format(CustomDateFormatDefault))
+	assert.Equal(t, 10.199999809265137, result.Data[0].Ordered.Value())
+	assert.Equal(t, 5.5, result.Data[0].Canceled.Value())
+	assert.Equal(t, float64(10), result.Data[0].CumulativeOrdered.Value())
+	assert.Equal(t, float64(12), result.Data[0].CumulativeCanceled.Value())
+	assert.Equal(t, "2020-10-05", result.Data[0].StartDate.Value().Format(CustomDateFormatDefault))
+	assert.Equal(t, "2020-10-05", result.Data[0].EndDate.Value().Format(CustomDateFormatDefault))
+	assert.Equal(t, "RU", result.Data[0].CountryCode)
+	assert.Equal(t, 1234567890, result.Data[0].AppleIdentifier.Value())
+	assert.Equal(t, "Lifestyle", result.Data[0].Category)
+	assert.Equal(t, "iPhone", result.Data[0].Device)
+	assert.Equal(t, "iOS", result.Data[0].SupportedPlatforms)
+	assert.Equal(t, "foo", result.Data[0].Client)
+	assert.Equal(t, "RU", result.Data[0].ProviderCountry)
+
+	defer resp.Body.Close()
+	body, _ := ioutil.ReadAll(resp.Body)
+	assert.NotEmpty(t, body)
+}
+
 func Test_Sales_GetPreOrdersReports_Error(t *testing.T) {
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
@@ -299,7 +462,7 @@ func Test_Sales_GetPreOrdersReports_Error(t *testing.T) {
 	httpmock.RegisterResponder("GET", config.Uri+"/v1/salesReports", httpmock.ResponderFromResponse(rsp))
 
 	resource := &SalesReportsResource{ar}
-	filter := NewPreOrderReportsFilter()
+	filter := NewPreOrdersReportsFilter()
 	filter.SubTypeSummary().Version10().Daily()
 	ctx := context.Background()
 	result, resp, err := resource.GetPreOrdersReports(ctx, filter)
