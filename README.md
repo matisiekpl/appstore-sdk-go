@@ -57,7 +57,7 @@ if err != nil {
 }
 
 //Dump raw response
-fmt.Println(response)
+fmt.Println(resp)
 
 //Dump result
 fmt.Println(result.Data[0].Provider)
@@ -105,7 +105,7 @@ if err != nil {
 }
 
 //Dump raw response
-fmt.Println(response)
+fmt.Println(resp)
 
 //Dump result
 fmt.Println(result.Data[0].AppName)
@@ -152,7 +152,7 @@ if err != nil {
 }
 
 //Dump raw response
-fmt.Println(response)
+fmt.Println(resp)
 
 //Dump result
 fmt.Println(result.Data[0].EventDate.Value().Format(CustomDateFormatDefault))
@@ -199,7 +199,7 @@ if err != nil {
 }
 
 //Dump raw response
-fmt.Println(response)
+fmt.Println(resp)
 
 //Dump result
 fmt.Println(result.Data[0].EventDate.Value().Format(CustomDateFormatDefault))
@@ -243,7 +243,7 @@ if err != nil {
 }
 
 //Dump raw response
-fmt.Println(response)
+fmt.Println(resp)
 
 //Dump result
 fmt.Println(result.Data[0].Provider)
@@ -266,4 +266,45 @@ fmt.Println(result.Data[0].Device)
 fmt.Println(result.Data[0].SupportedPlatforms)
 fmt.Println(result.Data[0].Client)
 fmt.Println(result.Data[0].ProviderCountry)
+```
+
+### Get financial reports
+```go
+ctx := context.Background()
+date, _ := time.Parse("2006-01-02", "2020-05-05")
+filter :=  appstore_sdk.NewFinancesReportsFilter()
+filter.SetReportDate(date).SetRegionCode("US")
+
+result, resp, err := client.FinancesReports().GetFinancialReports(ctx, filter)
+if err != nil {
+    fmt.Printf("Wrong API request " + err.Error())
+    panic(err)
+}
+
+//Dump raw response
+fmt.Println(resp)
+
+//Dump result
+fmt.Println(result.Data[0].StartDate.Value().Format(CustomDateFormatDefault))
+fmt.Println(result.Data[0].EndDate.Value().Format(CustomDateFormatDefault))
+fmt.Println(result.Data[0].UPC)
+fmt.Println(result.Data[0].ISRCIsbn)
+fmt.Println(result.Data[0].VendorIdentifier)
+fmt.Println(result.Data[0].Quantity.Value())
+fmt.Println(result.Data[0].PartnerShare.Value())
+fmt.Println(result.Data[0].ExtendedPartnerShare.Value())
+fmt.Println(result.Data[0].PartnerShareCurrency)
+fmt.Println(result.Data[0].SaleOrReturn)
+fmt.Println(result.Data[0].AppleIdentifier.Value())
+fmt.Println(result.Data[0].ArtistShowDeveloperAuthor)
+fmt.Println(result.Data[0].Title)
+fmt.Println(result.Data[0].LabelStudioNetworkDeveloperPublisher)
+fmt.Println(result.Data[0].Grid)
+fmt.Println(result.Data[0].ProductTypeIdentifier)
+fmt.Println(result.Data[0].ISANOtherIdentifier)
+fmt.Println(result.Data[0].CountryOfSale)
+fmt.Println(result.Data[0].PreOrderFlag)
+fmt.Println(result.Data[0].PromoCode)
+fmt.Println(result.Data[0].CustomerPrice.Value())
+fmt.Println(result.Data[0].CustomerCurrency)
 ```

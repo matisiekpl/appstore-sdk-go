@@ -26,7 +26,7 @@ func Test_Sales_SalesReportsBaseFilter_ToQueryParamsMapOnlyRequired(t *testing.T
 	assert.Equal(t, qs, filter.ToQueryParamsMap())
 }
 
-func Test_Sales_SalesReportsFilter_ToQueryParamsMap(t *testing.T) {
+func Test_Sales_SalesReportsBaseFilter_ToQueryParamsMap(t *testing.T) {
 	filter := &SalesReportsBaseFilter{}
 	date, _ := time.Parse("2006-01-02", "2020-05-05")
 	filter.Daily().TypeSales().SubTypeSummary().Version10().SetReportDate(date)
@@ -40,7 +40,7 @@ func Test_Sales_SalesReportsFilter_ToQueryParamsMap(t *testing.T) {
 	assert.Equal(t, qs, filter.ToQueryParamsMap())
 }
 
-func Test_Sales_SalesReportsFilter_SetSubType(t *testing.T) {
+func Test_Sales_SalesReportsBaseFilter_SetSubType(t *testing.T) {
 	filter := &SalesReportsBaseFilter{}
 	filter.SubTypeSummary()
 	assert.Equal(t, filter.ReportSubType, SalesReportSubTypeSummary)
@@ -50,7 +50,7 @@ func Test_Sales_SalesReportsFilter_SetSubType(t *testing.T) {
 	assert.Equal(t, filter.ReportSubType, SalesReportSubTypeOptIn)
 }
 
-func Test_Sales_SalesReportsFilter_SetType(t *testing.T) {
+func Test_Sales_SalesReportsBaseFilter_SetType(t *testing.T) {
 	filter := &SalesReportsBaseFilter{}
 	filter.TypeSales()
 	assert.Equal(t, filter.ReportType, SalesReportTypeSales)
@@ -66,7 +66,7 @@ func Test_Sales_SalesReportsFilter_SetType(t *testing.T) {
 	assert.Equal(t, filter.ReportType, SalesReportTypeSubscriptionEvent)
 }
 
-func Test_Sales_SalesReportsFilter_SetFrequency(t *testing.T) {
+func Test_Sales_SalesReportsBaseFilter_SetFrequency(t *testing.T) {
 	filter := &SalesReportsBaseFilter{}
 	filter.Daily()
 	assert.Equal(t, filter.Frequency, SalesReportFrequencyDaily)
@@ -78,7 +78,7 @@ func Test_Sales_SalesReportsFilter_SetFrequency(t *testing.T) {
 	assert.Equal(t, filter.Frequency, SalesReportFrequencyYearly)
 }
 
-func Test_Sales_SalesReportsFilter_SetVersion(t *testing.T) {
+func Test_Sales_SalesReportsBaseFilter_SetVersion(t *testing.T) {
 	filter := &SalesReportsBaseFilter{}
 	filter.Version10()
 	assert.Equal(t, filter.Version, SalesReportVersion10)

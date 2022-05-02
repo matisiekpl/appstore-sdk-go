@@ -61,13 +61,13 @@ func (srr *SalesReportsResource) GetSalesReports(ctx context.Context, filter *Sa
 	result.status = resp.StatusCode
 	if result.IsSuccess() {
 		reports := []*SalesReport{}
-		err = srr.unmarshalResponse(resp, &reports)
+		err = srr.unmarshalResponse(resp, &reports, false)
 		if err != nil {
 			return &result, resp, fmt.Errorf("SalesReportsResource.GetSalesReports error: %v", err)
 		}
 		result.Data = reports
 	} else {
-		err = srr.unmarshalResponse(resp, &result)
+		err = srr.unmarshalResponse(resp, &result, false)
 		if err != nil {
 			return &result, resp, fmt.Errorf("SalesReportsResource.GetSalesReports error: %v", err)
 		}
@@ -86,13 +86,13 @@ func (srr *SalesReportsResource) GetSubscriptionsReports(ctx context.Context, fi
 	result.status = resp.StatusCode
 	if result.IsSuccess() {
 		reports := []*SubscriptionsReport{}
-		err = srr.unmarshalResponse(resp, &reports)
+		err = srr.unmarshalResponse(resp, &reports, false)
 		if err != nil {
 			return &result, resp, fmt.Errorf("SalesReportsResource.GetSubscriptionsReports error: %v", err)
 		}
 		result.Data = reports
 	} else {
-		err = srr.unmarshalResponse(resp, &result)
+		err = srr.unmarshalResponse(resp, &result, false)
 		if err != nil {
 			return &result, resp, fmt.Errorf("SalesReportsResource.GetSubscriptionsReports error: %v", err)
 		}
@@ -111,13 +111,13 @@ func (srr *SalesReportsResource) GetSubscriptionsEventsReports(ctx context.Conte
 	result.status = resp.StatusCode
 	if result.IsSuccess() {
 		reports := []*SubscriptionsEventsReport{}
-		err = srr.unmarshalResponse(resp, &reports)
+		err = srr.unmarshalResponse(resp, &reports, false)
 		if err != nil {
 			return &result, resp, fmt.Errorf("SalesReportsResource.GetSubscriptionsReports error: %v", err)
 		}
 		result.Data = reports
 	} else {
-		err = srr.unmarshalResponse(resp, &result)
+		err = srr.unmarshalResponse(resp, &result, false)
 		if err != nil {
 			return &result, resp, fmt.Errorf("SalesReportsResource.GetSubscriptionsReports error: %v", err)
 		}
@@ -136,13 +136,13 @@ func (srr *SalesReportsResource) GetSubscribersReports(ctx context.Context, filt
 	result.status = resp.StatusCode
 	if result.IsSuccess() {
 		reports := []*SubscribersReport{}
-		err = srr.unmarshalResponse(resp, &reports)
+		err = srr.unmarshalResponse(resp, &reports, false)
 		if err != nil {
 			return &result, resp, fmt.Errorf("SalesReportsResource.GetSubscribersReports error: %v", err)
 		}
 		result.Data = reports
 	} else {
-		err = srr.unmarshalResponse(resp, &result)
+		err = srr.unmarshalResponse(resp, &result, false)
 		if err != nil {
 			return &result, resp, fmt.Errorf("SalesReportsResource.GetSubscribersReports error: %v", err)
 		}
@@ -161,13 +161,13 @@ func (srr *SalesReportsResource) GetPreOrdersReports(ctx context.Context, filter
 	result.status = resp.StatusCode
 	if result.IsSuccess() {
 		reports := []*PreOrdersReport{}
-		err = srr.unmarshalResponse(resp, &reports)
+		err = srr.unmarshalResponse(resp, &reports, false)
 		if err != nil {
 			return &result, resp, fmt.Errorf("SalesReportsResource.GetPreOrdersReports error: %v", err)
 		}
 		result.Data = reports
 	} else {
-		err = srr.unmarshalResponse(resp, &result)
+		err = srr.unmarshalResponse(resp, &result, false)
 		if err != nil {
 			return &result, resp, fmt.Errorf("SalesReportsResource.GetPreOrdersReports error: %v", err)
 		}

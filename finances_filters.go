@@ -22,6 +22,34 @@ type FinancesReportsFilter struct {
 	RegionCode string             //(Required) You can download consolidated or separate financial reports per territory. For a complete list of possible values, see Financial Report Regions and Currencies.
 }
 
+//SetReportType Set report type
+func (f *FinancesReportsFilter) SetReportType(value FinancesReportType) *FinancesReportsFilter {
+	f.ReportType = value
+	return f
+}
+
+//SetReportDate Set report date
+func (f *FinancesReportsFilter) SetReportDate(value time.Time) *FinancesReportsFilter {
+	f.ReportDate = value
+	return f
+}
+
+//SetRegionCode Set report date
+func (f *FinancesReportsFilter) SetRegionCode(value string) *FinancesReportsFilter {
+	f.RegionCode = value
+	return f
+}
+
+//TypeFinancial Change report type to Financial
+func (f *FinancesReportsFilter) TypeFinancial() *FinancesReportsFilter {
+	return f.SetReportType(FinancesReportTypeFinancial)
+}
+
+//TypeFinanceDetail Change report type to Sales
+func (f *FinancesReportsFilter) TypeFinanceDetail() *FinancesReportsFilter {
+	return f.SetReportType(FinancesReportTypeFinanceDetail)
+}
+
 //ToQueryParamsMap Convert filter to query params
 func (f *FinancesReportsFilter) toQueryParamsMap() map[string]interface{} {
 	qs := make(map[string]interface{})
@@ -45,4 +73,8 @@ func (f *FinancesReportsFilter) IsValid() error {
 		return fmt.Errorf("FinancesReportsFilter.IsValid: %v", "ReportDate is required")
 	}
 	return nil
+}
+
+func NewFinancesReportsFilter() *FinancesReportsFilter {
+	return &FinancesReportsFilter{ReportType: FinancesReportTypeFinancial}
 }

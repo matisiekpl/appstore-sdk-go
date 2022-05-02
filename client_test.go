@@ -40,7 +40,7 @@ func Test_Client_FinancialReports(t *testing.T) {
 	config := buildStubConfig()
 	client := NewClientFromConfig(config, nil)
 	_ = client.Init()
-	result := client.FinancialReports()
+	result := client.FinancesReports()
 	assert.NotEmpty(t, result)
 	assert.NotEmpty(t, result.config)
 	assert.NotEmpty(t, result.transport)

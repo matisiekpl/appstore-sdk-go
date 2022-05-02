@@ -28,8 +28,8 @@ func (cl *Client) SalesReports() *SalesReportsResource {
 	return &SalesReportsResource{ResourceAbstract: newResourceAbstract(cl.transport, cl.Cfg)}
 }
 
-//FinancialReports resource
-func (cl *Client) FinancialReports() *FinancesReportsResource {
+//FinancesReports resource
+func (cl *Client) FinancesReports() *FinancesReportsResource {
 	return &FinancesReportsResource{ResourceAbstract: newResourceAbstract(cl.transport, cl.Cfg)}
 }
 

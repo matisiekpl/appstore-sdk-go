@@ -77,19 +77,19 @@ func Test_HTTP_RequestBuilder_BuildRequestGET(t *testing.T) {
 }
 
 func Test_HTTP_NewResponseHandler_ResponseContentTypeGzip(t *testing.T) {
-	result := NewResponseHandler(ResponseContentTypeGzip)
+	result := NewResponseHandler(ResponseContentTypeGzip, false)
 	assert.Implements(t, (*ResponseHandlerInterface)(nil), result)
 	assert.IsType(t, (*ResponseHandlerGzip)(nil), result)
 }
 
 func Test_HTTP_NewResponseHandler_ResponseHandlerJson(t *testing.T) {
-	result := NewResponseHandler(ResponseContentTypeJson)
+	result := NewResponseHandler(ResponseContentTypeJson, false)
 	assert.Implements(t, (*ResponseHandlerInterface)(nil), result)
 	assert.IsType(t, (*ResponseHandlerJson)(nil), result)
 }
 
 func Test_HTTP_NewResponseHandler_ByDefault(t *testing.T) {
-	result := NewResponseHandler("foo")
+	result := NewResponseHandler("foo", false)
 	assert.Implements(t, (*ResponseHandlerInterface)(nil), result)
 	assert.IsType(t, (*ResponseHandlerJson)(nil), result)
 }

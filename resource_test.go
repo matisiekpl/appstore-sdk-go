@@ -24,7 +24,7 @@ func Test_Resource_UnmarshalResponseGzip(t *testing.T) {
 	reports := []*SalesReport{}
 	resp := buildStubResponseFromGzip(http.StatusOK, "stubs/reports/sales/sales.tsv")
 	resp.Header.Set("Content-Type", ResponseContentTypeGzip)
-	err := result.unmarshalResponse(resp, &reports)
+	err := result.unmarshalResponse(resp, &reports, false)
 	assert.NoError(t, err)
 	assert.Equal(t, 1234567890, reports[0].AppleIdentifier.Value())
 	assert.Equal(t, "2020-10-05", reports[0].BeginDate.Value().Format(CustomDateFormatDefault))
@@ -42,7 +42,7 @@ func Test_Resource_UnmarshalResponseJson(t *testing.T) {
 	var body ResponseBody
 	resp := buildStubResponseFromFile(http.StatusOK, "stubs/errors/invalid.parameter.json")
 	resp.Header.Set("Content-Type", ResponseContentTypeJson)
-	err := result.unmarshalResponse(resp, &body)
+	err := result.unmarshalResponse(resp, &body, false)
 	assert.NoError(t, err)
 	assert.Equal(t, "foo", body.Errors[0].Id)
 	assert.Equal(t, "400", body.Errors[0].Status)

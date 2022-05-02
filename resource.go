@@ -12,9 +12,9 @@ type ResourceAbstract struct {
 }
 
 //UnmarshalResponse method
-func (ra *ResourceAbstract) unmarshalResponse(resp *http.Response, v interface{}) error {
+func (ra *ResourceAbstract) unmarshalResponse(resp *http.Response, v interface{}, filterLines bool) error {
 	contentType := resp.Header.Get("Content-Type")
-	responseHandler := NewResponseHandler(contentType)
+	responseHandler := NewResponseHandler(contentType, filterLines)
 
 	bodyBytes, err := responseHandler.ReadBody(resp)
 	if err != nil {

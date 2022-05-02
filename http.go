@@ -162,6 +162,7 @@ func (r *ResponseHandlerJson) RestoreBody(data []byte) (io.ReadCloser, error) {
 }
 
 type ResponseHandlerGzip struct {
+	FilterLines bool
 }
 
 func (r *ResponseHandlerGzip) ReadBody(resp *http.Response) ([]byte, error) {
@@ -175,7 +176,11 @@ func (r *ResponseHandlerGzip) ReadBody(resp *http.Response) ([]byte, error) {
 }
 
 func (r *ResponseHandlerGzip) UnmarshalBody(data []byte, v interface{}) error {
-	return UnmarshalCSV(data, v)
+	if r.FilterLines {
+		return UnmarshalCSVWithFilterLines(data, v)
+	} else {
+		return UnmarshalCSV(data, v)
+	}
 }
 
 func (r *ResponseHandlerGzip) RestoreBody(data []byte) (io.ReadCloser, error) {
@@ -195,11 +200,11 @@ func (r *ResponseHandlerGzip) RestoreBody(data []byte) (io.ReadCloser, error) {
 	return ioutil.NopCloser(bytes.NewBuffer(b.Bytes())), nil
 }
 
-func NewResponseHandler(contentType string) ResponseHandlerInterface {
+func NewResponseHandler(contentType string, filterLines bool) ResponseHandlerInterface {
 	var handler ResponseHandlerInterface
 	switch contentType {
 	case ResponseContentTypeGzip:
-		handler = &ResponseHandlerGzip{}
+		handler = &ResponseHandlerGzip{FilterLines: filterLines}
 		break
 	case ResponseContentTypeJson:
 		handler = &ResponseHandlerJson{}
