@@ -29,7 +29,7 @@ func (ra *ResourceAbstract) unmarshalResponse(resp *http.Response, v interface{}
 	return responseHandler.UnmarshalBody(bodyBytes, v)
 }
 
-//Create new resource abstract
+//newResourceAbstract create new resource abstract
 func newResourceAbstract(transport *Transport, config *Config) *ResourceAbstract {
 	return &ResourceAbstract{transport: transport, config: config}
 }
