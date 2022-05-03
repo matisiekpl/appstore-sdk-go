@@ -10,9 +10,7 @@ import (
 )
 
 func Test_Sales_SalesReportsResource_GetReports_InvalidFilter(t *testing.T) {
-	config := buildStubConfig()
-	transport := buildStubHttpTransport()
-	resource := &SalesReportsResource{ResourceAbstract: newResourceAbstract(transport, config)}
+	resource := buildStubSalesReportsResource()
 	filter := &SalesReportsBaseFilter{}
 	filter.TypeSales().SubTypeSummary().Version10()
 	ctx := context.Background()
@@ -26,13 +24,12 @@ func Test_Sales_SalesReportsResource_GetReports_Success(t *testing.T) {
 	defer httpmock.DeactivateAndReset()
 
 	config := buildStubConfig()
-	transport := buildStubHttpTransport()
 
 	resp := buildStubResponseFromGzip(http.StatusOK, "stubs/reports/sales/sales.tsv")
 	resp.Header.Set("Content-Type", ResponseContentTypeGzip)
 	httpmock.RegisterResponder("GET", config.Uri+"/v1/salesReports", httpmock.ResponderFromResponse(resp))
 
-	resource := &SalesReportsResource{ResourceAbstract: newResourceAbstract(transport, config)}
+	resource := buildStubSalesReportsResource()
 	filter := &SalesReportsBaseFilter{}
 	filter.TypeSales().SubTypeSummary().Version10().Daily()
 	ctx := context.Background()
@@ -46,14 +43,12 @@ func Test_Sales_SalesReportsResource_GetSalesReports_Success(t *testing.T) {
 	defer httpmock.DeactivateAndReset()
 
 	config := buildStubConfig()
-	transport := buildStubHttpTransport()
-	ar := newResourceAbstract(transport, config)
 
 	rsp := buildStubResponseFromGzip(http.StatusOK, "stubs/reports/sales/sales.tsv")
 	rsp.Header.Set("Content-Type", ResponseContentTypeGzip)
 	httpmock.RegisterResponder("GET", config.Uri+"/v1/salesReports", httpmock.ResponderFromResponse(rsp))
 
-	resource := &SalesReportsResource{ar}
+	resource := buildStubSalesReportsResource()
 	filter := NewSalesReportsFilter()
 	filter.SubTypeSummary().Version10().Daily()
 	ctx := context.Background()
@@ -105,14 +100,12 @@ func Test_Sales_SalesReportsResource_GetSalesReports_Error(t *testing.T) {
 	defer httpmock.DeactivateAndReset()
 
 	config := buildStubConfig()
-	transport := buildStubHttpTransport()
-	ar := newResourceAbstract(transport, config)
 
 	rsp := buildStubResponseFromFile(http.StatusBadRequest, "stubs/errors/invalid.parameter.json")
 	rsp.Header.Set("Content-Type", ResponseContentTypeJson)
 	httpmock.RegisterResponder("GET", config.Uri+"/v1/salesReports", httpmock.ResponderFromResponse(rsp))
 
-	resource := &SalesReportsResource{ar}
+	resource := buildStubSalesReportsResource()
 	filter := NewSalesReportsFilter()
 	filter.SubTypeSummary().Version10().Daily()
 	ctx := context.Background()
@@ -132,19 +125,29 @@ func Test_Sales_SalesReportsResource_GetSalesReports_Error(t *testing.T) {
 	assert.NotEmpty(t, body)
 }
 
+func Test_Sales_SalesReportsResource_GetSalesReports_InvalidFilter(t *testing.T) {
+	resource := buildStubSalesReportsResource()
+	filter := NewSalesReportsFilter()
+	filter.Version10().Daily()
+	ctx := context.Background()
+	result, resp, err := resource.GetSalesReports(ctx, filter)
+	assert.Error(t, err)
+	assert.Empty(t, resp)
+	assert.Empty(t, result)
+	assert.Equal(t, "SalesReportsResource.GetSalesReports error: SalesReportsResource.GetReports invalid filter: SalesReportsBaseFilter.IsValid: ReportSubType is required", err.Error())
+}
+
 func Test_Sales_SalesReportsResource_GetSubscriptionsReports_Success(t *testing.T) {
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
 
 	config := buildStubConfig()
-	transport := buildStubHttpTransport()
-	ar := newResourceAbstract(transport, config)
 
 	rsp := buildStubResponseFromGzip(http.StatusOK, "stubs/reports/sales/subscriptions.tsv")
 	rsp.Header.Set("Content-Type", ResponseContentTypeGzip)
 	httpmock.RegisterResponder("GET", config.Uri+"/v1/salesReports", httpmock.ResponderFromResponse(rsp))
 
-	resource := &SalesReportsResource{ar}
+	resource := buildStubSalesReportsResource()
 	filter := NewSubscriptionsReportsFilter()
 	filter.SubTypeSummary().Version12().Daily()
 	ctx := context.Background()
@@ -195,14 +198,12 @@ func Test_Sales_SalesReportsResource_GetSubscriptionsReports_Error(t *testing.T)
 	defer httpmock.DeactivateAndReset()
 
 	config := buildStubConfig()
-	transport := buildStubHttpTransport()
-	ar := newResourceAbstract(transport, config)
 
 	rsp := buildStubResponseFromFile(http.StatusBadRequest, "stubs/errors/invalid.parameter.json")
 	rsp.Header.Set("Content-Type", ResponseContentTypeJson)
 	httpmock.RegisterResponder("GET", config.Uri+"/v1/salesReports", httpmock.ResponderFromResponse(rsp))
 
-	resource := &SalesReportsResource{ar}
+	resource := buildStubSalesReportsResource()
 	filter := NewSubscriptionsReportsFilter()
 	filter.SubTypeSummary().Version12().Daily()
 	ctx := context.Background()
@@ -227,14 +228,12 @@ func Test_Sales_SalesReportsResource_GetSubscriptionsEventsReports_Success(t *te
 	defer httpmock.DeactivateAndReset()
 
 	config := buildStubConfig()
-	transport := buildStubHttpTransport()
-	ar := newResourceAbstract(transport, config)
 
 	rsp := buildStubResponseFromGzip(http.StatusOK, "stubs/reports/sales/subscriptions-events.tsv")
 	rsp.Header.Set("Content-Type", ResponseContentTypeGzip)
 	httpmock.RegisterResponder("GET", config.Uri+"/v1/salesReports", httpmock.ResponderFromResponse(rsp))
 
-	resource := &SalesReportsResource{ar}
+	resource := buildStubSalesReportsResource()
 	filter := NewSubscriptionsEventsReportsFilter()
 	filter.SubTypeSummary().Version12().Daily()
 	ctx := context.Background()
@@ -285,14 +284,12 @@ func Test_Sales_SalesReportsResource_GetSubscriptionsEventsReports_Error(t *test
 	defer httpmock.DeactivateAndReset()
 
 	config := buildStubConfig()
-	transport := buildStubHttpTransport()
-	ar := newResourceAbstract(transport, config)
 
 	rsp := buildStubResponseFromFile(http.StatusBadRequest, "stubs/errors/invalid.parameter.json")
 	rsp.Header.Set("Content-Type", ResponseContentTypeJson)
 	httpmock.RegisterResponder("GET", config.Uri+"/v1/salesReports", httpmock.ResponderFromResponse(rsp))
 
-	resource := &SalesReportsResource{ar}
+	resource := buildStubSalesReportsResource()
 	filter := NewSubscriptionsEventsReportsFilter()
 	filter.SubTypeSummary().Version12().Daily()
 	ctx := context.Background()
@@ -317,14 +314,12 @@ func Test_Sales_SalesReportsResource_GetSubscribersReports_Success(t *testing.T)
 	defer httpmock.DeactivateAndReset()
 
 	config := buildStubConfig()
-	transport := buildStubHttpTransport()
-	ar := newResourceAbstract(transport, config)
 
 	rsp := buildStubResponseFromGzip(http.StatusOK, "stubs/reports/sales/subscribers.tsv")
 	rsp.Header.Set("Content-Type", ResponseContentTypeGzip)
 	httpmock.RegisterResponder("GET", config.Uri+"/v1/salesReports", httpmock.ResponderFromResponse(rsp))
 
-	resource := &SalesReportsResource{ar}
+	resource := buildStubSalesReportsResource()
 	filter := NewSubscribersReportsFilter()
 	filter.SubTypeDetailed().Version12().Daily()
 	ctx := context.Background()
@@ -372,14 +367,12 @@ func Test_Sales_SalesReportsResource_GetSubscribersReports_Error(t *testing.T) {
 	defer httpmock.DeactivateAndReset()
 
 	config := buildStubConfig()
-	transport := buildStubHttpTransport()
-	ar := newResourceAbstract(transport, config)
 
 	rsp := buildStubResponseFromFile(http.StatusBadRequest, "stubs/errors/invalid.parameter.json")
 	rsp.Header.Set("Content-Type", ResponseContentTypeJson)
 	httpmock.RegisterResponder("GET", config.Uri+"/v1/salesReports", httpmock.ResponderFromResponse(rsp))
 
-	resource := &SalesReportsResource{ar}
+	resource := buildStubSalesReportsResource()
 	filter := NewSubscribersReportsFilter()
 	filter.SubTypeDetailed().Version12().Daily()
 	ctx := context.Background()
@@ -404,14 +397,12 @@ func Test_Sales_SalesReportsResource_GetPreOrdersReports_Success(t *testing.T) {
 	defer httpmock.DeactivateAndReset()
 
 	config := buildStubConfig()
-	transport := buildStubHttpTransport()
-	ar := newResourceAbstract(transport, config)
 
 	rsp := buildStubResponseFromGzip(http.StatusOK, "stubs/reports/sales/preorders.tsv")
 	rsp.Header.Set("Content-Type", ResponseContentTypeGzip)
 	httpmock.RegisterResponder("GET", config.Uri+"/v1/salesReports", httpmock.ResponderFromResponse(rsp))
 
-	resource := &SalesReportsResource{ar}
+	resource := buildStubSalesReportsResource()
 	filter := NewPreOrdersReportsFilter()
 	filter.SubTypeSummary().Version10().Daily()
 	ctx := context.Background()
@@ -454,14 +445,12 @@ func Test_Sales_SalesReportsResource_GetPreOrdersReports_Error(t *testing.T) {
 	defer httpmock.DeactivateAndReset()
 
 	config := buildStubConfig()
-	transport := buildStubHttpTransport()
-	ar := newResourceAbstract(transport, config)
 
 	rsp := buildStubResponseFromFile(http.StatusBadRequest, "stubs/errors/invalid.parameter.json")
 	rsp.Header.Set("Content-Type", ResponseContentTypeJson)
 	httpmock.RegisterResponder("GET", config.Uri+"/v1/salesReports", httpmock.ResponderFromResponse(rsp))
 
-	resource := &SalesReportsResource{ar}
+	resource := buildStubSalesReportsResource()
 	filter := NewPreOrdersReportsFilter()
 	filter.SubTypeSummary().Version10().Daily()
 	ctx := context.Background()
@@ -483,9 +472,7 @@ func Test_Sales_SalesReportsResource_GetPreOrdersReports_Error(t *testing.T) {
 
 func Test_Sales_SalesReportsResource_BuildQueryParams(t *testing.T) {
 	config := buildStubConfig()
-	token := buildStubAuthToken()
-	transport := NewHttpTransport(config, token, nil)
-	resource := &SalesReportsResource{ResourceAbstract: newResourceAbstract(transport, config)}
+	resource := buildStubSalesReportsResource()
 	filter := &SalesReportsBaseFilter{}
 	filter.TypeSales().SubTypeSummary().Version10().Daily()
 	result := resource.buildQueryParams(filter)

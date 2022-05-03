@@ -17,10 +17,7 @@ func Test_Resource_NewResourceAbstract(t *testing.T) {
 }
 
 func Test_Resource_UnmarshalResponseGzip(t *testing.T) {
-	config := buildStubConfig()
-	token := buildStubAuthToken()
-	transport := NewHttpTransport(config, token, nil)
-	result := newResourceAbstract(transport, config)
+	result := buildStubResourceAbstract()
 	reports := []*SalesReport{}
 	resp := buildStubResponseFromGzip(http.StatusOK, "stubs/reports/sales/sales.tsv")
 	resp.Header.Set("Content-Type", ResponseContentTypeGzip)
@@ -35,10 +32,7 @@ func Test_Resource_UnmarshalResponseGzip(t *testing.T) {
 }
 
 func Test_Resource_UnmarshalResponseJson(t *testing.T) {
-	config := buildStubConfig()
-	token := buildStubAuthToken()
-	transport := NewHttpTransport(config, token, nil)
-	result := newResourceAbstract(transport, config)
+	result := buildStubResourceAbstract()
 	var body ResponseBody
 	resp := buildStubResponseFromFile(http.StatusOK, "stubs/errors/invalid.parameter.json")
 	resp.Header.Set("Content-Type", ResponseContentTypeJson)

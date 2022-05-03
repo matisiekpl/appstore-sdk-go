@@ -15,13 +15,12 @@ func Test_Finances_FinancesReportsResource_GetReports_Success(t *testing.T) {
 	defer httpmock.DeactivateAndReset()
 
 	config := buildStubConfig()
-	transport := buildStubHttpTransport()
 
 	resp := buildStubResponseFromGzip(http.StatusOK, "stubs/reports/finances/financial.tsv")
 	resp.Header.Set("Content-Type", ResponseContentTypeGzip)
 	httpmock.RegisterResponder("GET", config.Uri+"/v1/financeReports", httpmock.ResponderFromResponse(resp))
 
-	resource := &FinancesReportsResource{ResourceAbstract: newResourceAbstract(transport, config)}
+	resource := buildStubFinancesReportsResource()
 	date, _ := time.Parse("2006-01-02", "2020-05-04")
 	filter := &FinancesReportsFilter{ReportDate: date, RegionCode: "US", ReportType: FinancesReportTypeFinancial}
 	ctx := context.Background()
@@ -35,13 +34,12 @@ func Test_Finances_FinancesReportsResource_GetReports_WrongFilter(t *testing.T) 
 	defer httpmock.DeactivateAndReset()
 
 	config := buildStubConfig()
-	transport := buildStubHttpTransport()
 
 	resp := buildStubResponseFromGzip(http.StatusOK, "stubs/reports/finances/financial.tsv")
 	resp.Header.Set("Content-Type", ResponseContentTypeGzip)
 	httpmock.RegisterResponder("GET", config.Uri+"/v1/financeReports", httpmock.ResponderFromResponse(resp))
 
-	resource := &FinancesReportsResource{ResourceAbstract: newResourceAbstract(transport, config)}
+	resource := buildStubFinancesReportsResource()
 	date, _ := time.Parse("2006-01-02", "2020-05-04")
 	filter := &FinancesReportsFilter{ReportDate: date, RegionCode: "US"}
 	ctx := context.Background()
@@ -56,14 +54,12 @@ func Test_Finances_FinancesReportsResource_GetFinancialReports_Success(t *testin
 	defer httpmock.DeactivateAndReset()
 
 	config := buildStubConfig()
-	transport := buildStubHttpTransport()
-	ar := newResourceAbstract(transport, config)
 
 	rsp := buildStubResponseFromGzip(http.StatusOK, "stubs/reports/finances/financial.tsv")
 	rsp.Header.Set("Content-Type", ResponseContentTypeGzip)
 	httpmock.RegisterResponder("GET", config.Uri+"/v1/financeReports", httpmock.ResponderFromResponse(rsp))
 
-	resource := &FinancesReportsResource{ar}
+	resource := buildStubFinancesReportsResource()
 	date, _ := time.Parse("2006-01-02", "2020-05-04")
 	filter := &FinancesReportsFilter{ReportDate: date, RegionCode: "US", ReportType: FinancesReportTypeFinancial}
 	ctx := context.Background()
@@ -108,14 +104,12 @@ func Test_Finances_FinancesReportsResource_GetFinancialReports_Error(t *testing.
 	defer httpmock.DeactivateAndReset()
 
 	config := buildStubConfig()
-	transport := buildStubHttpTransport()
-	ar := newResourceAbstract(transport, config)
 
 	rsp := buildStubResponseFromFile(http.StatusBadRequest, "stubs/errors/invalid.parameter.json")
 	rsp.Header.Set("Content-Type", ResponseContentTypeJson)
 	httpmock.RegisterResponder("GET", config.Uri+"/v1/financeReports", httpmock.ResponderFromResponse(rsp))
 
-	resource := &FinancesReportsResource{ar}
+	resource := buildStubFinancesReportsResource()
 	date, _ := time.Parse("2006-01-02", "2020-05-04")
 	filter := &FinancesReportsFilter{ReportDate: date, RegionCode: "US", ReportType: FinancesReportTypeFinancial}
 	ctx := context.Background()
@@ -133,6 +127,18 @@ func Test_Finances_FinancesReportsResource_GetFinancialReports_Error(t *testing.
 	defer resp.Body.Close()
 	body, _ := ioutil.ReadAll(resp.Body)
 	assert.NotEmpty(t, body)
+}
+
+func Test_Finances_FinancesReportsResource_GetFinancialReports_ErrorWrongFilter(t *testing.T) {
+	resource := buildStubFinancesReportsResource()
+	date, _ := time.Parse("2006-01-02", "2020-05-04")
+	filter := &FinancesReportsFilter{ReportDate: date, RegionCode: "US"}
+	ctx := context.Background()
+	result, resp, err := resource.GetFinancialReports(ctx, filter)
+	assert.Error(t, err)
+	assert.Empty(t, resp)
+	assert.Empty(t, result)
+	assert.Equal(t, "FinancialReportsResponse.GetFinancialReports error: FinancesReportsResource.GetReports invalid filter: FinancesReportsFilter.IsValid: ReportType is required", err.Error())
 }
 
 func Test_Finances_FinancesReportsResource_BuildQueryParams(t *testing.T) {

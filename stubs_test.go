@@ -65,3 +65,21 @@ func buildStubResponseFromGzip(statusCode int, path string) *http.Response {
 	body := ioutil.NopCloser(bytes.NewReader(data))
 	return &http.Response{Body: body, StatusCode: statusCode, Header: http.Header{}}
 }
+
+func buildStubResourceAbstract() *ResourceAbstract {
+	config := buildStubConfig()
+	transport := buildStubHttpTransport()
+	return newResourceAbstract(transport, config)
+}
+
+func buildStubSalesReportsResource() *SalesReportsResource {
+	config := buildStubConfig()
+	transport := buildStubHttpTransport()
+	return &SalesReportsResource{newResourceAbstract(transport, config)}
+}
+
+func buildStubFinancesReportsResource() *FinancesReportsResource {
+	config := buildStubConfig()
+	transport := buildStubHttpTransport()
+	return &FinancesReportsResource{newResourceAbstract(transport, config)}
+}
