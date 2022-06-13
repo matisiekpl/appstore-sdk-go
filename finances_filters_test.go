@@ -2,48 +2,58 @@ package appstore
 
 import (
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/suite"
 	"testing"
 	"time"
 )
 
-func Test_Finances_FinancesReportsFilter_IsValid(t *testing.T) {
+type FinancesReportsFilterTestSuite struct {
+	suite.Suite
+}
+
+func (suite *FinancesReportsFilterTestSuite) TestIsValid() {
 	date, _ := time.Parse("2006-01-02", "2020-04-17")
 	filter := NewFinancesReportsFilter()
 	filter.SetReportDate(date).SetRegionCode("US")
-	assert.NoError(t, filter.IsValid())
+	assert.NoError(suite.T(), filter.IsValid())
+	assert.Equal(suite.T(), FinancesReportTypeFinancial, filter.ReportType)
 }
 
-func Test_Finances_FinancesReportsFilter_IsInvalidEmptyReportType(t *testing.T) {
+func (suite *FinancesReportsFilterTestSuite) TestIsInvalidEmptyReportType() {
 	date, _ := time.Parse("2006-01-02", "2020-04-17")
 	filter := &FinancesReportsFilter{ReportDate: date, RegionCode: "US"}
 	err := filter.IsValid()
-	assert.Error(t, err)
-	assert.Equal(t, "FinancesReportsFilter.IsValid: ReportType is required", err.Error())
+	assert.Error(suite.T(), err)
+	assert.Equal(suite.T(), "FinancesReportsFilter.IsValid: ReportType is required", err.Error())
 }
 
-func Test_Finances_FinancesReportsFilter_IsInvalidEmptyRegionCode(t *testing.T) {
+func (suite *FinancesReportsFilterTestSuite) TestIsInvalidEmptyRegionCode() {
 	date, _ := time.Parse("2006-01-02", "2020-04-17")
 	filter := &FinancesReportsFilter{ReportDate: date}
 	filter.TypeFinancial()
 	err := filter.IsValid()
-	assert.Error(t, err)
-	assert.Equal(t, "FinancesReportsFilter.IsValid: RegionCode is required", err.Error())
+	assert.Error(suite.T(), err)
+	assert.Equal(suite.T(), "FinancesReportsFilter.IsValid: RegionCode is required", err.Error())
 }
 
-func Test_Finances_FinancesReportsFilter_IsInvalidEmptyReportDate(t *testing.T) {
+func (suite *FinancesReportsFilterTestSuite) TestIsInvalidEmptyReportDate() {
 	filter := &FinancesReportsFilter{RegionCode: "US"}
 	filter.TypeFinanceDetail()
 	err := filter.IsValid()
-	assert.Error(t, err)
-	assert.Equal(t, "FinancesReportsFilter.IsValid: ReportDate is required", err.Error())
+	assert.Error(suite.T(), err)
+	assert.Equal(suite.T(), "FinancesReportsFilter.IsValid: ReportDate is required", err.Error())
 }
 
-func Test_Finances_FinancesReportsFilter_ToQueryParamsMap(t *testing.T) {
+func (suite *FinancesReportsFilterTestSuite) TestToQueryParamsMap() {
 	date, _ := time.Parse("2006-01-02", "2020-05-04")
 	filter := &FinancesReportsFilter{ReportDate: date, RegionCode: "US", ReportType: FinancesReportTypeFinancial}
 	qs := make(map[string]interface{})
 	qs["filter[reportDate]"] = "2020-05"
 	qs["filter[reportType]"] = string(FinancesReportTypeFinancial)
 	qs["filter[regionCode]"] = "US"
-	assert.Equal(t, qs, filter.toQueryParamsMap())
+	assert.Equal(suite.T(), qs, filter.toQueryParamsMap())
+}
+
+func TestFinancesReportsFilterTestSuite(t *testing.T) {
+	suite.Run(t, new(FinancesReportsFilterTestSuite))
 }
