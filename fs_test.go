@@ -2,15 +2,25 @@ package appstore
 
 import (
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/suite"
 	"testing"
 )
 
-func Test_Filesystem_fileExistsSuccess(t *testing.T) {
-	exists := fileExists(StubAuthKeyPath)
-	assert.True(t, exists)
+type FilesystemTestSuite struct {
+	suite.Suite
 }
 
-func Test_Filesystem_readFileSuccess(t *testing.T) {
-	exists, _ := readFile(StubAuthKeyPath)
-	assert.NotEmpty(t, exists)
+func (suite *FilesystemTestSuite) TestFileExistsSuccess() {
+	exists := fileExists(StubAuthKeyPath)
+	assert.True(suite.T(), exists)
+}
+
+func (suite *FilesystemTestSuite) TestReadFileSuccess() {
+	exists, err := readFile(StubAuthKeyPath)
+	assert.NoError(suite.T(), err)
+	assert.NotEmpty(suite.T(), exists)
+}
+
+func TestFilesystemTestSuite(t *testing.T) {
+	suite.Run(t, new(FilesystemTestSuite))
 }

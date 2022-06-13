@@ -2,50 +2,64 @@ package appstore
 
 import (
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/suite"
 	"testing"
 )
 
-func Test_PrivateKey_LoadFromFile(t *testing.T) {
-	pk := &PrivateKey{}
-	data, _ := pk.LoadFromFile(StubAuthKeyPath)
-	assert.NotEmpty(t, data)
+type PrivateKeyTestSuite struct {
+	suite.Suite
+	testable *PrivateKey
 }
 
-func Test_PrivateKey_LoadFromContent(t *testing.T) {
-	pk := &PrivateKey{}
-	data, _ := pk.LoadFromFile(StubAuthKeyPath)
-	data, _ = pk.LoadFromContent(string(data))
-	assert.NotEmpty(t, data)
+func (suite *PrivateKeyTestSuite) SetupTest() {
+	suite.testable = &PrivateKey{}
 }
 
-func Test_PrivateKey_LoadSuccess(t *testing.T) {
-	pk := &PrivateKey{}
-	key, _ := pk.Load(StubAuthKeyPath)
-	assert.NotEmpty(t, key)
+func (suite *PrivateKeyTestSuite) TestLoadFromFile() {
+	data, err := suite.testable.LoadFromFile(StubAuthKeyPath)
+	assert.NoError(suite.T(), err)
+	assert.NotEmpty(suite.T(), data)
 }
 
-func Test_PrivateKey_LoadDataAsFile(t *testing.T) {
-	pk := &PrivateKey{}
-	data, _ := pk.LoadData(StubAuthKeyPath)
-	assert.NotEmpty(t, data)
+func (suite *PrivateKeyTestSuite) TestLoadFromContent() {
+	data, _ := suite.testable.LoadFromFile(StubAuthKeyPath)
+	data, err := suite.testable.LoadFromContent(string(data))
+	assert.NoError(suite.T(), err)
+	assert.NotEmpty(suite.T(), data)
 }
 
-func Test_PrivateKey_LoadDataAsContent(t *testing.T) {
-	pk := &PrivateKey{}
-	dataBt, _ := pk.LoadData("foo")
-	assert.NotEmpty(t, dataBt)
+func (suite *PrivateKeyTestSuite) TestLoadSuccess() {
+	key, err := suite.testable.Load(StubAuthKeyPath)
+	assert.NoError(suite.T(), err)
+	assert.NotEmpty(suite.T(), key)
 }
 
-func Test_PrivateKey_ParseP8Success(t *testing.T) {
-	pk := &PrivateKey{}
-	data, _ := pk.LoadFromFile(StubAuthKeyPath)
-	key, _ := pk.ParseP8(data)
-	assert.NotEmpty(t, key)
+func (suite *PrivateKeyTestSuite) TestLoadDataAsFile() {
+	data, err := suite.testable.LoadData(StubAuthKeyPath)
+	assert.NoError(suite.T(), err)
+	assert.NotEmpty(suite.T(), data)
 }
 
-func Test_PrivateKey_DecodePemSuccess(t *testing.T) {
-	pk := &PrivateKey{}
-	data, _ := pk.LoadFromFile(StubAuthKeyPath)
-	pem, _ := pk.DecodePem(data)
-	assert.NotEmpty(t, pem)
+func (suite *PrivateKeyTestSuite) TestLoadDataAsContent() {
+	dataBt, err := suite.testable.LoadData("foo")
+	assert.NoError(suite.T(), err)
+	assert.NotEmpty(suite.T(), dataBt)
+}
+
+func (suite *PrivateKeyTestSuite) TestParseP8Success() {
+	data, _ := suite.testable.LoadFromFile(StubAuthKeyPath)
+	key, err := suite.testable.ParseP8(data)
+	assert.NoError(suite.T(), err)
+	assert.NotEmpty(suite.T(), key)
+}
+
+func (suite *PrivateKeyTestSuite) TestDecodePemSuccess() {
+	data, _ := suite.testable.LoadFromFile(StubAuthKeyPath)
+	pem, err := suite.testable.DecodePem(data)
+	assert.NoError(suite.T(), err)
+	assert.NotEmpty(suite.T(), pem)
+}
+
+func TestPrivateKeyTestSuite(t *testing.T) {
+	suite.Run(t, new(PrivateKeyTestSuite))
 }
