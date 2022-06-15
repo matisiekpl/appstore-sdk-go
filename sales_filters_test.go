@@ -2,125 +2,126 @@ package appstore
 
 import (
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/suite"
 	"testing"
 	"time"
 )
 
-func Test_Sales_SalesReportsBaseFilter_FillByDefault(t *testing.T) {
-	filter := &SalesReportsBaseFilter{}
-	filter.Daily().TypeSales().SubTypeSummary().Version10()
-	assert.Equal(t, SalesReportTypeSales, filter.ReportType)
-	assert.Equal(t, SalesReportSubTypeSummary, filter.ReportSubType)
-	assert.Equal(t, SalesReportFrequencyDaily, filter.Frequency)
-	assert.Equal(t, SalesReportVersion10, filter.Version)
+type SalesReportsBaseFilterSuite struct {
+	suite.Suite
+	testable *SalesReportsBaseFilter
 }
 
-func Test_Sales_SalesReportsBaseFilter_ToQueryParamsMapOnlyRequired(t *testing.T) {
-	filter := &SalesReportsBaseFilter{}
-	filter.Yearly().TypeSales().SubTypeSummary()
+func (suite *SalesReportsBaseFilterSuite) SetupTest() {
+	suite.testable = &SalesReportsBaseFilter{}
+}
 
+func (suite *SalesReportsBaseFilterSuite) TestFillByDefault() {
+	suite.testable.Daily().TypeSales().SubTypeSummary().Version10()
+	assert.Equal(suite.T(), SalesReportTypeSales, suite.testable.ReportType)
+	assert.Equal(suite.T(), SalesReportSubTypeSummary, suite.testable.ReportSubType)
+	assert.Equal(suite.T(), SalesReportFrequencyDaily, suite.testable.Frequency)
+	assert.Equal(suite.T(), SalesReportVersion10, suite.testable.Version)
+}
+
+func (suite *SalesReportsBaseFilterSuite) TestToQueryParamsMapOnlyRequired() {
+	suite.testable.Yearly().TypeSales().SubTypeSummary()
 	qs := make(map[string]interface{})
 	qs["filter[reportSubType]"] = string(SalesReportSubTypeSummary)
 	qs["filter[reportType]"] = string(SalesReportTypeSales)
 	qs["filter[frequency]"] = string(SalesReportFrequencyYearly)
-	assert.Equal(t, qs, filter.ToQueryParamsMap())
+	assert.Equal(suite.T(), qs, suite.testable.ToQueryParamsMap())
 }
 
-func Test_Sales_SalesReportsBaseFilter_ToQueryParamsMap(t *testing.T) {
-	filter := &SalesReportsBaseFilter{}
+func (suite *SalesReportsBaseFilterSuite) TestToQueryParamsMap() {
 	date, _ := time.Parse("2006-01-02", "2020-05-05")
-	filter.Daily().TypeSales().SubTypeSummary().Version10().SetReportDate(date)
-
+	suite.testable.Daily().TypeSales().SubTypeSummary().Version10().SetReportDate(date)
 	qs := make(map[string]interface{})
 	qs["filter[reportDate]"] = "2020-05-05"
 	qs["filter[reportSubType]"] = string(SalesReportSubTypeSummary)
 	qs["filter[reportType]"] = string(SalesReportTypeSales)
 	qs["filter[frequency]"] = string(SalesReportFrequencyDaily)
 	qs["filter[version]"] = string(SalesReportVersion10)
-	assert.Equal(t, qs, filter.ToQueryParamsMap())
+	assert.Equal(suite.T(), qs, suite.testable.ToQueryParamsMap())
 }
 
-func Test_Sales_SalesReportsBaseFilter_SetSubType(t *testing.T) {
-	filter := &SalesReportsBaseFilter{}
-	filter.SubTypeSummary()
-	assert.Equal(t, filter.ReportSubType, SalesReportSubTypeSummary)
-	filter.SubTypeDetailed()
-	assert.Equal(t, filter.ReportSubType, SalesReportSubTypeDetailed)
-	filter.SubTypeOptIn()
-	assert.Equal(t, filter.ReportSubType, SalesReportSubTypeOptIn)
+func (suite *SalesReportsBaseFilterSuite) TestSetSubType() {
+	suite.testable.SubTypeSummary()
+	assert.Equal(suite.T(), suite.testable.ReportSubType, SalesReportSubTypeSummary)
+	suite.testable.SubTypeDetailed()
+	assert.Equal(suite.T(), suite.testable.ReportSubType, SalesReportSubTypeDetailed)
+	suite.testable.SubTypeOptIn()
+	assert.Equal(suite.T(), suite.testable.ReportSubType, SalesReportSubTypeOptIn)
 }
 
-func Test_Sales_SalesReportsBaseFilter_SetType(t *testing.T) {
-	filter := &SalesReportsBaseFilter{}
-	filter.TypeSales()
-	assert.Equal(t, filter.ReportType, SalesReportTypeSales)
-	filter.TypeNewsStand()
-	assert.Equal(t, filter.ReportType, SalesReportTypeNewsStand)
-	filter.TypePreOrder()
-	assert.Equal(t, filter.ReportType, SalesReportTypePreorder)
-	filter.TypeSubscriber()
-	assert.Equal(t, filter.ReportType, SalesReportTypeSubscriber)
-	filter.TypeSubscription()
-	assert.Equal(t, filter.ReportType, SalesReportTypeSubscription)
-	filter.TypeSubscriptionEvent()
-	assert.Equal(t, filter.ReportType, SalesReportTypeSubscriptionEvent)
+func (suite *SalesReportsBaseFilterSuite) TestSetType() {
+	suite.testable.TypeSales()
+	assert.Equal(suite.T(), suite.testable.ReportType, SalesReportTypeSales)
+	suite.testable.TypeNewsStand()
+	assert.Equal(suite.T(), suite.testable.ReportType, SalesReportTypeNewsStand)
+	suite.testable.TypePreOrder()
+	assert.Equal(suite.T(), suite.testable.ReportType, SalesReportTypePreorder)
+	suite.testable.TypeSubscriber()
+	assert.Equal(suite.T(), suite.testable.ReportType, SalesReportTypeSubscriber)
+	suite.testable.TypeSubscription()
+	assert.Equal(suite.T(), suite.testable.ReportType, SalesReportTypeSubscription)
+	suite.testable.TypeSubscriptionEvent()
+	assert.Equal(suite.T(), suite.testable.ReportType, SalesReportTypeSubscriptionEvent)
 }
 
-func Test_Sales_SalesReportsBaseFilter_SetFrequency(t *testing.T) {
-	filter := &SalesReportsBaseFilter{}
-	filter.Daily()
-	assert.Equal(t, filter.Frequency, SalesReportFrequencyDaily)
-	filter.Weekly()
-	assert.Equal(t, filter.Frequency, SalesReportFrequencyWeekly)
-	filter.Monthly()
-	assert.Equal(t, filter.Frequency, SalesReportFrequencyMonthly)
-	filter.Yearly()
-	assert.Equal(t, filter.Frequency, SalesReportFrequencyYearly)
+func (suite *SalesReportsBaseFilterSuite) TestSetFrequency() {
+	suite.testable.Daily()
+	assert.Equal(suite.T(), suite.testable.Frequency, SalesReportFrequencyDaily)
+	suite.testable.Weekly()
+	assert.Equal(suite.T(), suite.testable.Frequency, SalesReportFrequencyWeekly)
+	suite.testable.Monthly()
+	assert.Equal(suite.T(), suite.testable.Frequency, SalesReportFrequencyMonthly)
+	suite.testable.Yearly()
+	assert.Equal(suite.T(), suite.testable.Frequency, SalesReportFrequencyYearly)
 }
 
-func Test_Sales_SalesReportsBaseFilter_SetVersion(t *testing.T) {
-	filter := &SalesReportsBaseFilter{}
-	filter.Version10()
-	assert.Equal(t, filter.Version, SalesReportVersion10)
-	filter.Version12()
-	assert.Equal(t, filter.Version, SalesReportVersion12)
-	filter.Version13()
-	assert.Equal(t, filter.Version, SalesReportVersion13)
+func (suite *SalesReportsBaseFilterSuite) TestSetVersion() {
+	suite.testable.Version10()
+	assert.Equal(suite.T(), suite.testable.Version, SalesReportVersion10)
+	suite.testable.Version12()
+	assert.Equal(suite.T(), suite.testable.Version, SalesReportVersion12)
+	suite.testable.Version13()
+	assert.Equal(suite.T(), suite.testable.Version, SalesReportVersion13)
 }
 
-func Test_Sales_SalesReportsBaseFilter_IsValid(t *testing.T) {
-	filter := &SalesReportsBaseFilter{}
+func (suite *SalesReportsBaseFilterSuite) TestIsValid() {
 	date, _ := time.Parse("2006-01-02", "2020-05-05")
-	filter.Daily().TypeSales().SubTypeSummary().Version10().SetReportDate(date)
-	err := filter.IsValid()
-	assert.Nil(t, err)
+	suite.testable.Daily().TypeSales().SubTypeSummary().Version10().SetReportDate(date)
+	err := suite.testable.IsValid()
+	assert.Nil(suite.T(), err)
 }
 
-func Test_Sales_SalesReportsBaseFilter_IsInvalidReportType(t *testing.T) {
-	filter := &SalesReportsBaseFilter{}
+func (suite *SalesReportsBaseFilterSuite) TestIsInvalidReportType() {
 	date, _ := time.Parse("2006-01-02", "2020-05-05")
-	filter.Daily().SubTypeSummary().Version10().SetReportDate(date)
-	err := filter.IsValid()
-	assert.Error(t, err)
-	assert.Equal(t, "SalesReportsBaseFilter.IsValid: ReportType is required", err.Error())
+	suite.testable.Daily().SubTypeSummary().Version10().SetReportDate(date)
+	err := suite.testable.IsValid()
+	assert.Error(suite.T(), err)
+	assert.Equal(suite.T(), "SalesReportsBaseFilter.IsValid: ReportType is required", err.Error())
 }
 
-func Test_Sales_SalesReportsBaseFilter_IsInvalidReportSubType(t *testing.T) {
-	filter := &SalesReportsBaseFilter{}
+func (suite *SalesReportsBaseFilterSuite) TestIsInvalidReportSubType() {
 	date, _ := time.Parse("2006-01-02", "2020-05-05")
-	filter.Daily().TypeSales().Version10().SetReportDate(date)
-	err := filter.IsValid()
-	assert.Error(t, err)
-	assert.Equal(t, "SalesReportsBaseFilter.IsValid: ReportSubType is required", err.Error())
+	suite.testable.Daily().TypeSales().Version10().SetReportDate(date)
+	err := suite.testable.IsValid()
+	assert.Error(suite.T(), err)
+	assert.Equal(suite.T(), "SalesReportsBaseFilter.IsValid: ReportSubType is required", err.Error())
 }
 
-func Test_Sales_SalesReportsBaseFilter_IsInvalidFrequency(t *testing.T) {
-	filter := &SalesReportsBaseFilter{}
+func (suite *SalesReportsBaseFilterSuite) TestIsInvalidFrequency() {
 	date, _ := time.Parse("2006-01-02", "2020-05-05")
-	filter.SubTypeSummary().TypeSales().Version10().SetReportDate(date)
-	err := filter.IsValid()
-	assert.Error(t, err)
-	assert.Equal(t, "SalesReportsBaseFilter.IsValid: Frequency is required", err.Error())
+	suite.testable.SubTypeSummary().TypeSales().Version10().SetReportDate(date)
+	err := suite.testable.IsValid()
+	assert.Error(suite.T(), err)
+	assert.Equal(suite.T(), "SalesReportsBaseFilter.IsValid: Frequency is required", err.Error())
+}
+
+func TestSalesReportsBaseFilterSuite(t *testing.T) {
+	suite.Run(t, new(SalesReportsBaseFilterSuite))
 }
 
 func Test_Sales_SalesReportsFilter_IsInvalidReportType(t *testing.T) {
