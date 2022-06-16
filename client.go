@@ -25,12 +25,12 @@ func (cl *Client) Init() error {
 
 //SalesReports resource
 func (cl *Client) SalesReports() *SalesReportsResource {
-	return &SalesReportsResource{ResourceAbstract: newResourceAbstract(cl.transport, cl.Cfg)}
+	return &SalesReportsResource{newResourceAbstract(cl.transport, cl.Cfg)}
 }
 
 //FinancesReports resource
 func (cl *Client) FinancesReports() *FinancesReportsResource {
-	return &FinancesReportsResource{ResourceAbstract: newResourceAbstract(cl.transport, cl.Cfg)}
+	return &FinancesReportsResource{newResourceAbstract(cl.transport, cl.Cfg)}
 }
 
 //NewClientFromConfig Create new client from config

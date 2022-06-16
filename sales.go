@@ -8,36 +8,36 @@ import (
 
 //SalesReportsResource reports
 type SalesReportsResource struct {
-	*ResourceAbstract
+	ResourceAbstract
 }
 
 //SalesReportsResponse struct
 type SalesReportsResponse struct {
-	*ResponseBody
+	ResponseBody
 	Data []*SalesReport `json:"data,omitempty"`
 }
 
 //SubscriptionsReportsResponse struct
 type SubscriptionsReportsResponse struct {
-	*ResponseBody
+	ResponseBody
 	Data []*SubscriptionsReport `json:"data,omitempty"`
 }
 
 //SubscriptionsEventsReportsResponse struct
 type SubscriptionsEventsReportsResponse struct {
-	*ResponseBody
+	ResponseBody
 	Data []*SubscriptionsEventsReport `json:"data,omitempty"`
 }
 
 //SubscribersReportsResponse struct
 type SubscribersReportsResponse struct {
-	*ResponseBody
+	ResponseBody
 	Data []*SubscribersReport `json:"data,omitempty"`
 }
 
 //PreOrdersReportsResponse struct
 type PreOrdersReportsResponse struct {
-	*ResponseBody
+	ResponseBody
 	Data []*PreOrdersReport `json:"data,omitempty"`
 }
 
@@ -57,7 +57,7 @@ func (srr *SalesReportsResource) GetSalesReports(ctx context.Context, filter *Sa
 	if err != nil {
 		return nil, nil, fmt.Errorf("SalesReportsResource.GetSalesReports error: %v", err)
 	}
-	result := SalesReportsResponse{ResponseBody: &ResponseBody{}}
+	result := SalesReportsResponse{}
 	result.status = resp.StatusCode
 	if result.IsSuccess() {
 		reports := []*SalesReport{}
@@ -82,7 +82,7 @@ func (srr *SalesReportsResource) GetSubscriptionsReports(ctx context.Context, fi
 	if err != nil {
 		return nil, nil, fmt.Errorf("SalesReportsResource.GetSubscriptionsReports error: %v", err)
 	}
-	result := SubscriptionsReportsResponse{ResponseBody: &ResponseBody{}}
+	result := SubscriptionsReportsResponse{}
 	result.status = resp.StatusCode
 	if result.IsSuccess() {
 		reports := []*SubscriptionsReport{}
@@ -107,7 +107,7 @@ func (srr *SalesReportsResource) GetSubscriptionsEventsReports(ctx context.Conte
 	if err != nil {
 		return nil, nil, fmt.Errorf("SalesReportsResource.GetSubscriptionsReports error: %v", err)
 	}
-	result := SubscriptionsEventsReportsResponse{ResponseBody: &ResponseBody{}}
+	result := SubscriptionsEventsReportsResponse{}
 	result.status = resp.StatusCode
 	if result.IsSuccess() {
 		reports := []*SubscriptionsEventsReport{}
@@ -132,7 +132,7 @@ func (srr *SalesReportsResource) GetSubscribersReports(ctx context.Context, filt
 	if err != nil {
 		return nil, nil, fmt.Errorf("SalesReportsResource.GetSubscribersReports error: %v", err)
 	}
-	result := SubscribersReportsResponse{ResponseBody: &ResponseBody{}}
+	result := SubscribersReportsResponse{}
 	result.status = resp.StatusCode
 	if result.IsSuccess() {
 		reports := []*SubscribersReport{}
@@ -157,7 +157,7 @@ func (srr *SalesReportsResource) GetPreOrdersReports(ctx context.Context, filter
 	if err != nil {
 		return nil, nil, fmt.Errorf("SalesReportsResource.GetPreOrdersReports error: %v", err)
 	}
-	result := PreOrdersReportsResponse{ResponseBody: &ResponseBody{}}
+	result := PreOrdersReportsResponse{}
 	result.status = resp.StatusCode
 	if result.IsSuccess() {
 		reports := []*PreOrdersReport{}

@@ -8,13 +8,13 @@ import (
 
 //FinancialReportsResponse struct
 type FinancialReportsResponse struct {
-	*ResponseBody
+	ResponseBody
 	Data []*FinancialReport `json:"data,omitempty"`
 }
 
 //FinancesReportsResource reports
 type FinancesReportsResource struct {
-	*ResourceAbstract
+	ResourceAbstract
 }
 
 //GetReports Get finances reports by filter
@@ -33,7 +33,7 @@ func (frr *FinancesReportsResource) GetFinancialReports(ctx context.Context, fil
 	if err != nil {
 		return nil, nil, fmt.Errorf("FinancialReportsResponse.GetFinancialReports error: %v", err)
 	}
-	result := FinancialReportsResponse{ResponseBody: &ResponseBody{}}
+	result := FinancialReportsResponse{}
 	result.status = resp.StatusCode
 	if result.IsSuccess() {
 		reports := []*FinancialReport{}

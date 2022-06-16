@@ -219,7 +219,7 @@ type SalesReportsFilterInterface interface {
 
 //SalesReportsFilter
 type SalesReportsFilter struct {
-	*SalesReportsBaseFilter
+	SalesReportsBaseFilter
 }
 
 //IsValid Validate sales report filter params
@@ -242,7 +242,7 @@ func (f *SalesReportsFilter) IsValid() error {
 
 //SubscriptionsReportsFilter
 type SubscriptionsReportsFilter struct {
-	*SalesReportsBaseFilter
+	SalesReportsBaseFilter
 }
 
 //IsValid Validate sales report filter params
@@ -268,7 +268,7 @@ func (f *SubscriptionsReportsFilter) IsValid() error {
 
 //SubscriptionsEventsReportsFilter
 type SubscriptionsEventsReportsFilter struct {
-	*SalesReportsBaseFilter
+	SalesReportsBaseFilter
 }
 
 //IsValid Validate sales report filter params
@@ -294,7 +294,7 @@ func (f *SubscriptionsEventsReportsFilter) IsValid() error {
 
 //SubscribersReportsFilter
 type SubscribersReportsFilter struct {
-	*SalesReportsBaseFilter
+	SalesReportsBaseFilter
 }
 
 //IsValid Validate sales report filter params
@@ -320,7 +320,7 @@ func (f *SubscribersReportsFilter) IsValid() error {
 
 //SubscriptionsOffersCodesRedemptionReportsFilter
 type SubscriptionsOffersCodesRedemptionReportsFilter struct {
-	*SalesReportsBaseFilter
+	SalesReportsBaseFilter
 }
 
 //IsValid Validate sales report filter params
@@ -346,7 +346,7 @@ func (f *SubscriptionsOffersCodesRedemptionReportsFilter) IsValid() error {
 
 //NewsstandReportsFilter
 type NewsstandReportsFilter struct {
-	*SalesReportsBaseFilter
+	SalesReportsBaseFilter
 }
 
 //IsValid Validate sales report filter params
@@ -372,7 +372,7 @@ func (f *NewsstandReportsFilter) IsValid() error {
 
 //PreOrdersReportsFilter
 type PreOrdersReportsFilter struct {
-	*SalesReportsBaseFilter
+	SalesReportsBaseFilter
 }
 
 //IsValid Validate sales report filter params
@@ -395,34 +395,34 @@ func (f *PreOrdersReportsFilter) IsValid() error {
 
 //NewSalesReportsFilter
 func NewSalesReportsFilter() *SalesReportsFilter {
-	return &SalesReportsFilter{&SalesReportsBaseFilter{ReportType: SalesReportTypeSales}}
+	return &SalesReportsFilter{SalesReportsBaseFilter{ReportType: SalesReportTypeSales}}
 }
 
 //NewSubscriptionsReportsFilter
 func NewSubscriptionsReportsFilter() *SubscriptionsReportsFilter {
-	return &SubscriptionsReportsFilter{&SalesReportsBaseFilter{ReportType: SalesReportTypeSubscription}}
+	return &SubscriptionsReportsFilter{SalesReportsBaseFilter{ReportType: SalesReportTypeSubscription}}
 }
 
 //NewSubscriptionsEventsReportsFilter
 func NewSubscriptionsEventsReportsFilter() *SubscriptionsEventsReportsFilter {
-	return &SubscriptionsEventsReportsFilter{&SalesReportsBaseFilter{ReportType: SalesReportTypeSubscriptionEvent}}
+	return &SubscriptionsEventsReportsFilter{SalesReportsBaseFilter{ReportType: SalesReportTypeSubscriptionEvent}}
 }
 
 //NewSubscribersReportsFilter
 func NewSubscribersReportsFilter() *SubscribersReportsFilter {
-	return &SubscribersReportsFilter{&SalesReportsBaseFilter{ReportType: SalesReportTypeSubscriber}}
+	return &SubscribersReportsFilter{SalesReportsBaseFilter{ReportType: SalesReportTypeSubscriber}}
 }
 
 func NewSubscriptionsOffersCodesRedemptionReportsFilter() *SubscriptionsOffersCodesRedemptionReportsFilter {
-	return &SubscriptionsOffersCodesRedemptionReportsFilter{&SalesReportsBaseFilter{ReportType: SalesReportTypeSubscriptionOfferCodeRedemption}}
+	return &SubscriptionsOffersCodesRedemptionReportsFilter{SalesReportsBaseFilter{ReportType: SalesReportTypeSubscriptionOfferCodeRedemption}}
 }
 
 //NewNewsstandReportsFilter
 func NewNewsstandReportsFilter() *NewsstandReportsFilter {
-	return &NewsstandReportsFilter{&SalesReportsBaseFilter{ReportType: SalesReportTypeNewsStand}}
+	return &NewsstandReportsFilter{SalesReportsBaseFilter{ReportType: SalesReportTypeNewsStand}}
 }
 
 //NewPreOrdersReportsFilter
 func NewPreOrdersReportsFilter() *PreOrdersReportsFilter {
-	return &PreOrdersReportsFilter{&SalesReportsBaseFilter{ReportType: SalesReportTypePreorder}}
+	return &PreOrdersReportsFilter{SalesReportsBaseFilter{ReportType: SalesReportTypePreorder}}
 }

@@ -66,7 +66,7 @@ func buildStubResponseFromGzip(statusCode int, path string) *http.Response {
 	return &http.Response{Body: body, StatusCode: statusCode, Header: http.Header{}}
 }
 
-func buildStubResourceAbstract() *ResourceAbstract {
+func buildStubResourceAbstract() ResourceAbstract {
 	config := buildStubConfig()
 	transport := buildStubHttpTransport()
 	return newResourceAbstract(transport, config)
