@@ -10,11 +10,11 @@ import (
 	"testing"
 )
 
-type FinancesReportSuite struct {
+type FinancesReportTestSuite struct {
 	suite.Suite
 }
 
-func (suite *FinancesReportSuite) TestFinancialReportMarshalJson() {
+func (suite *FinancesReportTestSuite) TestFinancialReportMarshalJson() {
 	reportData, _ := ioutil.ReadFile("stubs/reports/finances/financial.tsv")
 	r := bytes.NewReader(reportData)
 	decoder, err := NewLineSkipDecoder(r)
@@ -26,6 +26,6 @@ func (suite *FinancesReportSuite) TestFinancialReportMarshalJson() {
 	assert.Equal(suite.T(), expected, string(data))
 }
 
-func TestFinancesReportSuite(t *testing.T) {
-	suite.Run(t, new(FinancesReportSuite))
+func TestFinancesReportTestSuite(t *testing.T) {
+	suite.Run(t, new(FinancesReportTestSuite))
 }

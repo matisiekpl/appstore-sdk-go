@@ -8,11 +8,11 @@ import (
 	"testing"
 )
 
-type SalesReportSuite struct {
+type SalesReportTestSuite struct {
 	suite.Suite
 }
 
-func (suite *SalesReportSuite) TestSalesReportMarshalJson() {
+func (suite *SalesReportTestSuite) TestSalesReportMarshalJson() {
 	reportData, _ := ioutil.ReadFile("stubs/reports/sales/sales.tsv")
 	reports := []*SalesReport{}
 	_ = UnmarshalCSV(reportData, &reports)
@@ -21,7 +21,7 @@ func (suite *SalesReportSuite) TestSalesReportMarshalJson() {
 	assert.Equal(suite.T(), expected, string(data))
 }
 
-func (suite *SalesReportSuite) TestSubscriptionsReportMarshalJson() {
+func (suite *SalesReportTestSuite) TestSubscriptionsReportMarshalJson() {
 	reportData, _ := ioutil.ReadFile("stubs/reports/sales/subscriptions.tsv")
 	reports := []*SubscriptionsReport{}
 	_ = UnmarshalCSV(reportData, &reports)
@@ -30,7 +30,7 @@ func (suite *SalesReportSuite) TestSubscriptionsReportMarshalJson() {
 	assert.Equal(suite.T(), expected, string(data))
 }
 
-func (suite *SalesReportSuite) TestSubscriptionsEventsReportMarshalJson() {
+func (suite *SalesReportTestSuite) TestSubscriptionsEventsReportMarshalJson() {
 	reportData, _ := ioutil.ReadFile("stubs/reports/sales/subscriptions-events.tsv")
 	reports := []*SubscriptionsEventsReport{}
 	_ = UnmarshalCSV(reportData, &reports)
@@ -39,7 +39,7 @@ func (suite *SalesReportSuite) TestSubscriptionsEventsReportMarshalJson() {
 	assert.Equal(suite.T(), expected, string(data))
 }
 
-func (suite *SalesReportSuite) TestSubscribersReportMarshalJson() {
+func (suite *SalesReportTestSuite) TestSubscribersReportMarshalJson() {
 	reportData, _ := ioutil.ReadFile("stubs/reports/sales/subscribers.tsv")
 	reports := []*SubscribersReport{}
 	_ = UnmarshalCSV(reportData, &reports)
@@ -48,7 +48,7 @@ func (suite *SalesReportSuite) TestSubscribersReportMarshalJson() {
 	assert.Equal(suite.T(), expected, string(data))
 }
 
-func (suite *SalesReportSuite) TestPreOrdersReportMarshalJson() {
+func (suite *SalesReportTestSuite) TestPreOrdersReportMarshalJson() {
 	reportData, _ := ioutil.ReadFile("stubs/reports/sales/preorders.tsv")
 	reports := []*PreOrdersReport{}
 	_ = UnmarshalCSV(reportData, &reports)
@@ -57,6 +57,6 @@ func (suite *SalesReportSuite) TestPreOrdersReportMarshalJson() {
 	assert.Equal(suite.T(), expected, string(data))
 }
 
-func TestSalesReportSuite(t *testing.T) {
-	suite.Run(t, new(SalesReportSuite))
+func TestSalesReportTestSuite(t *testing.T) {
+	suite.Run(t, new(SalesReportTestSuite))
 }

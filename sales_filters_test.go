@@ -7,16 +7,16 @@ import (
 	"time"
 )
 
-type SalesReportsBaseFilterSuite struct {
+type SalesReportsBaseFilterTestSuite struct {
 	suite.Suite
 	testable *SalesReportsBaseFilter
 }
 
-func (suite *SalesReportsBaseFilterSuite) SetupTest() {
+func (suite *SalesReportsBaseFilterTestSuite) SetupTest() {
 	suite.testable = &SalesReportsBaseFilter{}
 }
 
-func (suite *SalesReportsBaseFilterSuite) TestFillByDefault() {
+func (suite *SalesReportsBaseFilterTestSuite) TestFillByDefault() {
 	suite.testable.Daily().TypeSales().SubTypeSummary().Version10()
 	assert.Equal(suite.T(), SalesReportTypeSales, suite.testable.ReportType)
 	assert.Equal(suite.T(), SalesReportSubTypeSummary, suite.testable.ReportSubType)
@@ -24,7 +24,7 @@ func (suite *SalesReportsBaseFilterSuite) TestFillByDefault() {
 	assert.Equal(suite.T(), SalesReportVersion10, suite.testable.Version)
 }
 
-func (suite *SalesReportsBaseFilterSuite) TestToQueryParamsMapOnlyRequired() {
+func (suite *SalesReportsBaseFilterTestSuite) TestToQueryParamsMapOnlyRequired() {
 	suite.testable.Yearly().TypeSales().SubTypeSummary()
 	qs := make(map[string]interface{})
 	qs["filter[reportSubType]"] = string(SalesReportSubTypeSummary)
@@ -33,7 +33,7 @@ func (suite *SalesReportsBaseFilterSuite) TestToQueryParamsMapOnlyRequired() {
 	assert.Equal(suite.T(), qs, suite.testable.ToQueryParamsMap())
 }
 
-func (suite *SalesReportsBaseFilterSuite) TestToQueryParamsMap() {
+func (suite *SalesReportsBaseFilterTestSuite) TestToQueryParamsMap() {
 	date, _ := time.Parse("2006-01-02", "2020-05-05")
 	suite.testable.Daily().TypeSales().SubTypeSummary().Version10().SetReportDate(date)
 	qs := make(map[string]interface{})
@@ -45,7 +45,7 @@ func (suite *SalesReportsBaseFilterSuite) TestToQueryParamsMap() {
 	assert.Equal(suite.T(), qs, suite.testable.ToQueryParamsMap())
 }
 
-func (suite *SalesReportsBaseFilterSuite) TestSetSubType() {
+func (suite *SalesReportsBaseFilterTestSuite) TestSetSubType() {
 	suite.testable.SubTypeSummary()
 	assert.Equal(suite.T(), suite.testable.ReportSubType, SalesReportSubTypeSummary)
 	suite.testable.SubTypeDetailed()
@@ -54,7 +54,7 @@ func (suite *SalesReportsBaseFilterSuite) TestSetSubType() {
 	assert.Equal(suite.T(), suite.testable.ReportSubType, SalesReportSubTypeOptIn)
 }
 
-func (suite *SalesReportsBaseFilterSuite) TestSetType() {
+func (suite *SalesReportsBaseFilterTestSuite) TestSetType() {
 	suite.testable.TypeSales()
 	assert.Equal(suite.T(), suite.testable.ReportType, SalesReportTypeSales)
 	suite.testable.TypeNewsStand()
@@ -69,7 +69,7 @@ func (suite *SalesReportsBaseFilterSuite) TestSetType() {
 	assert.Equal(suite.T(), suite.testable.ReportType, SalesReportTypeSubscriptionEvent)
 }
 
-func (suite *SalesReportsBaseFilterSuite) TestSetFrequency() {
+func (suite *SalesReportsBaseFilterTestSuite) TestSetFrequency() {
 	suite.testable.Daily()
 	assert.Equal(suite.T(), suite.testable.Frequency, SalesReportFrequencyDaily)
 	suite.testable.Weekly()
@@ -80,7 +80,7 @@ func (suite *SalesReportsBaseFilterSuite) TestSetFrequency() {
 	assert.Equal(suite.T(), suite.testable.Frequency, SalesReportFrequencyYearly)
 }
 
-func (suite *SalesReportsBaseFilterSuite) TestSetVersion() {
+func (suite *SalesReportsBaseFilterTestSuite) TestSetVersion() {
 	suite.testable.Version10()
 	assert.Equal(suite.T(), suite.testable.Version, SalesReportVersion10)
 	suite.testable.Version12()
@@ -89,14 +89,14 @@ func (suite *SalesReportsBaseFilterSuite) TestSetVersion() {
 	assert.Equal(suite.T(), suite.testable.Version, SalesReportVersion13)
 }
 
-func (suite *SalesReportsBaseFilterSuite) TestIsValid() {
+func (suite *SalesReportsBaseFilterTestSuite) TestIsValid() {
 	date, _ := time.Parse("2006-01-02", "2020-05-05")
 	suite.testable.Daily().TypeSales().SubTypeSummary().Version10().SetReportDate(date)
 	err := suite.testable.IsValid()
 	assert.Nil(suite.T(), err)
 }
 
-func (suite *SalesReportsBaseFilterSuite) TestIsInvalidReportType() {
+func (suite *SalesReportsBaseFilterTestSuite) TestIsInvalidReportType() {
 	date, _ := time.Parse("2006-01-02", "2020-05-05")
 	suite.testable.Daily().SubTypeSummary().Version10().SetReportDate(date)
 	err := suite.testable.IsValid()
@@ -104,7 +104,7 @@ func (suite *SalesReportsBaseFilterSuite) TestIsInvalidReportType() {
 	assert.Equal(suite.T(), "SalesReportsBaseFilter.IsValid: ReportType is required", err.Error())
 }
 
-func (suite *SalesReportsBaseFilterSuite) TestIsInvalidReportSubType() {
+func (suite *SalesReportsBaseFilterTestSuite) TestIsInvalidReportSubType() {
 	date, _ := time.Parse("2006-01-02", "2020-05-05")
 	suite.testable.Daily().TypeSales().Version10().SetReportDate(date)
 	err := suite.testable.IsValid()
@@ -112,7 +112,7 @@ func (suite *SalesReportsBaseFilterSuite) TestIsInvalidReportSubType() {
 	assert.Equal(suite.T(), "SalesReportsBaseFilter.IsValid: ReportSubType is required", err.Error())
 }
 
-func (suite *SalesReportsBaseFilterSuite) TestIsInvalidFrequency() {
+func (suite *SalesReportsBaseFilterTestSuite) TestIsInvalidFrequency() {
 	date, _ := time.Parse("2006-01-02", "2020-05-05")
 	suite.testable.SubTypeSummary().TypeSales().Version10().SetReportDate(date)
 	err := suite.testable.IsValid()
@@ -120,20 +120,20 @@ func (suite *SalesReportsBaseFilterSuite) TestIsInvalidFrequency() {
 	assert.Equal(suite.T(), "SalesReportsBaseFilter.IsValid: Frequency is required", err.Error())
 }
 
-func TestSalesReportsBaseFilterSuite(t *testing.T) {
-	suite.Run(t, new(SalesReportsBaseFilterSuite))
+func TestSalesReportsBaseFilterTestSuite(t *testing.T) {
+	suite.Run(t, new(SalesReportsBaseFilterTestSuite))
 }
 
-type SalesReportsFilterSuite struct {
+type SalesReportsFilterTestSuite struct {
 	suite.Suite
 	testable *SalesReportsFilter
 }
 
-func (suite *SalesReportsFilterSuite) SetupTest() {
+func (suite *SalesReportsFilterTestSuite) SetupTest() {
 	suite.testable = NewSalesReportsFilter()
 }
 
-func (suite *SalesReportsFilterSuite) TestIsInvalidReportType() {
+func (suite *SalesReportsFilterTestSuite) TestIsInvalidReportType() {
 	suite.testable.SubTypeSummary().Version10().Daily()
 	suite.testable.TypePreOrder()
 	err := suite.testable.IsValid()
@@ -141,7 +141,7 @@ func (suite *SalesReportsFilterSuite) TestIsInvalidReportType() {
 	assert.Equal(suite.T(), "SalesReportsFilter.IsValid: ReportType is not valid", err.Error())
 }
 
-func (suite *SalesReportsFilterSuite) TestIsInvalidReportSubType() {
+func (suite *SalesReportsFilterTestSuite) TestIsInvalidReportSubType() {
 	suite.testable.Version10().Daily()
 	suite.testable.SubTypeDetailed()
 	err := suite.testable.IsValid()
@@ -149,7 +149,7 @@ func (suite *SalesReportsFilterSuite) TestIsInvalidReportSubType() {
 	assert.Equal(suite.T(), "SalesReportsFilter.IsValid: ReportSubType is not valid", err.Error())
 }
 
-func (suite *SalesReportsFilterSuite) TestIsInvalidVersion() {
+func (suite *SalesReportsFilterTestSuite) TestIsInvalidVersion() {
 	suite.testable.SubTypeSummary().Daily()
 	suite.testable.Version12()
 	err := suite.testable.IsValid()
@@ -157,20 +157,20 @@ func (suite *SalesReportsFilterSuite) TestIsInvalidVersion() {
 	assert.Equal(suite.T(), "SalesReportsFilter.IsValid: Version is not valid", err.Error())
 }
 
-func TestSalesReportsFilterSuite(t *testing.T) {
-	suite.Run(t, new(SalesReportsFilterSuite))
+func TestSalesReportsFilterTestSuite(t *testing.T) {
+	suite.Run(t, new(SalesReportsFilterTestSuite))
 }
 
-type SalesSubscriptionsReportsFilterSuite struct {
+type SalesSubscriptionsReportsFilterTestSuite struct {
 	suite.Suite
 	testable *SubscriptionsReportsFilter
 }
 
-func (suite *SalesSubscriptionsReportsFilterSuite) SetupTest() {
+func (suite *SalesSubscriptionsReportsFilterTestSuite) SetupTest() {
 	suite.testable = NewSubscriptionsReportsFilter()
 }
 
-func (suite *SalesSubscriptionsReportsFilterSuite) TestIsInvalidReportType() {
+func (suite *SalesSubscriptionsReportsFilterTestSuite) TestIsInvalidReportType() {
 	suite.testable.SubTypeSummary().Version12().Daily()
 	suite.testable.TypePreOrder()
 	err := suite.testable.IsValid()
@@ -178,7 +178,7 @@ func (suite *SalesSubscriptionsReportsFilterSuite) TestIsInvalidReportType() {
 	assert.Equal(suite.T(), "SubscriptionsReportsFilter.IsValid: ReportType is not valid", err.Error())
 }
 
-func (suite *SalesSubscriptionsReportsFilterSuite) TestIsInvalidReportSubType() {
+func (suite *SalesSubscriptionsReportsFilterTestSuite) TestIsInvalidReportSubType() {
 	suite.testable.Version12().Daily()
 	suite.testable.SubTypeOptIn()
 	err := suite.testable.IsValid()
@@ -186,7 +186,7 @@ func (suite *SalesSubscriptionsReportsFilterSuite) TestIsInvalidReportSubType() 
 	assert.Equal(suite.T(), "SubscriptionsReportsFilter.IsValid: ReportSubType is not valid", err.Error())
 }
 
-func (suite *SalesSubscriptionsReportsFilterSuite) TestIsInvalidFrequency() {
+func (suite *SalesSubscriptionsReportsFilterTestSuite) TestIsInvalidFrequency() {
 	suite.testable.SubTypeSummary().Version12()
 	suite.testable.Yearly()
 	err := suite.testable.IsValid()
@@ -194,7 +194,7 @@ func (suite *SalesSubscriptionsReportsFilterSuite) TestIsInvalidFrequency() {
 	assert.Equal(suite.T(), "SubscriptionsReportsFilter.IsValid: Frequency is not valid", err.Error())
 }
 
-func (suite *SalesSubscriptionsReportsFilterSuite) TestIsInvalidVersion() {
+func (suite *SalesSubscriptionsReportsFilterTestSuite) TestIsInvalidVersion() {
 	suite.testable.SubTypeSummary().Daily()
 	suite.testable.Version10()
 	err := suite.testable.IsValid()
@@ -202,20 +202,20 @@ func (suite *SalesSubscriptionsReportsFilterSuite) TestIsInvalidVersion() {
 	assert.Equal(suite.T(), "SubscriptionsReportsFilter.IsValid: Version is not valid", err.Error())
 }
 
-func TestSalesSubscriptionsReportsFilterSuite(t *testing.T) {
-	suite.Run(t, new(SalesSubscriptionsReportsFilterSuite))
+func TestSalesSubscriptionsReportsFilterTestSuite(t *testing.T) {
+	suite.Run(t, new(SalesSubscriptionsReportsFilterTestSuite))
 }
 
-type SalesSubscriptionsEventsReportsFilterSuite struct {
+type SalesSubscriptionsEventsReportsFilterTestSuite struct {
 	suite.Suite
 	testable *SubscriptionsEventsReportsFilter
 }
 
-func (suite *SalesSubscriptionsEventsReportsFilterSuite) SetupTest() {
+func (suite *SalesSubscriptionsEventsReportsFilterTestSuite) SetupTest() {
 	suite.testable = NewSubscriptionsEventsReportsFilter()
 }
 
-func (suite *SalesSubscriptionsEventsReportsFilterSuite) TestIsInvalidReportType() {
+func (suite *SalesSubscriptionsEventsReportsFilterTestSuite) TestIsInvalidReportType() {
 	suite.testable.SubTypeSummary().Version12().Daily()
 	suite.testable.TypePreOrder()
 	err := suite.testable.IsValid()
@@ -223,7 +223,7 @@ func (suite *SalesSubscriptionsEventsReportsFilterSuite) TestIsInvalidReportType
 	assert.Equal(suite.T(), "SubscriptionsEventsReportsFilter.IsValid: ReportType is not valid", err.Error())
 }
 
-func (suite *SalesSubscriptionsEventsReportsFilterSuite) TestIsInvalidReportSubType() {
+func (suite *SalesSubscriptionsEventsReportsFilterTestSuite) TestIsInvalidReportSubType() {
 	suite.testable.Version12().Daily()
 	suite.testable.SubTypeOptIn()
 	err := suite.testable.IsValid()
@@ -231,7 +231,7 @@ func (suite *SalesSubscriptionsEventsReportsFilterSuite) TestIsInvalidReportSubT
 	assert.Equal(suite.T(), "SubscriptionsEventsReportsFilter.IsValid: ReportSubType is not valid", err.Error())
 }
 
-func (suite *SalesSubscriptionsEventsReportsFilterSuite) TestIsInvalidReportFrequency() {
+func (suite *SalesSubscriptionsEventsReportsFilterTestSuite) TestIsInvalidReportFrequency() {
 	suite.testable.SubTypeSummary().Version12()
 	suite.testable.Yearly()
 	err := suite.testable.IsValid()
@@ -239,7 +239,7 @@ func (suite *SalesSubscriptionsEventsReportsFilterSuite) TestIsInvalidReportFreq
 	assert.Equal(suite.T(), "SubscriptionsEventsReportsFilter.IsValid: Frequency is not valid", err.Error())
 }
 
-func (suite *SalesSubscriptionsEventsReportsFilterSuite) TestIsInvalidReportVersion() {
+func (suite *SalesSubscriptionsEventsReportsFilterTestSuite) TestIsInvalidReportVersion() {
 	suite.testable.SubTypeSummary().Daily()
 	suite.testable.Version10()
 	err := suite.testable.IsValid()
@@ -247,20 +247,20 @@ func (suite *SalesSubscriptionsEventsReportsFilterSuite) TestIsInvalidReportVers
 	assert.Equal(suite.T(), "SubscriptionsEventsReportsFilter.IsValid: Version is not valid", err.Error())
 }
 
-func TestSalesSubscriptionsEventsReportsFilterSuite(t *testing.T) {
-	suite.Run(t, new(SalesSubscriptionsEventsReportsFilterSuite))
+func TestSalesSubscriptionsEventsReportsFilterTestSuite(t *testing.T) {
+	suite.Run(t, new(SalesSubscriptionsEventsReportsFilterTestSuite))
 }
 
-type SalesSubscribersReportsFilterSuite struct {
+type SalesSubscribersReportsFilterTestSuite struct {
 	suite.Suite
 	testable *SubscribersReportsFilter
 }
 
-func (suite *SalesSubscribersReportsFilterSuite) SetupTest() {
+func (suite *SalesSubscribersReportsFilterTestSuite) SetupTest() {
 	suite.testable = NewSubscribersReportsFilter()
 }
 
-func (suite *SalesSubscribersReportsFilterSuite) TestIsInvalidReportType() {
+func (suite *SalesSubscribersReportsFilterTestSuite) TestIsInvalidReportType() {
 	suite.testable.SubTypeDetailed().Version12().Daily()
 	suite.testable.TypePreOrder()
 	err := suite.testable.IsValid()
@@ -268,7 +268,7 @@ func (suite *SalesSubscribersReportsFilterSuite) TestIsInvalidReportType() {
 	assert.Equal(suite.T(), "SubscribersReportsFilter.IsValid: ReportType is not valid", err.Error())
 }
 
-func (suite *SalesSubscribersReportsFilterSuite) TestIsInvalidReportSubType() {
+func (suite *SalesSubscribersReportsFilterTestSuite) TestIsInvalidReportSubType() {
 	suite.testable.Version12().Daily()
 	suite.testable.SubTypeSummary()
 	err := suite.testable.IsValid()
@@ -276,7 +276,7 @@ func (suite *SalesSubscribersReportsFilterSuite) TestIsInvalidReportSubType() {
 	assert.Equal(suite.T(), "SubscribersReportsFilter.IsValid: ReportSubType is not valid", err.Error())
 }
 
-func (suite *SalesSubscribersReportsFilterSuite) TestIsInvalidReportFrequency() {
+func (suite *SalesSubscribersReportsFilterTestSuite) TestIsInvalidReportFrequency() {
 	suite.testable.SubTypeDetailed().Version12()
 	suite.testable.Yearly()
 	err := suite.testable.IsValid()
@@ -284,7 +284,7 @@ func (suite *SalesSubscribersReportsFilterSuite) TestIsInvalidReportFrequency() 
 	assert.Equal(suite.T(), "SubscribersReportsFilter.IsValid: Frequency is not valid", err.Error())
 }
 
-func (suite *SalesSubscribersReportsFilterSuite) TestIsInvalidReportVersion() {
+func (suite *SalesSubscribersReportsFilterTestSuite) TestIsInvalidReportVersion() {
 	suite.testable.SubTypeDetailed().Daily()
 	suite.testable.Version10()
 	err := suite.testable.IsValid()
@@ -292,20 +292,20 @@ func (suite *SalesSubscribersReportsFilterSuite) TestIsInvalidReportVersion() {
 	assert.Equal(suite.T(), "SubscribersReportsFilter.IsValid: Version is not valid", err.Error())
 }
 
-func TestSalesSubscribersReportsFilterSuite(t *testing.T) {
-	suite.Run(t, new(SalesSubscribersReportsFilterSuite))
+func TestSalesSubscribersReportsFilterTestSuite(t *testing.T) {
+	suite.Run(t, new(SalesSubscribersReportsFilterTestSuite))
 }
 
-type SalesSubscriptionsOffersCodesRedemptionReportsFilterSuite struct {
+type SalesSubscriptionsOffersCodesRedemptionReportsFilterTestSuite struct {
 	suite.Suite
 	testable *SubscriptionsOffersCodesRedemptionReportsFilter
 }
 
-func (suite *SalesSubscriptionsOffersCodesRedemptionReportsFilterSuite) SetupTest() {
+func (suite *SalesSubscriptionsOffersCodesRedemptionReportsFilterTestSuite) SetupTest() {
 	suite.testable = NewSubscriptionsOffersCodesRedemptionReportsFilter()
 }
 
-func (suite *SalesSubscriptionsOffersCodesRedemptionReportsFilterSuite) TestIsInvalidReportType() {
+func (suite *SalesSubscriptionsOffersCodesRedemptionReportsFilterTestSuite) TestIsInvalidReportType() {
 	suite.testable.SubTypeDetailed().Version12().Daily()
 	suite.testable.TypePreOrder()
 	err := suite.testable.IsValid()
@@ -313,7 +313,7 @@ func (suite *SalesSubscriptionsOffersCodesRedemptionReportsFilterSuite) TestIsIn
 	assert.Equal(suite.T(), "SubscriptionsOffersCodesRedemptionReportsFilter.IsValid: ReportType is not valid", err.Error())
 }
 
-func (suite *SalesSubscriptionsOffersCodesRedemptionReportsFilterSuite) TestIsInvalidReportSubType() {
+func (suite *SalesSubscriptionsOffersCodesRedemptionReportsFilterTestSuite) TestIsInvalidReportSubType() {
 	suite.testable.Version10().Daily()
 	suite.testable.SubTypeDetailed()
 	err := suite.testable.IsValid()
@@ -321,7 +321,7 @@ func (suite *SalesSubscriptionsOffersCodesRedemptionReportsFilterSuite) TestIsIn
 	assert.Equal(suite.T(), "SubscriptionsOffersCodesRedemptionReportsFilter.IsValid: ReportSubType is not valid", err.Error())
 }
 
-func (suite *SalesSubscriptionsOffersCodesRedemptionReportsFilterSuite) TestIsInvalidReportFrequency() {
+func (suite *SalesSubscriptionsOffersCodesRedemptionReportsFilterTestSuite) TestIsInvalidReportFrequency() {
 	suite.testable.SubTypeSummary().Version10()
 	suite.testable.Yearly()
 	err := suite.testable.IsValid()
@@ -329,7 +329,7 @@ func (suite *SalesSubscriptionsOffersCodesRedemptionReportsFilterSuite) TestIsIn
 	assert.Equal(suite.T(), "SubscriptionsOffersCodesRedemptionReportsFilter.IsValid: Frequency is not valid", err.Error())
 }
 
-func (suite *SalesSubscriptionsOffersCodesRedemptionReportsFilterSuite) TestIsInvalidReportVersion() {
+func (suite *SalesSubscriptionsOffersCodesRedemptionReportsFilterTestSuite) TestIsInvalidReportVersion() {
 	suite.testable.SubTypeSummary().Daily()
 	suite.testable.Version12()
 	err := suite.testable.IsValid()
@@ -337,20 +337,20 @@ func (suite *SalesSubscriptionsOffersCodesRedemptionReportsFilterSuite) TestIsIn
 	assert.Equal(suite.T(), "SubscriptionsOffersCodesRedemptionReportsFilter.IsValid: Version is not valid", err.Error())
 }
 
-func TestSalesSubscriptionsOffersCodesRedemptionReportsFilterSuite(t *testing.T) {
-	suite.Run(t, new(SalesSubscriptionsOffersCodesRedemptionReportsFilterSuite))
+func TestSalesSubscriptionsOffersCodesRedemptionReportsFilterTestSuite(t *testing.T) {
+	suite.Run(t, new(SalesSubscriptionsOffersCodesRedemptionReportsFilterTestSuite))
 }
 
-type SalesNewsstandReportsFilterSuite struct {
+type SalesNewsstandReportsFilterTestSuite struct {
 	suite.Suite
 	testable *NewsstandReportsFilter
 }
 
-func (suite *SalesNewsstandReportsFilterSuite) SetupTest() {
+func (suite *SalesNewsstandReportsFilterTestSuite) SetupTest() {
 	suite.testable = NewNewsstandReportsFilter()
 }
 
-func (suite *SalesNewsstandReportsFilterSuite) TestIsInvalidReportType() {
+func (suite *SalesNewsstandReportsFilterTestSuite) TestIsInvalidReportType() {
 	suite.testable.SubTypeDetailed().Version10().Daily()
 	suite.testable.TypePreOrder()
 	err := suite.testable.IsValid()
@@ -358,7 +358,7 @@ func (suite *SalesNewsstandReportsFilterSuite) TestIsInvalidReportType() {
 	assert.Equal(suite.T(), "NewsstandReportsFilter.IsValid: ReportType is not valid", err.Error())
 }
 
-func (suite *SalesNewsstandReportsFilterSuite) TestIsInvalidReportSubType() {
+func (suite *SalesNewsstandReportsFilterTestSuite) TestIsInvalidReportSubType() {
 	suite.testable.Version10().Daily()
 	suite.testable.SubTypeSummary()
 	err := suite.testable.IsValid()
@@ -366,7 +366,7 @@ func (suite *SalesNewsstandReportsFilterSuite) TestIsInvalidReportSubType() {
 	assert.Equal(suite.T(), "NewsstandReportsFilter.IsValid: ReportSubType is not valid", err.Error())
 }
 
-func (suite *SalesNewsstandReportsFilterSuite) TestIsInvalidReportFrequency() {
+func (suite *SalesNewsstandReportsFilterTestSuite) TestIsInvalidReportFrequency() {
 	suite.testable.SubTypeDetailed().Version10()
 	suite.testable.Yearly()
 	err := suite.testable.IsValid()
@@ -374,7 +374,7 @@ func (suite *SalesNewsstandReportsFilterSuite) TestIsInvalidReportFrequency() {
 	assert.Equal(suite.T(), "NewsstandReportsFilter.IsValid: Frequency is not valid", err.Error())
 }
 
-func (suite *SalesNewsstandReportsFilterSuite) TestIsInvalidReportVersion() {
+func (suite *SalesNewsstandReportsFilterTestSuite) TestIsInvalidReportVersion() {
 	suite.testable.SubTypeDetailed().Daily()
 	suite.testable.Version12()
 	err := suite.testable.IsValid()
@@ -382,20 +382,20 @@ func (suite *SalesNewsstandReportsFilterSuite) TestIsInvalidReportVersion() {
 	assert.Equal(suite.T(), "NewsstandReportsFilter.IsValid: Version is not valid", err.Error())
 }
 
-func TestSalesNewsstandReportsFilterSuite(t *testing.T) {
-	suite.Run(t, new(SalesNewsstandReportsFilterSuite))
+func TestSalesNewsstandReportsFilterTestSuite(t *testing.T) {
+	suite.Run(t, new(SalesNewsstandReportsFilterTestSuite))
 }
 
-type SalesPreOrdersReportsFilterSuite struct {
+type SalesPreOrdersReportsFilterTestSuite struct {
 	suite.Suite
 	testable *PreOrdersReportsFilter
 }
 
-func (suite *SalesPreOrdersReportsFilterSuite) SetupTest() {
+func (suite *SalesPreOrdersReportsFilterTestSuite) SetupTest() {
 	suite.testable = NewPreOrdersReportsFilter()
 }
 
-func (suite *SalesPreOrdersReportsFilterSuite) TestIsInvalidReportType() {
+func (suite *SalesPreOrdersReportsFilterTestSuite) TestIsInvalidReportType() {
 	suite.testable.SubTypeSummary().Version10().Daily()
 	suite.testable.TypeNewsStand()
 	err := suite.testable.IsValid()
@@ -403,7 +403,7 @@ func (suite *SalesPreOrdersReportsFilterSuite) TestIsInvalidReportType() {
 	assert.Equal(suite.T(), "PreOrdersReportsFilter.IsValid: ReportType is not valid", err.Error())
 }
 
-func (suite *SalesPreOrdersReportsFilterSuite) TestIsInvalidReportSubType() {
+func (suite *SalesPreOrdersReportsFilterTestSuite) TestIsInvalidReportSubType() {
 	suite.testable.Version10().Daily()
 	suite.testable.SubTypeDetailed()
 	err := suite.testable.IsValid()
@@ -411,7 +411,7 @@ func (suite *SalesPreOrdersReportsFilterSuite) TestIsInvalidReportSubType() {
 	assert.Equal(suite.T(), "PreOrdersReportsFilter.IsValid: ReportSubType is not valid", err.Error())
 }
 
-func (suite *SalesPreOrdersReportsFilterSuite) TestIsInvalidReportVersion() {
+func (suite *SalesPreOrdersReportsFilterTestSuite) TestIsInvalidReportVersion() {
 	suite.testable.SubTypeSummary().Daily()
 	suite.testable.Version12()
 	err := suite.testable.IsValid()
@@ -419,6 +419,6 @@ func (suite *SalesPreOrdersReportsFilterSuite) TestIsInvalidReportVersion() {
 	assert.Equal(suite.T(), "PreOrdersReportsFilter.IsValid: Version is not valid", err.Error())
 }
 
-func TestSalesPreOrdersReportsFilterSuite(t *testing.T) {
-	suite.Run(t, new(SalesPreOrdersReportsFilterSuite))
+func TestSalesPreOrdersReportsFilterTestSuite(t *testing.T) {
+	suite.Run(t, new(SalesPreOrdersReportsFilterTestSuite))
 }
