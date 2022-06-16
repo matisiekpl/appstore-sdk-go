@@ -124,236 +124,301 @@ func TestSalesReportsBaseFilterSuite(t *testing.T) {
 	suite.Run(t, new(SalesReportsBaseFilterSuite))
 }
 
-func Test_Sales_SalesReportsFilter_IsInvalidReportType(t *testing.T) {
-	filter := NewSalesReportsFilter()
-	filter.SubTypeSummary().Version10().Daily()
-	filter.TypePreOrder()
-	err := filter.IsValid()
-	assert.Error(t, err)
-	assert.Equal(t, "SalesReportsFilter.IsValid: ReportType is not valid", err.Error())
+type SalesReportsFilterSuite struct {
+	suite.Suite
+	testable *SalesReportsFilter
 }
 
-func Test_Sales_SalesReportsFilter_IsInvalidReportSubType(t *testing.T) {
-	filter := NewSalesReportsFilter()
-	filter.Version10().Daily()
-	filter.SubTypeDetailed()
-	err := filter.IsValid()
-	assert.Error(t, err)
-	assert.Equal(t, "SalesReportsFilter.IsValid: ReportSubType is not valid", err.Error())
+func (suite *SalesReportsFilterSuite) SetupTest() {
+	suite.testable = NewSalesReportsFilter()
 }
 
-func Test_Sales_SalesReportsFilter_IsInvalidVersion(t *testing.T) {
-	filter := NewSalesReportsFilter()
-	filter.SubTypeSummary().Daily()
-	filter.Version12()
-	err := filter.IsValid()
-	assert.Error(t, err)
-	assert.Equal(t, "SalesReportsFilter.IsValid: Version is not valid", err.Error())
+func (suite *SalesReportsFilterSuite) TestIsInvalidReportType() {
+	suite.testable.SubTypeSummary().Version10().Daily()
+	suite.testable.TypePreOrder()
+	err := suite.testable.IsValid()
+	assert.Error(suite.T(), err)
+	assert.Equal(suite.T(), "SalesReportsFilter.IsValid: ReportType is not valid", err.Error())
 }
 
-func Test_Sales_SubscriptionsReportsFilter_IsInvalidReportType(t *testing.T) {
-	filter := NewSubscriptionsReportsFilter()
-	filter.SubTypeSummary().Version12().Daily()
-	filter.TypePreOrder()
-	err := filter.IsValid()
-	assert.Error(t, err)
-	assert.Equal(t, "SubscriptionsReportsFilter.IsValid: ReportType is not valid", err.Error())
+func (suite *SalesReportsFilterSuite) TestIsInvalidReportSubType() {
+	suite.testable.Version10().Daily()
+	suite.testable.SubTypeDetailed()
+	err := suite.testable.IsValid()
+	assert.Error(suite.T(), err)
+	assert.Equal(suite.T(), "SalesReportsFilter.IsValid: ReportSubType is not valid", err.Error())
 }
 
-func Test_Sales_SubscriptionsReportsFilter_IsInvalidReportSubType(t *testing.T) {
-	filter := NewSubscriptionsReportsFilter()
-	filter.Version12().Daily()
-	filter.SubTypeOptIn()
-	err := filter.IsValid()
-	assert.Error(t, err)
-	assert.Equal(t, "SubscriptionsReportsFilter.IsValid: ReportSubType is not valid", err.Error())
+func (suite *SalesReportsFilterSuite) TestIsInvalidVersion() {
+	suite.testable.SubTypeSummary().Daily()
+	suite.testable.Version12()
+	err := suite.testable.IsValid()
+	assert.Error(suite.T(), err)
+	assert.Equal(suite.T(), "SalesReportsFilter.IsValid: Version is not valid", err.Error())
 }
 
-func Test_Sales_SubscriptionsReportsFilter_IsInvalidFrequency(t *testing.T) {
-	filter := NewSubscriptionsReportsFilter()
-	filter.SubTypeSummary().Version12()
-	filter.Yearly()
-	err := filter.IsValid()
-	assert.Error(t, err)
-	assert.Equal(t, "SubscriptionsReportsFilter.IsValid: Frequency is not valid", err.Error())
+func TestSalesReportsFilterSuite(t *testing.T) {
+	suite.Run(t, new(SalesReportsFilterSuite))
 }
 
-func Test_Sales_SubscriptionsReportsFilter_IsInvalidVersion(t *testing.T) {
-	filter := NewSubscriptionsReportsFilter()
-	filter.SubTypeSummary().Daily()
-	filter.Version10()
-	err := filter.IsValid()
-	assert.Error(t, err)
-	assert.Equal(t, "SubscriptionsReportsFilter.IsValid: Version is not valid", err.Error())
+type SalesSubscriptionsReportsFilterSuite struct {
+	suite.Suite
+	testable *SubscriptionsReportsFilter
 }
 
-func Test_Sales_SubscriptionsEventsReportsFilter_IsInvalidReportType(t *testing.T) {
-	filter := NewSubscriptionsEventsReportsFilter()
-	filter.SubTypeSummary().Version12().Daily()
-	filter.TypePreOrder()
-	err := filter.IsValid()
-	assert.Error(t, err)
-	assert.Equal(t, "SubscriptionsEventsReportsFilter.IsValid: ReportType is not valid", err.Error())
+func (suite *SalesSubscriptionsReportsFilterSuite) SetupTest() {
+	suite.testable = NewSubscriptionsReportsFilter()
 }
 
-func Test_Sales_SubscriptionsEventsReportsFilter_IsInvalidReportSubType(t *testing.T) {
-	filter := NewSubscriptionsEventsReportsFilter()
-	filter.Version12().Daily()
-	filter.SubTypeOptIn()
-	err := filter.IsValid()
-	assert.Error(t, err)
-	assert.Equal(t, "SubscriptionsEventsReportsFilter.IsValid: ReportSubType is not valid", err.Error())
+func (suite *SalesSubscriptionsReportsFilterSuite) TestIsInvalidReportType() {
+	suite.testable.SubTypeSummary().Version12().Daily()
+	suite.testable.TypePreOrder()
+	err := suite.testable.IsValid()
+	assert.Error(suite.T(), err)
+	assert.Equal(suite.T(), "SubscriptionsReportsFilter.IsValid: ReportType is not valid", err.Error())
 }
 
-func Test_Sales_SubscriptionsEventsReportsFilter_IsInvalidReportFrequency(t *testing.T) {
-	filter := NewSubscriptionsEventsReportsFilter()
-	filter.SubTypeSummary().Version12()
-	filter.Yearly()
-	err := filter.IsValid()
-	assert.Error(t, err)
-	assert.Equal(t, "SubscriptionsEventsReportsFilter.IsValid: Frequency is not valid", err.Error())
+func (suite *SalesSubscriptionsReportsFilterSuite) TestIsInvalidReportSubType() {
+	suite.testable.Version12().Daily()
+	suite.testable.SubTypeOptIn()
+	err := suite.testable.IsValid()
+	assert.Error(suite.T(), err)
+	assert.Equal(suite.T(), "SubscriptionsReportsFilter.IsValid: ReportSubType is not valid", err.Error())
 }
 
-func Test_Sales_SubscriptionsEventsReportsFilter_IsInvalidReportVersion(t *testing.T) {
-	filter := NewSubscriptionsEventsReportsFilter()
-	filter.SubTypeSummary().Daily()
-	filter.Version10()
-	err := filter.IsValid()
-	assert.Error(t, err)
-	assert.Equal(t, "SubscriptionsEventsReportsFilter.IsValid: Version is not valid", err.Error())
+func (suite *SalesSubscriptionsReportsFilterSuite) TestIsInvalidFrequency() {
+	suite.testable.SubTypeSummary().Version12()
+	suite.testable.Yearly()
+	err := suite.testable.IsValid()
+	assert.Error(suite.T(), err)
+	assert.Equal(suite.T(), "SubscriptionsReportsFilter.IsValid: Frequency is not valid", err.Error())
 }
 
-func Test_Sales_SubscribersReportsFilter_IsInvalidReportType(t *testing.T) {
-	filter := NewSubscribersReportsFilter()
-	filter.SubTypeDetailed().Version12().Daily()
-	filter.TypePreOrder()
-	err := filter.IsValid()
-	assert.Error(t, err)
-	assert.Equal(t, "SubscribersReportsFilter.IsValid: ReportType is not valid", err.Error())
+func (suite *SalesSubscriptionsReportsFilterSuite) TestIsInvalidVersion() {
+	suite.testable.SubTypeSummary().Daily()
+	suite.testable.Version10()
+	err := suite.testable.IsValid()
+	assert.Error(suite.T(), err)
+	assert.Equal(suite.T(), "SubscriptionsReportsFilter.IsValid: Version is not valid", err.Error())
 }
 
-func Test_Sales_SubscribersReportsFilter_IsInvalidReportSubType(t *testing.T) {
-	filter := NewSubscribersReportsFilter()
-	filter.Version12().Daily()
-	filter.SubTypeSummary()
-	err := filter.IsValid()
-	assert.Error(t, err)
-	assert.Equal(t, "SubscribersReportsFilter.IsValid: ReportSubType is not valid", err.Error())
+func TestSalesSubscriptionsReportsFilterSuite(t *testing.T) {
+	suite.Run(t, new(SalesSubscriptionsReportsFilterSuite))
 }
 
-func Test_Sales_SubscribersReportsFilter_IsInvalidReportFrequency(t *testing.T) {
-	filter := NewSubscribersReportsFilter()
-	filter.SubTypeDetailed().Version12()
-	filter.Yearly()
-	err := filter.IsValid()
-	assert.Error(t, err)
-	assert.Equal(t, "SubscribersReportsFilter.IsValid: Frequency is not valid", err.Error())
+type SalesSubscriptionsEventsReportsFilterSuite struct {
+	suite.Suite
+	testable *SubscriptionsEventsReportsFilter
 }
 
-func Test_Sales_SubscribersReportsFilter_IsInvalidReportVersion(t *testing.T) {
-	filter := NewSubscribersReportsFilter()
-	filter.SubTypeDetailed().Daily()
-	filter.Version10()
-	err := filter.IsValid()
-	assert.Error(t, err)
-	assert.Equal(t, "SubscribersReportsFilter.IsValid: Version is not valid", err.Error())
+func (suite *SalesSubscriptionsEventsReportsFilterSuite) SetupTest() {
+	suite.testable = NewSubscriptionsEventsReportsFilter()
 }
 
-func Test_Sales_SubscriptionsOffersCodesRedemptionReportsFilter_IsInvalidReportType(t *testing.T) {
-	filter := NewSubscriptionsOffersCodesRedemptionReportsFilter()
-	filter.SubTypeDetailed().Version12().Daily()
-	filter.TypePreOrder()
-	err := filter.IsValid()
-	assert.Error(t, err)
-	assert.Equal(t, "SubscriptionsOffersCodesRedemptionReportsFilter.IsValid: ReportType is not valid", err.Error())
+func (suite *SalesSubscriptionsEventsReportsFilterSuite) TestIsInvalidReportType() {
+	suite.testable.SubTypeSummary().Version12().Daily()
+	suite.testable.TypePreOrder()
+	err := suite.testable.IsValid()
+	assert.Error(suite.T(), err)
+	assert.Equal(suite.T(), "SubscriptionsEventsReportsFilter.IsValid: ReportType is not valid", err.Error())
 }
 
-func Test_Sales_SubscriptionsOffersCodesRedemptionReportsFilter_IsInvalidReportSubType(t *testing.T) {
-	filter := NewSubscriptionsOffersCodesRedemptionReportsFilter()
-	filter.Version10().Daily()
-	filter.SubTypeDetailed()
-	err := filter.IsValid()
-	assert.Error(t, err)
-	assert.Equal(t, "SubscriptionsOffersCodesRedemptionReportsFilter.IsValid: ReportSubType is not valid", err.Error())
+func (suite *SalesSubscriptionsEventsReportsFilterSuite) TestIsInvalidReportSubType() {
+	suite.testable.Version12().Daily()
+	suite.testable.SubTypeOptIn()
+	err := suite.testable.IsValid()
+	assert.Error(suite.T(), err)
+	assert.Equal(suite.T(), "SubscriptionsEventsReportsFilter.IsValid: ReportSubType is not valid", err.Error())
 }
 
-func Test_Sales_SubscriptionsOffersCodesRedemptionReportsFilterr_IsInvalidReportFrequency(t *testing.T) {
-	filter := NewSubscriptionsOffersCodesRedemptionReportsFilter()
-	filter.SubTypeSummary().Version10()
-	filter.Yearly()
-	err := filter.IsValid()
-	assert.Error(t, err)
-	assert.Equal(t, "SubscriptionsOffersCodesRedemptionReportsFilter.IsValid: Frequency is not valid", err.Error())
+func (suite *SalesSubscriptionsEventsReportsFilterSuite) TestIsInvalidReportFrequency() {
+	suite.testable.SubTypeSummary().Version12()
+	suite.testable.Yearly()
+	err := suite.testable.IsValid()
+	assert.Error(suite.T(), err)
+	assert.Equal(suite.T(), "SubscriptionsEventsReportsFilter.IsValid: Frequency is not valid", err.Error())
 }
 
-func Test_Sales_SubscriptionsOffersCodesRedemptionReportsFilter_IsInvalidReportVersion(t *testing.T) {
-	filter := NewSubscriptionsOffersCodesRedemptionReportsFilter()
-	filter.SubTypeSummary().Daily()
-	filter.Version12()
-	err := filter.IsValid()
-	assert.Error(t, err)
-	assert.Equal(t, "SubscriptionsOffersCodesRedemptionReportsFilter.IsValid: Version is not valid", err.Error())
+func (suite *SalesSubscriptionsEventsReportsFilterSuite) TestIsInvalidReportVersion() {
+	suite.testable.SubTypeSummary().Daily()
+	suite.testable.Version10()
+	err := suite.testable.IsValid()
+	assert.Error(suite.T(), err)
+	assert.Equal(suite.T(), "SubscriptionsEventsReportsFilter.IsValid: Version is not valid", err.Error())
 }
 
-func Test_Sales_NewsstandReportsFilter_IsInvalidReportType(t *testing.T) {
-	filter := NewNewsstandReportsFilter()
-	filter.SubTypeDetailed().Version10().Daily()
-	filter.TypePreOrder()
-	err := filter.IsValid()
-	assert.Error(t, err)
-	assert.Equal(t, "NewsstandReportsFilter.IsValid: ReportType is not valid", err.Error())
+func TestSalesSubscriptionsEventsReportsFilterSuite(t *testing.T) {
+	suite.Run(t, new(SalesSubscriptionsEventsReportsFilterSuite))
 }
 
-func Test_Sales_NewsstandReportsFilter_IsInvalidReportSubType(t *testing.T) {
-	filter := NewNewsstandReportsFilter()
-	filter.Version10().Daily()
-	filter.SubTypeSummary()
-	err := filter.IsValid()
-	assert.Error(t, err)
-	assert.Equal(t, "NewsstandReportsFilter.IsValid: ReportSubType is not valid", err.Error())
+type SalesSubscribersReportsFilterSuite struct {
+	suite.Suite
+	testable *SubscribersReportsFilter
 }
 
-func Test_Sales_NewsstandReportsFilter_IsInvalidReportFrequency(t *testing.T) {
-	filter := NewNewsstandReportsFilter()
-	filter.SubTypeDetailed().Version10()
-	filter.Yearly()
-	err := filter.IsValid()
-	assert.Error(t, err)
-	assert.Equal(t, "NewsstandReportsFilter.IsValid: Frequency is not valid", err.Error())
+func (suite *SalesSubscribersReportsFilterSuite) SetupTest() {
+	suite.testable = NewSubscribersReportsFilter()
 }
 
-func Test_Sales_NewsstandReportsFilter_IsInvalidReportVersion(t *testing.T) {
-	filter := NewNewsstandReportsFilter()
-	filter.SubTypeDetailed().Daily()
-	filter.Version12()
-	err := filter.IsValid()
-	assert.Error(t, err)
-	assert.Equal(t, "NewsstandReportsFilter.IsValid: Version is not valid", err.Error())
+func (suite *SalesSubscribersReportsFilterSuite) TestIsInvalidReportType() {
+	suite.testable.SubTypeDetailed().Version12().Daily()
+	suite.testable.TypePreOrder()
+	err := suite.testable.IsValid()
+	assert.Error(suite.T(), err)
+	assert.Equal(suite.T(), "SubscribersReportsFilter.IsValid: ReportType is not valid", err.Error())
 }
 
-func Test_Sales_PreOrdersReportsFilter_IsInvalidReportType(t *testing.T) {
-	filter := NewPreOrdersReportsFilter()
-	filter.SubTypeSummary().Version10().Daily()
-	filter.TypeNewsStand()
-	err := filter.IsValid()
-	assert.Error(t, err)
-	assert.Equal(t, "PreOrdersReportsFilter.IsValid: ReportType is not valid", err.Error())
+func (suite *SalesSubscribersReportsFilterSuite) TestIsInvalidReportSubType() {
+	suite.testable.Version12().Daily()
+	suite.testable.SubTypeSummary()
+	err := suite.testable.IsValid()
+	assert.Error(suite.T(), err)
+	assert.Equal(suite.T(), "SubscribersReportsFilter.IsValid: ReportSubType is not valid", err.Error())
 }
 
-func Test_Sales_PreOrdersReportsFilter_IsInvalidReportSubType(t *testing.T) {
-	filter := NewPreOrdersReportsFilter()
-	filter.Version10().Daily()
-	filter.SubTypeDetailed()
-	err := filter.IsValid()
-	assert.Error(t, err)
-	assert.Equal(t, "PreOrdersReportsFilter.IsValid: ReportSubType is not valid", err.Error())
+func (suite *SalesSubscribersReportsFilterSuite) TestIsInvalidReportFrequency() {
+	suite.testable.SubTypeDetailed().Version12()
+	suite.testable.Yearly()
+	err := suite.testable.IsValid()
+	assert.Error(suite.T(), err)
+	assert.Equal(suite.T(), "SubscribersReportsFilter.IsValid: Frequency is not valid", err.Error())
 }
 
-func Test_Sales_PreOrdersReportsFilter_IsInvalidReportVersion(t *testing.T) {
-	filter := NewPreOrdersReportsFilter()
-	filter.SubTypeSummary().Daily()
-	filter.Version12()
-	err := filter.IsValid()
-	assert.Error(t, err)
-	assert.Equal(t, "PreOrdersReportsFilter.IsValid: Version is not valid", err.Error())
+func (suite *SalesSubscribersReportsFilterSuite) TestIsInvalidReportVersion() {
+	suite.testable.SubTypeDetailed().Daily()
+	suite.testable.Version10()
+	err := suite.testable.IsValid()
+	assert.Error(suite.T(), err)
+	assert.Equal(suite.T(), "SubscribersReportsFilter.IsValid: Version is not valid", err.Error())
+}
+
+func TestSalesSubscribersReportsFilterSuite(t *testing.T) {
+	suite.Run(t, new(SalesSubscribersReportsFilterSuite))
+}
+
+type SalesSubscriptionsOffersCodesRedemptionReportsFilterSuite struct {
+	suite.Suite
+	testable *SubscriptionsOffersCodesRedemptionReportsFilter
+}
+
+func (suite *SalesSubscriptionsOffersCodesRedemptionReportsFilterSuite) SetupTest() {
+	suite.testable = NewSubscriptionsOffersCodesRedemptionReportsFilter()
+}
+
+func (suite *SalesSubscriptionsOffersCodesRedemptionReportsFilterSuite) TestIsInvalidReportType() {
+	suite.testable.SubTypeDetailed().Version12().Daily()
+	suite.testable.TypePreOrder()
+	err := suite.testable.IsValid()
+	assert.Error(suite.T(), err)
+	assert.Equal(suite.T(), "SubscriptionsOffersCodesRedemptionReportsFilter.IsValid: ReportType is not valid", err.Error())
+}
+
+func (suite *SalesSubscriptionsOffersCodesRedemptionReportsFilterSuite) TestIsInvalidReportSubType() {
+	suite.testable.Version10().Daily()
+	suite.testable.SubTypeDetailed()
+	err := suite.testable.IsValid()
+	assert.Error(suite.T(), err)
+	assert.Equal(suite.T(), "SubscriptionsOffersCodesRedemptionReportsFilter.IsValid: ReportSubType is not valid", err.Error())
+}
+
+func (suite *SalesSubscriptionsOffersCodesRedemptionReportsFilterSuite) TestIsInvalidReportFrequency() {
+	suite.testable.SubTypeSummary().Version10()
+	suite.testable.Yearly()
+	err := suite.testable.IsValid()
+	assert.Error(suite.T(), err)
+	assert.Equal(suite.T(), "SubscriptionsOffersCodesRedemptionReportsFilter.IsValid: Frequency is not valid", err.Error())
+}
+
+func (suite *SalesSubscriptionsOffersCodesRedemptionReportsFilterSuite) TestIsInvalidReportVersion() {
+	suite.testable.SubTypeSummary().Daily()
+	suite.testable.Version12()
+	err := suite.testable.IsValid()
+	assert.Error(suite.T(), err)
+	assert.Equal(suite.T(), "SubscriptionsOffersCodesRedemptionReportsFilter.IsValid: Version is not valid", err.Error())
+}
+
+func TestSalesSubscriptionsOffersCodesRedemptionReportsFilterSuite(t *testing.T) {
+	suite.Run(t, new(SalesSubscriptionsOffersCodesRedemptionReportsFilterSuite))
+}
+
+type SalesNewsstandReportsFilterSuite struct {
+	suite.Suite
+	testable *NewsstandReportsFilter
+}
+
+func (suite *SalesNewsstandReportsFilterSuite) SetupTest() {
+	suite.testable = NewNewsstandReportsFilter()
+}
+
+func (suite *SalesNewsstandReportsFilterSuite) TestIsInvalidReportType() {
+	suite.testable.SubTypeDetailed().Version10().Daily()
+	suite.testable.TypePreOrder()
+	err := suite.testable.IsValid()
+	assert.Error(suite.T(), err)
+	assert.Equal(suite.T(), "NewsstandReportsFilter.IsValid: ReportType is not valid", err.Error())
+}
+
+func (suite *SalesNewsstandReportsFilterSuite) TestIsInvalidReportSubType() {
+	suite.testable.Version10().Daily()
+	suite.testable.SubTypeSummary()
+	err := suite.testable.IsValid()
+	assert.Error(suite.T(), err)
+	assert.Equal(suite.T(), "NewsstandReportsFilter.IsValid: ReportSubType is not valid", err.Error())
+}
+
+func (suite *SalesNewsstandReportsFilterSuite) TestIsInvalidReportFrequency() {
+	suite.testable.SubTypeDetailed().Version10()
+	suite.testable.Yearly()
+	err := suite.testable.IsValid()
+	assert.Error(suite.T(), err)
+	assert.Equal(suite.T(), "NewsstandReportsFilter.IsValid: Frequency is not valid", err.Error())
+}
+
+func (suite *SalesNewsstandReportsFilterSuite) TestIsInvalidReportVersion() {
+	suite.testable.SubTypeDetailed().Daily()
+	suite.testable.Version12()
+	err := suite.testable.IsValid()
+	assert.Error(suite.T(), err)
+	assert.Equal(suite.T(), "NewsstandReportsFilter.IsValid: Version is not valid", err.Error())
+}
+
+func TestSalesNewsstandReportsFilterSuite(t *testing.T) {
+	suite.Run(t, new(SalesNewsstandReportsFilterSuite))
+}
+
+type SalesPreOrdersReportsFilterSuite struct {
+	suite.Suite
+	testable *PreOrdersReportsFilter
+}
+
+func (suite *SalesPreOrdersReportsFilterSuite) SetupTest() {
+	suite.testable = NewPreOrdersReportsFilter()
+}
+
+func (suite *SalesPreOrdersReportsFilterSuite) TestIsInvalidReportType() {
+	suite.testable.SubTypeSummary().Version10().Daily()
+	suite.testable.TypeNewsStand()
+	err := suite.testable.IsValid()
+	assert.Error(suite.T(), err)
+	assert.Equal(suite.T(), "PreOrdersReportsFilter.IsValid: ReportType is not valid", err.Error())
+}
+
+func (suite *SalesPreOrdersReportsFilterSuite) TestIsInvalidReportSubType() {
+	suite.testable.Version10().Daily()
+	suite.testable.SubTypeDetailed()
+	err := suite.testable.IsValid()
+	assert.Error(suite.T(), err)
+	assert.Equal(suite.T(), "PreOrdersReportsFilter.IsValid: ReportSubType is not valid", err.Error())
+}
+
+func (suite *SalesPreOrdersReportsFilterSuite) TestIsInvalidReportVersion() {
+	suite.testable.SubTypeSummary().Daily()
+	suite.testable.Version12()
+	err := suite.testable.IsValid()
+	assert.Error(suite.T(), err)
+	assert.Equal(suite.T(), "PreOrdersReportsFilter.IsValid: Version is not valid", err.Error())
+}
+
+func TestSalesPreOrdersReportsFilterSuite(t *testing.T) {
+	suite.Run(t, new(SalesPreOrdersReportsFilterSuite))
 }
