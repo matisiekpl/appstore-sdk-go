@@ -18,7 +18,7 @@ https://developer.apple.com/documentation/appstoreconnectapi/download_sales_and_
 
 ## Download
 ```shell
-go get -u github.com/kachit/appstore-sdk-go
+go get -u github.com/kachit/appstore-sdk-go/v1
 ```
 
 ## Usage
