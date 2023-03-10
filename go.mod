@@ -1,4 +1,4 @@
-module github.com/kachit/appstore-sdk-go/v1
+module github.com/kachit/appstore-sdk-go
 
 go 1.14
 

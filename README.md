@@ -18,7 +18,7 @@ https://developer.apple.com/documentation/appstoreconnectapi/download_sales_and_
 
 ## Download
 ```shell
-go get -u github.com/kachit/appstore-sdk-go/v1
+go get -u github.com/kachit/appstore-sdk-go
 ```
 
 ## Usage
@@ -28,7 +28,7 @@ package main
 import (
     "fmt"
     "time"
-    appstore_sdk "github.com/kachit/appstore-sdk-go/v1"
+    appstore_sdk "github.com/kachit/appstore-sdk-go"
 )
 
 func main(){
