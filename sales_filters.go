@@ -5,16 +5,16 @@ import (
 	"time"
 )
 
-//SalesReportType type
+// SalesReportType type
 type SalesReportType string
 
-//SalesReportSubType type
+// SalesReportSubType type
 type SalesReportSubType string
 
-//SalesReportFrequency type
+// SalesReportFrequency type
 type SalesReportFrequency string
 
-//SalesReportVersion type
+// SalesReportVersion type
 type SalesReportVersion string
 
 const (
@@ -57,13 +57,15 @@ const (
 const (
 	//SalesReportVersion10 const
 	SalesReportVersion10 SalesReportVersion = "1_0"
+	//SalesReportVersion11 const
+	SalesReportVersion11 SalesReportVersion = "1_1"
 	//SalesReportVersion12 const
 	SalesReportVersion12 SalesReportVersion = "1_2"
 	//SalesReportVersion13 const
 	SalesReportVersion13 SalesReportVersion = "1_3"
 )
 
-//SalesReportsBaseFilter Sales reports filter
+// SalesReportsBaseFilter Sales reports filter
 type SalesReportsBaseFilter struct {
 	ReportDate    time.Time            //The report date to download. The date is specified in the YYYY-MM-DD format for all report frequencies except DAILY, which does not require a specified date. For more information, see report availability and storage.
 	ReportSubType SalesReportSubType   //(Required) The report sub type to download. For a list of values, see Allowed Values Based on Sales Report Type below. Possible values: SUMMARY, DETAILED, OPT_IN
@@ -72,117 +74,122 @@ type SalesReportsBaseFilter struct {
 	Version       SalesReportVersion   //The version of the report. For a list of values, see Allowed Values Based on Sales Report Type below.
 }
 
-//SetReportDate Set report date
+// SetReportDate Set report date
 func (f *SalesReportsBaseFilter) SetReportDate(value time.Time) *SalesReportsBaseFilter {
 	f.ReportDate = value
 	return f
 }
 
-//SetReportSubType Set report sub type
+// SetReportSubType Set report sub type
 func (f *SalesReportsBaseFilter) SetReportSubType(value SalesReportSubType) *SalesReportsBaseFilter {
 	f.ReportSubType = value
 	return f
 }
 
-//SubTypeDetailed Change report sub type to Detailed
+// SubTypeDetailed Change report sub type to Detailed
 func (f *SalesReportsBaseFilter) SubTypeDetailed() *SalesReportsBaseFilter {
 	return f.SetReportSubType(SalesReportSubTypeDetailed)
 }
 
-//SubTypeOptIn Change report sub type to OptIn
+// SubTypeOptIn Change report sub type to OptIn
 func (f *SalesReportsBaseFilter) SubTypeOptIn() *SalesReportsBaseFilter {
 	return f.SetReportSubType(SalesReportSubTypeOptIn)
 }
 
-//SubTypeSummary Change report sub type to Summary
+// SubTypeSummary Change report sub type to Summary
 func (f *SalesReportsBaseFilter) SubTypeSummary() *SalesReportsBaseFilter {
 	return f.SetReportSubType(SalesReportSubTypeSummary)
 }
 
-//SetReportType Set report type
+// SetReportType Set report type
 func (f *SalesReportsBaseFilter) SetReportType(value SalesReportType) *SalesReportsBaseFilter {
 	f.ReportType = value
 	return f
 }
 
-//TypeSales Change report type to Sales
+// TypeSales Change report type to Sales
 func (f *SalesReportsBaseFilter) TypeSales() *SalesReportsBaseFilter {
 	return f.SetReportType(SalesReportTypeSales)
 }
 
-//TypePreOrder Change report type to PreOrder
+// TypePreOrder Change report type to PreOrder
 func (f *SalesReportsBaseFilter) TypePreOrder() *SalesReportsBaseFilter {
 	return f.SetReportType(SalesReportTypePreorder)
 }
 
-//TypeNewsStand Change report type to NewsStand
+// TypeNewsStand Change report type to NewsStand
 func (f *SalesReportsBaseFilter) TypeNewsStand() *SalesReportsBaseFilter {
 	return f.SetReportType(SalesReportTypeNewsStand)
 }
 
-//TypeSubscription Change report type to Subscription
+// TypeSubscription Change report type to Subscription
 func (f *SalesReportsBaseFilter) TypeSubscription() *SalesReportsBaseFilter {
 	return f.SetReportType(SalesReportTypeSubscription)
 }
 
-//TypeSubscriptionEvent Change report type to SubscriptionEvent
+// TypeSubscriptionEvent Change report type to SubscriptionEvent
 func (f *SalesReportsBaseFilter) TypeSubscriptionEvent() *SalesReportsBaseFilter {
 	return f.SetReportType(SalesReportTypeSubscriptionEvent)
 }
 
-//TypeSubscriber Change report type to Subscriber
+// TypeSubscriber Change report type to Subscriber
 func (f *SalesReportsBaseFilter) TypeSubscriber() *SalesReportsBaseFilter {
 	return f.SetReportType(SalesReportTypeSubscriber)
 }
 
-//SetFrequency Set frequency
+// SetFrequency Set frequency
 func (f *SalesReportsBaseFilter) SetFrequency(value SalesReportFrequency) *SalesReportsBaseFilter {
 	f.Frequency = value
 	return f
 }
 
-//Daily Change frequency to Daily
+// Daily Change frequency to Daily
 func (f *SalesReportsBaseFilter) Daily() *SalesReportsBaseFilter {
 	return f.SetFrequency(SalesReportFrequencyDaily)
 }
 
-//Weekly Change frequency to Weekly
+// Weekly Change frequency to Weekly
 func (f *SalesReportsBaseFilter) Weekly() *SalesReportsBaseFilter {
 	return f.SetFrequency(SalesReportFrequencyWeekly)
 }
 
-//Monthly Change frequency to Monthly
+// Monthly Change frequency to Monthly
 func (f *SalesReportsBaseFilter) Monthly() *SalesReportsBaseFilter {
 	return f.SetFrequency(SalesReportFrequencyMonthly)
 }
 
-//Yearly Change frequency to Yearly
+// Yearly Change frequency to Yearly
 func (f *SalesReportsBaseFilter) Yearly() *SalesReportsBaseFilter {
 	return f.SetFrequency(SalesReportFrequencyYearly)
 }
 
-//SetVersion Set version
+// SetVersion Set version
 func (f *SalesReportsBaseFilter) SetVersion(value SalesReportVersion) *SalesReportsBaseFilter {
 	f.Version = value
 	return f
 }
 
-//Version13 Change version to 1_3
+// Version13 Change version to 1_3
 func (f *SalesReportsBaseFilter) Version13() *SalesReportsBaseFilter {
 	return f.SetVersion(SalesReportVersion13)
 }
 
-//Version12 Change version to 1_2
+// Version12 Change version to 1_2
 func (f *SalesReportsBaseFilter) Version12() *SalesReportsBaseFilter {
 	return f.SetVersion(SalesReportVersion12)
 }
 
-//Version10 Change version to 1_0
+// Version11 Change version to 1_1
+func (f *SalesReportsBaseFilter) Version11() *SalesReportsBaseFilter {
+	return f.SetVersion(SalesReportVersion11)
+}
+
+// Version10 Change version to 1_0
 func (f *SalesReportsBaseFilter) Version10() *SalesReportsBaseFilter {
 	return f.SetVersion(SalesReportVersion10)
 }
 
-//ToQueryParamsMap Convert filter to query params
+// ToQueryParamsMap Convert filter to query params
 func (f *SalesReportsBaseFilter) ToQueryParamsMap() map[string]interface{} {
 	qs := make(map[string]interface{})
 	qs["filter[reportSubType]"] = string(f.ReportSubType)
@@ -197,7 +204,7 @@ func (f *SalesReportsBaseFilter) ToQueryParamsMap() map[string]interface{} {
 	return qs
 }
 
-//IsValid Validate sales report filter params
+// IsValid Validate sales report filter params
 func (f *SalesReportsBaseFilter) IsValid() error {
 	if f.ReportType == "" {
 		return fmt.Errorf("SalesReportsBaseFilter.IsValid: %v", "ReportType is required")
@@ -211,18 +218,18 @@ func (f *SalesReportsBaseFilter) IsValid() error {
 	return nil
 }
 
-//SalesReportsFilterInterface
+// SalesReportsFilterInterface
 type SalesReportsFilterInterface interface {
 	IsValid() error
 	ToQueryParamsMap() map[string]interface{}
 }
 
-//SalesReportsFilter
+// SalesReportsFilter
 type SalesReportsFilter struct {
 	SalesReportsBaseFilter
 }
 
-//IsValid Validate sales report filter params
+// IsValid Validate sales report filter params
 func (f *SalesReportsFilter) IsValid() error {
 	err := f.SalesReportsBaseFilter.IsValid()
 	if err != nil {
@@ -234,18 +241,18 @@ func (f *SalesReportsFilter) IsValid() error {
 	if f.ReportSubType != SalesReportSubTypeSummary {
 		return fmt.Errorf("SalesReportsFilter.IsValid: %v", "ReportSubType is not valid")
 	}
-	if f.Version != SalesReportVersion10 {
+	if f.Version != SalesReportVersion11 {
 		return fmt.Errorf("SalesReportsFilter.IsValid: %v", "Version is not valid")
 	}
 	return nil
 }
 
-//SubscriptionsReportsFilter
+// SubscriptionsReportsFilter
 type SubscriptionsReportsFilter struct {
 	SalesReportsBaseFilter
 }
 
-//IsValid Validate sales report filter params
+// IsValid Validate sales report filter params
 func (f *SubscriptionsReportsFilter) IsValid() error {
 	err := f.SalesReportsBaseFilter.IsValid()
 	if err != nil {
@@ -266,12 +273,12 @@ func (f *SubscriptionsReportsFilter) IsValid() error {
 	return nil
 }
 
-//SubscriptionsEventsReportsFilter
+// SubscriptionsEventsReportsFilter
 type SubscriptionsEventsReportsFilter struct {
 	SalesReportsBaseFilter
 }
 
-//IsValid Validate sales report filter params
+// IsValid Validate sales report filter params
 func (f *SubscriptionsEventsReportsFilter) IsValid() error {
 	err := f.SalesReportsBaseFilter.IsValid()
 	if err != nil {
@@ -292,12 +299,12 @@ func (f *SubscriptionsEventsReportsFilter) IsValid() error {
 	return nil
 }
 
-//SubscribersReportsFilter
+// SubscribersReportsFilter
 type SubscribersReportsFilter struct {
 	SalesReportsBaseFilter
 }
 
-//IsValid Validate sales report filter params
+// IsValid Validate sales report filter params
 func (f *SubscribersReportsFilter) IsValid() error {
 	err := f.SalesReportsBaseFilter.IsValid()
 	if err != nil {
@@ -318,12 +325,12 @@ func (f *SubscribersReportsFilter) IsValid() error {
 	return nil
 }
 
-//SubscriptionsOffersCodesRedemptionReportsFilter
+// SubscriptionsOffersCodesRedemptionReportsFilter
 type SubscriptionsOffersCodesRedemptionReportsFilter struct {
 	SalesReportsBaseFilter
 }
 
-//IsValid Validate sales report filter params
+// IsValid Validate sales report filter params
 func (f *SubscriptionsOffersCodesRedemptionReportsFilter) IsValid() error {
 	err := f.SalesReportsBaseFilter.IsValid()
 	if err != nil {
@@ -344,12 +351,12 @@ func (f *SubscriptionsOffersCodesRedemptionReportsFilter) IsValid() error {
 	return nil
 }
 
-//NewsstandReportsFilter
+// NewsstandReportsFilter
 type NewsstandReportsFilter struct {
 	SalesReportsBaseFilter
 }
 
-//IsValid Validate sales report filter params
+// IsValid Validate sales report filter params
 func (f *NewsstandReportsFilter) IsValid() error {
 	err := f.SalesReportsBaseFilter.IsValid()
 	if err != nil {
@@ -370,12 +377,12 @@ func (f *NewsstandReportsFilter) IsValid() error {
 	return nil
 }
 
-//PreOrdersReportsFilter
+// PreOrdersReportsFilter
 type PreOrdersReportsFilter struct {
 	SalesReportsBaseFilter
 }
 
-//IsValid Validate sales report filter params
+// IsValid Validate sales report filter params
 func (f *PreOrdersReportsFilter) IsValid() error {
 	err := f.SalesReportsBaseFilter.IsValid()
 	if err != nil {
@@ -393,22 +400,22 @@ func (f *PreOrdersReportsFilter) IsValid() error {
 	return nil
 }
 
-//NewSalesReportsFilter
+// NewSalesReportsFilter
 func NewSalesReportsFilter() *SalesReportsFilter {
 	return &SalesReportsFilter{SalesReportsBaseFilter{ReportType: SalesReportTypeSales}}
 }
 
-//NewSubscriptionsReportsFilter
+// NewSubscriptionsReportsFilter
 func NewSubscriptionsReportsFilter() *SubscriptionsReportsFilter {
 	return &SubscriptionsReportsFilter{SalesReportsBaseFilter{ReportType: SalesReportTypeSubscription}}
 }
 
-//NewSubscriptionsEventsReportsFilter
+// NewSubscriptionsEventsReportsFilter
 func NewSubscriptionsEventsReportsFilter() *SubscriptionsEventsReportsFilter {
 	return &SubscriptionsEventsReportsFilter{SalesReportsBaseFilter{ReportType: SalesReportTypeSubscriptionEvent}}
 }
 
-//NewSubscribersReportsFilter
+// NewSubscribersReportsFilter
 func NewSubscribersReportsFilter() *SubscribersReportsFilter {
 	return &SubscribersReportsFilter{SalesReportsBaseFilter{ReportType: SalesReportTypeSubscriber}}
 }
@@ -417,12 +424,12 @@ func NewSubscriptionsOffersCodesRedemptionReportsFilter() *SubscriptionsOffersCo
 	return &SubscriptionsOffersCodesRedemptionReportsFilter{SalesReportsBaseFilter{ReportType: SalesReportTypeSubscriptionOfferCodeRedemption}}
 }
 
-//NewNewsstandReportsFilter
+// NewNewsstandReportsFilter
 func NewNewsstandReportsFilter() *NewsstandReportsFilter {
 	return &NewsstandReportsFilter{SalesReportsBaseFilter{ReportType: SalesReportTypeNewsStand}}
 }
 
-//NewPreOrdersReportsFilter
+// NewPreOrdersReportsFilter
 func NewPreOrdersReportsFilter() *PreOrdersReportsFilter {
 	return &PreOrdersReportsFilter{SalesReportsBaseFilter{ReportType: SalesReportTypePreorder}}
 }

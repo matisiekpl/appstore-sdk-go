@@ -17,11 +17,11 @@ func (suite *SalesReportsBaseFilterTestSuite) SetupTest() {
 }
 
 func (suite *SalesReportsBaseFilterTestSuite) TestFillByDefault() {
-	suite.testable.Daily().TypeSales().SubTypeSummary().Version10()
+	suite.testable.Daily().TypeSales().SubTypeSummary().Version11()
 	assert.Equal(suite.T(), SalesReportTypeSales, suite.testable.ReportType)
 	assert.Equal(suite.T(), SalesReportSubTypeSummary, suite.testable.ReportSubType)
 	assert.Equal(suite.T(), SalesReportFrequencyDaily, suite.testable.Frequency)
-	assert.Equal(suite.T(), SalesReportVersion10, suite.testable.Version)
+	assert.Equal(suite.T(), SalesReportVersion11, suite.testable.Version)
 }
 
 func (suite *SalesReportsBaseFilterTestSuite) TestToQueryParamsMapOnlyRequired() {
@@ -83,6 +83,8 @@ func (suite *SalesReportsBaseFilterTestSuite) TestSetFrequency() {
 func (suite *SalesReportsBaseFilterTestSuite) TestSetVersion() {
 	suite.testable.Version10()
 	assert.Equal(suite.T(), suite.testable.Version, SalesReportVersion10)
+	suite.testable.Version11()
+	assert.Equal(suite.T(), suite.testable.Version, SalesReportVersion11)
 	suite.testable.Version12()
 	assert.Equal(suite.T(), suite.testable.Version, SalesReportVersion12)
 	suite.testable.Version13()

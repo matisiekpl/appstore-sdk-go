@@ -55,7 +55,7 @@ func (suite *SalesReportsResourceTestSuite) TestGetSalesReportsSuccess() {
 	httpmock.RegisterResponder("GET", suite.cfg.Uri+"/v1/salesReports", httpmock.ResponderFromResponse(rsp))
 
 	filter := NewSalesReportsFilter()
-	filter.SubTypeSummary().Version10().Daily()
+	filter.SubTypeSummary().Version11().Daily()
 
 	result, resp, err := suite.testable.GetSalesReports(suite.ctx, filter)
 	assert.NoError(suite.T(), err)
@@ -106,7 +106,7 @@ func (suite *SalesReportsResourceTestSuite) TestGetSalesReportsError() {
 	httpmock.RegisterResponder("GET", suite.cfg.Uri+"/v1/salesReports", httpmock.ResponderFromResponse(rsp))
 
 	filter := NewSalesReportsFilter()
-	filter.SubTypeSummary().Version10().Daily()
+	filter.SubTypeSummary().Version11().Daily()
 
 	result, resp, err := suite.testable.GetSalesReports(suite.ctx, filter)
 	assert.Error(suite.T(), err)
