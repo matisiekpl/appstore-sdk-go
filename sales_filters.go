@@ -241,7 +241,7 @@ func (f *SalesReportsFilter) IsValid() error {
 	if f.ReportSubType != SalesReportSubTypeSummary {
 		return fmt.Errorf("SalesReportsFilter.IsValid: %v", "ReportSubType is not valid")
 	}
-	if f.Version != SalesReportVersion11 {
+	if f.Version != SalesReportVersion11 && f.Version != SalesReportVersion10 {
 		return fmt.Errorf("SalesReportsFilter.IsValid: %v", "Version is not valid")
 	}
 	return nil
