@@ -196,7 +196,7 @@ func (f *SalesReportsBaseFilter) ToQueryParamsMap() map[string]interface{} {
 	qs["filter[reportType]"] = string(f.ReportType)
 	qs["filter[frequency]"] = string(f.Frequency)
 	if !f.ReportDate.IsZero() {
-		qs["filter[reportDate]"] = f.ReportDate.Format("2006-01-02")
+		qs["filter[reportDate]"] = f.ReportDate.Format("2006")
 	}
 	if f.Version != "" {
 		qs["filter[version]"] = string(f.Version)
